@@ -1,0 +1,518 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" type="image/ico" href="images/favicon.ico">
+    <title>Geolocation (HIVE)</title>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
+
+    <style media="screen">
+      /* Add space between vega-embed links */
+      /* http://vega.github.io/vega-tutorials/airports/ */
+      .vega-embed .vega-actions a {
+        margin-left: 1em;
+        visibility: hidden;
+      }
+      .vega-embed:hover .vega-actions a {
+        visibility: visible;
+      }
+    </style>
+  </head>
+
+  <body class="hive_geolocation" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo.png" class="logo" alt="Logo" />
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc" class="toc-list-h1">
+          <li>
+            <a href="#geolocation" class="toc-h1 toc-link" data-title="Geolocation">GEOLOCATION</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#summary-of-results" class="toc-h2 toc-link" data-title="Summary of Results">Summary of Results</a>
+                  </li>
+                  <li>
+                    <a href="#summary-of-gunrock-implementation" class="toc-h2 toc-link" data-title="Summary of Gunrock Implementation">Summary of Gunrock Implementation</a>
+                  </li>
+                  <li>
+                    <a href="#how-to-run-this-application-on-darpa-39-s-dgx-1" class="toc-h2 toc-link" data-title="How To Run This Application on DARPA's DGX-1">How To Run This Application on DARPA's DGX-1</a>
+                  </li>
+                  <li>
+                    <a href="#performance-and-analysis" class="toc-h2 toc-link" data-title="Performance and Analysis">Performance and Analysis</a>
+                  </li>
+                  <li>
+                    <a href="#next-steps" class="toc-h2 toc-link" data-title="Next Steps">Next Steps</a>
+                  </li>
+              </ul>
+          </li>
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://github.com/gunrock/gunrock'>Gunrock&colon; GPU Graph Analytics</a></li>
+            <li>Gunrock &copy; 2018 The Regents of the University of California.</li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+
+        <!-- <div class="dark-box"></div> -->
+
+      <div class="content">
+        <h1 id='geolocation'>Geolocation</h1>
+<p>Infers user locations using the location (latitude, longitude) of friends through spatial label propagation. Given a graph <code>G</code>, geolocation examines each vertex <code>v</code>'s neighbors and computes the spatial median of the neighbors' location list. The output is a list of predicted locations for all vertices with unknown locations.</p>
+<h2 id='summary-of-results'>Summary of Results</h2>
+<p>Geolocation or geotagging is an interesting parallel problem, because it is among the few that exhibits the dynamic parallism pattern within the compute. The pattern is as follows; there is parallel compute across nodes, each node has some serial work and within the serial work there are sveral parallel math operations. Even without leveraging dynamic parallelism within CUDA (kernel launches within a kernel), Geolocation performs well on the GPU environment because it mainly requires simple math operations, instead of complicated memory movement schemes. </p>
+
+<p>However, the challenge within the application is load balancing this simple compute, such that each processor has roughly the same amount of work. Currently, in gunrock, we map Geolocation using the <code>ForAll()</code> compute operator with optimizations to exit early (performing less work and fewer reads). Even without addressing load balancing issue with a complicated balancing scheme, on the HIVE datasets we achieve a 100x speedup with respect to the CPU reference code, implemented using C++ and OpenMP, and ~533x speedup  with respect to the GTUSC implementation. We improve upon the algorithm by avoiding a global gather and a global synchronize, and using 3x less memory than the GTUSC reference implementation.</p>
+<h2 id='summary-of-gunrock-implementation'>Summary of Gunrock Implementation</h2>
+<p>There are two approaches we took to implement Geolocation within gunrock:</p>
+
+<ul>
+<li><strong>[Fewer Reads] Global Gather:</strong> uses two <code>compute</code> operators as <code>ForAll()</code>. The first <code>ForAll()</code> is a <code>gather</code> operation, gathering all the values of neighbors with known locations for an active vertex <code>v</code>, and the second <code>ForAll()</code> uses those values to compute the <code>spatial_center</code> where the spatial center of a list's points is the center of those points on the earth's surface.</li>
+</ul>
+
+<pre class="mid-column-code">
+def gather_op(Vertex v):
+    for neighbor in G.neighbors(v):
+        if isValid(neighbor.location):
+            locations_list[v].append(neighbor.location)
+
+def compute_op(Vertex v):
+    if !isValid(v.location):
+        v.location = spatial_center(locations_list[v])
+</pre>
+
+<ul>
+<li><strong>[Less Memory] Repeated Compute:</strong> skips the global gather and uses only one <code>compute</code> operator as a <code>ForAll()</code> to find the spatial center of every vertex. During the spatial center computation, instead of iterating over all valid neighbors (where valid neighbor is a neighbor with a known location), we iterate over all neighbors for each vertex, doing more random reads than the global gather approach, but using <code>3x</code> less memory.</li>
+</ul>
+<pre class="highlight python tab-python"><code><span class="k">def</span> <span class="nf">spatial_center</span><span class="p">(</span><span class="n">Vertex</span> <span class="n">v</span><span class="p">):</span>
+    <span class="k">if</span> <span class="err">!</span><span class="n">isValid</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">location</span><span class="p">):</span>
+        <span class="n">v</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">spatial_median</span><span class="p">(</span><span class="n">neighbors_list</span><span class="p">[</span><span class="n">v</span><span class="p">])</span>
+</code></pre>
+<ul>
+<li><strong>[Optimization] Early Exit:</strong> fuses the global gather approach with the repeated compute, by performing one local gather for every vertex within the spatial center operator (without a costly device barrier), and exiting early if a vertex <code>v</code> has only one or two valid neighbors:</li>
+</ul>
+<pre class="highlight python tab-python"><code><span class="k">def</span> <span class="nf">spatial_center</span><span class="p">(</span><span class="n">Vertex</span> <span class="n">v</span><span class="p">):</span>
+    <span class="k">if</span> <span class="err">!</span><span class="n">isValid</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">location</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">valid_locations</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">valid_neighbor</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">location</span><span class="p">:</span>
+            <span class="nb">exit</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">valid_locations</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">mid_point</span><span class="p">(</span><span class="n">valid_neighbors</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">spatial_median</span><span class="p">(</span><span class="n">neighbors_list</span><span class="p">[</span><span class="n">v</span><span class="p">])</span>
+</code></pre>
+<table><thead>
+<tr>
+<th>Approach</th>
+<th>Memory Usage</th>
+<th>Memory Reads/Vertex</th>
+<th>Device Barriers</th>
+<th>Largest Dataset (P100)</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Global Gather</td>
+<td>O(3x\</td>
+<td>E\</td>
+<td>)</td>
+<td># of valid locations</td>
+</tr>
+<tr>
+<td>Repeated Compute</td>
+<td>O(\</td>
+<td>E\</td>
+<td>)</td>
+<td>degree of vertex</td>
+</tr>
+</tbody></table>
+
+<p><strong>Note:</strong> <code>spatial_median()</code> is defined as center of points on earth's surface -- given a set of points <code>Q</code>, the function computes the point <code>p</code> such that: <code>sum([haversine_distance(p, q) for q in Q])</code> is minimized. See <code>gunrock/app/geo/geo_spatial.cuh</code> for details on the spatial median implementation.</p>
+<h2 id='how-to-run-this-application-on-darpa-39-s-dgx-1'>How To Run This Application on DARPA's DGX-1</h2><h3 id='prerequisites'>Prerequisites</h3><pre class="highlight shell tab-shell"><code>git clone --recursive https://github.com/gunrock/gunrock -b dev-refactor
+<span class="nb">cd </span>gunrock
+mkdir build
+ctest ..
+<span class="nb">cd</span> ../tests/geo/
+make clean <span class="o">&amp;&amp;</span> make
+</code></pre><h3 id='hive-data-preparation'>HIVE Data Preparation</h3>
+<p>Prepare the data, skip this step if you are just running the sample dataset. Assuming we are in <code>tests/geo</code> directory:</p>
+<pre class="highlight shell tab-shell"><code><span class="nb">export </span><span class="nv">TOKEN</span><span class="o">=</span> <span class="c"># get this Authentication TOKEN from</span>
+              <span class="c"># https://api-token.hiveprogram.com/#!/user</span>
+wget --header <span class="s2">"Authorization:</span><span class="nv">$TOKEN</span><span class="s2">"</span> <span class="se">\</span>
+  https://hiveprogram.com/data/_v0/geotagging/instagram/instagram.tar.gz
+tar -xzvf instagram.tar.gz <span class="o">&amp;&amp;</span> rm instagram.tar.gz
+<span class="nb">cd </span>instagram/graph
+cp ../../generate-data.py ./
+python generate-data.py
+</code></pre>
+<p>This will generate two files, <code>instagram.mtx</code> and <code>instagram.labels</code>, which can be used as an input to the geolocation app.</p>
+<h3 id='running-the-application'>Running the application</h3>
+<p>Application specific parameters:</p>
+<pre class="highlight plaintext"><code>--labels-file
+    file name containing node ids and their locations.
+
+--geo-iter
+    number of iterations to run geolocation or (stop condition).
+    (default = 3)
+
+--spatial-iter
+    number of iterations for spatial median computation.
+    (default = 1000)
+
+--geo-complete
+    runs geolocation for as many iterations as required
+    to find locations for all nodes.
+    (default = false because it uses atomics)
+
+--debug
+    Debug label values, this prints out the entire labels
+    array (longitude, latitude).
+    (default = false)
+</code></pre>
+<p>Example command-line:</p>
+<pre class="highlight shell tab-shell"><code><span class="c"># geolocation.mtx is a graph based on chesapeake.mtx dataset</span>
+./bin/test_geo_10.0_x86_64 --graph-type<span class="o">=</span>market --graph-file<span class="o">=</span>./geolocation.mtx <span class="se">\</span>
+  --labels-file<span class="o">=</span>./locations.labels --geo-iter<span class="o">=</span>2 --geo-complete<span class="o">=</span><span class="nb">false</span>
+</code></pre>
+<p>Sample input (labels):</p>
+<pre class="highlight plaintext"><code>% Nodes Latitude Longitude
+39 2 2
+1 37.7449063493 -122.009432884
+2 37.8668048274 -122.257973253
+4 37.869112506 -122.25910604
+6 37.6431858915 -121.816156983
+11 37.8652346572 -122.250634008
+19 38.2043433677 -114.300341275
+21 36.7582225593 -118.167916598
+22 33.9774659389 -114.886512278
+30 39.2598884729 -106.804662071
+31 37.880443573 -122.230147039
+39 9.4276164485 -110.640705659
+</code></pre>
+<p>Sample output:</p>
+<pre class="highlight plaintext"><code>Loading Matrix-market coordinate-formatted graph ...
+Reading from ./geolocation.mtx:
+  Parsing MARKET COO format edge-value-seed = 1539674096
+ (39 nodes, 340 directed edges)...
+Done parsing (0 s).
+  Converting 39 vertices, 340 directed edges ( ordered tuples) to CSR format...
+Done converting (0s).
+Labels File Input: ./locations.labels
+Loading Labels into an array ...
+Reading from ./locations.labels:
+  Parsing LABELS
+ (39 nodes)
+Done parsing (0 s).
+Debugging Labels -------------
+ (nans represent unknown locations)
+    locations[ 0 ] = < 37.744907 , -122.009430 >
+    locations[ 1 ] = < 37.866806 , -122.257973 >
+    locations[ 2 ] = < nan , nan >
+    locations[ 3 ] = < 37.869114 , -122.259109 >
+     ...
+    locations[ 35 ] = < nan , nan >
+    locations[ 36 ] = < nan , nan >
+    locations[ 37 ] = < nan , nan >
+    locations[ 38 ] = < 9.427616 , -110.640709 >
+__________________________
+______ CPU Reference _____
+--------------------------
+ Elapsed: 0.267029
+Initializing problem ...
+Number of nodes for allocation: 39
+Initializing enactor ...
+Using advance mode LB
+Using filter mode CULL
+nodes=39
+__________________________
+0        0       0       queue3          oversize :      234 ->  342
+0        0       0       queue3          oversize :      234 ->  342
+--------------------------
+Run 0 elapsed: 11.322021, #iterations = 2
+Node [ 0 ]: Predicted = < 37.744907 , -122.009430 > Reference = < 37.744907 , -122.009430 >
+Node [ 1 ]: Predicted = < 37.866806 , -122.257973 > Reference = < 37.866806 , -122.257973 >
+Node [ 2 ]: Predicted = < 9.427616 , -110.640709 > Reference = < 9.427616 , -110.640709 >
+Node [ 3 ]: Predicted = < 37.869114 , -122.259109 > Reference = < 37.869114 , -122.259109 >
+...
+Node [ 35 ]: Predicted = < 37.864429 , -122.199409 > Reference = < 37.864429 , -122.199409 >
+Node [ 36 ]: Predicted = < 23.755602 , -115.803055 > Reference = < 37.807079 , -122.134163 >
+Node [ 37 ]: Predicted = < 37.053715 , -115.913658 > Reference = < 37.053719 , -115.913628 >
+Node [ 38 ]: Predicted = < 9.427616 , -110.640709 > Reference = < 9.427616 , -110.640709 >
+0 errors occurred.
+[geolocation] finished.
+ avg. elapsed: 11.322021 ms
+ iterations: 2
+ min. elapsed: 11.322021 ms
+ max. elapsed: 11.322021 ms
+ load time: 68.671 ms
+ preprocess time: 496.136000 ms
+ postprocess time: 0.463009 ms
+ total time: 508.110046 ms
+</code></pre><h3 id='output'>Output</h3>
+<p>When <code>quick</code> mode is disabled, the application performs the CPU reference implementation, which is used to validate the results from the GPU implementation by comparing the predicted latitudes and longitudes of each vertex with the CPU reference implementation. Further correctness checking was performed by comparing results to the <a href="https://gitlab.hiveprogram.com/ggillary/geotagging.git">HIVE reference implementation</a>.</p>
+
+<p>Geolocation application also supports the <code>quiet</code> mode, which allows the user to skip the output and just report the performance metrics (note, this will run the CPU implementation in the background without any output).</p>
+<h2 id='performance-and-analysis'>Performance and Analysis</h2>
+<p>Runtime is the key metric for measuring performance for Geolocation. We also check for prediction accuracy of the labels, but that is a threshold for correctness. If a certain threshold is not met (while comparing results to the CPU reference code), the output is considered incorrect and that run is invalid. Therefore, for the report we just focus on runtime.</p>
+<h3 id='implementation-limitations'>Implementation limitations</h3>
+<p>Geolocation is also one of the few applications that exhibits a dynamic parallelism pattern:</p>
+
+<ul>
+<li>Parallel compute across the nodes,</li>
+<li>Serial compute per node, and</li>
+<li>Parallel compute within the serial compute per node.</li>
+</ul>
+
+<p>One way to implement this will use the <code>ForAll()</code> operator for the parallel compute across the nodes, a simple while loop for the serial compute per node, and finally multiple <code>neighbor_reduce()</code> operators for the parallel work within the serial while loop. Currently, we do not have a way to support this within Gunrock, but moving forward we can potentially leverage kernel launch within a kernel ("dynamic parallelism") to address this limitation.</p>
+<h3 id='comparison-against-existing-implementations'>Comparison against existing implementations</h3>
+<p>| GPU  | Dataset            | |V|    | |E|     | Iterations | Spatial Iters | GTUSC (16 threads) | Gunrock (CPU)  | Gunrock (GPU) |
+|------|--------------------|----------|-----------|------------|---------------|--------------------|----------------|---------------|
+| P100 | sample             | 39       | 170       | 10         | 1000          | N/A                | 0.144005 ms    | 0.022888 ms   |
+| P100 | instagram          | 23731995 | 82711740  | 10         | 1000          | 8009.491 ms        | 1589.884033 ms | 15.113831 ms  |
+| V100 | twitter            | 50190344 | 488078602 | 10         | 1000          | N/A                | 9216.666016 ms | 46.108007 ms  |</p>
+
+<p>On a workload that fills the GPU, gunrock outperforms GT's OpenMP C++ implementation by ~533x. Comparing gunrock's GPU vs. CPU performance, we see that gunrock's GPU version outperforms the CPU implementation by 100x. There is a lack of available datasets against which we can compare performance, so we use only the provided instagram and twitter datasets, and a toy sample for a sanity check on NVIDIA's P100 with 16GB of global memory and V100 with 32GB of global memory. All tested implementations meet the criteria of accuracy, which is validated against the output of the original python implementation.</p>
+
+<ul>
+<li><a href="https://gitlab.hiveprogram.com/ggillary/geotagging.git">HIVE reference implementation</a> uses distributed PySpark.</li>
+<li><a href="https://gitlab.hiveprogram.com/gtusc/geotagging">GTUSC implementation</a> uses C++ OpenMP.</li>
+</ul>
+<h3 id='performance-limitations'>Performance limitations</h3>
+<p>As discussed later in the "Alternate approaches" section, the current implementation of geolocation uses a compute operator with minimal load balancing. In cases where the graph is not so nicely distributed (where there is a great deal of difference in the degrees of vertices), the entire application will suffer significantly from load imbalance.</p>
+
+<p>Profiling the application shows 98.78% of the compute time in GPU activities is in the <code>spatial_median</code> kernel, which gives us a good direction to focus our efforts on load-balancing the workloads within the operator. Specifically, we must target the <code>for</code> loops iterating over the neighbor list for spatial center calculations.</p>
+<h2 id='next-steps'>Next Steps</h2><h3 id='alternate-approaches'>Alternate approaches</h3>
+<ul>
+<li><p><strong>Neighborhood Reduce w/ Spatial Center:</strong> We can perform better load balancing by leveraging a neighbor-reduce (<code>advance</code> operator + <code>cub::DeviceSegmentedReduce</code>) instead of using a compute operator. In graphs where the degrees of nodes vary a lot, the compute operator will be significantly slower than a load-balanced advance + segmented reduce.</p></li>
+<li><p><strong>Push Based Approach:</strong> Instead of gathering all the locations from all the neighbors of an active vertex, we could instead perform a scatter of valid locations of all active vertices to their neighbors; this is a push approach vs. our current implementation's pull. Similar to the global gather approach, a push-based geolocation could also suffer from load imbalance, where some vertices will have to broadcast their valid locations to a long list of neighbors, while others will only have few neighbors to update. A push-based approach will also require a device synchronize before the spatial center computation, but may perform better by using an <code>advance_op</code> with an atomic update (note, pull is done using a <code>ForAll()</code>).</p></li>
+</ul>
+<h3 id='gunrock-implications'>Gunrock implications</h3>
+<ul>
+<li><p><strong>The <code>predicted</code> atomic:</strong> Geolocation and some other applications exhibit the same behavior where the algorithm stops when all vertices' labels are predicted or determined. In Geolocation's case, when a location for all nodes is predicted, geolocation converges. We currently implement this with a loop and an atomic. This needs to be more of a core operation (mini-operator) such that when <code>isValidCount(labels|V|) == |V|</code>, a stop condition is met. Currently, we sidestep this issue by using a number-of-iterations parameter to determine the stop condition.</p></li>
+<li><p><strong>Parallel -> Serial -> Parallel:</strong> As discussed earlier, gunrock currently doesn't have a way to address the dynamic parallelism problem, or even a kernel launch within a kernel. In geolocation's case, these minor parallel work inside the serial loop need to be multiple neighbor reduce.</p></li>
+</ul>
+<h3 id='notes-on-multi-gpu-parallelization'>Notes on multi-GPU parallelization</h3>
+<p>The challenging part for a multi-GPU Geolocation would be to obtain the updated node location from a separate device if the two vertices on different devices share an edge. An interesting approach here would be leveraging the P2P memory bandwidth with the new NVLink connectors to exchange a small amount of updates across the NVLink's memory lane; other ways are simply using direct accesses or explicit data movement. This is detailed more in the scaling documentation, but the communication model for multi-gpu geolocation could be done in the following way:</p>
+<pre class="highlight plaintext"><code>do
+    Local geo location updates on local vertices;
+    Broadcast local vertices' updates;
+while no more update.
+</code></pre><h3 id='notes-on-dynamic-graphs'>Notes on dynamic graphs</h3>
+<p>Streaming graphs is an interesting problem for the Geolocation application, because when predicting the location of a certain node, if another edge is introduced, the location of the vertex has to be recomputed entirely. This can still be done in an iterative manner, where if a node was inserted as a neighbor to a vertex, that vertex's predicted location will be marked invalid and during the next iteration it will be computed again along with all the other invalid vertices (locations).</p>
+<h3 id='notes-on-larger-datasets'>Notes on larger datasets</h3>
+<p>If the datasets are larger than a single or multi-GPU's aggregate memory, the straightforward solution would be to let Unified Virtual Memory (UVM) in CUDA automatically handle memory movement.</p>
+<h3 id='notes-on-other-pieces-of-this-workload'>Notes on other pieces of this workload</h3>
+<p>Geolocation calls a lot of CUDA math functions (<code>sin</code>, <code>cos</code>, <code>atan</code>, <code>atan2</code>, <code>median</code>, <code>mean</code>, <code>fminf</code>, <code>fmaxf</code>, etc.).  Some of these micro-workloads can also leverage the GPU's parallelism; for example, a mean could be implemented using <code>reduce-mean/sum</code>. We currently don't have these math operators exposed within Gunrock in such a way they can be used in graph applications.</p>
+
+      </div>
+
+        <!-- <div class="dark-box"></div> -->
+    </div>
+  </body>
+</html>
