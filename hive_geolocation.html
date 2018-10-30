@@ -291,23 +291,29 @@ def compute_op(Vertex v):
 <ul>
 <li><strong>[Less Memory] Repeated Compute:</strong> skips the global gather and uses only one <code>compute</code> operator as a <code>ForAll()</code> to find the spatial center of every vertex. During the spatial center computation, instead of iterating over all valid neighbors (where valid neighbor is a neighbor with a known location), we iterate over all neighbors for each vertex, doing more random reads than the global gather approach, but using <code>3x</code> less memory.</li>
 </ul>
-<pre class="highlight python tab-python"><code><span class="k">def</span> <span class="nf">spatial_center</span><span class="p">(</span><span class="n">Vertex</span> <span class="n">v</span><span class="p">):</span>
-    <span class="k">if</span> <span class="err">!</span><span class="n">isValid</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">location</span><span class="p">):</span>
-        <span class="n">v</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">spatial_median</span><span class="p">(</span><span class="n">neighbors_list</span><span class="p">[</span><span class="n">v</span><span class="p">])</span>
-</code></pre>
+
+<pre class="mid-column-code">
+def spatial_center(Vertex v):
+    if !isValid(v.location):
+        v.location = spatial_median(neighbors_list[v])
+</pre>
+
 <ul>
 <li><strong>[Optimization] Early Exit:</strong> fuses the global gather approach with the repeated compute, by performing one local gather for every vertex within the spatial center operator (without a costly device barrier), and exiting early if a vertex <code>v</code> has only one or two valid neighbors:</li>
 </ul>
-<pre class="highlight python tab-python"><code><span class="k">def</span> <span class="nf">spatial_center</span><span class="p">(</span><span class="n">Vertex</span> <span class="n">v</span><span class="p">):</span>
-    <span class="k">if</span> <span class="err">!</span><span class="n">isValid</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">location</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">valid_locations</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">v</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">valid_neighbor</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">location</span><span class="p">:</span>
-            <span class="nb">exit</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">valid_locations</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="n">v</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">mid_point</span><span class="p">(</span><span class="n">valid_neighbors</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">v</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">spatial_median</span><span class="p">(</span><span class="n">neighbors_list</span><span class="p">[</span><span class="n">v</span><span class="p">])</span>
-</code></pre>
+
+<pre class="mid-column-code">
+def spatial_center(Vertex v):
+    if !isValid(v.location):
+        if v.valid_locations == 1:
+            v.location = valid_neighbor[v].location:
+            exit
+        else if v.valid_locations == 2:
+            v.location = mid_point(valid_neighbors[v].location)
+        else:
+            v.location = spatial_median(neighbors_list[v])
+</pre>
+
 <table><thead>
 <tr>
 <th>Approach</th>
@@ -334,27 +340,35 @@ def compute_op(Vertex v):
 </tbody></table>
 
 <p><strong>Note:</strong> <code>spatial_median()</code> is defined as center of points on earth's surface -- given a set of points <code>Q</code>, the function computes the point <code>p</code> such that: <code>sum([haversine_distance(p, q) for q in Q])</code> is minimized. See <code>gunrock/app/geo/geo_spatial.cuh</code> for details on the spatial median implementation.</p>
-<h2 id='how-to-run-this-application-on-darpa-39-s-dgx-1'>How To Run This Application on DARPA's DGX-1</h2><h3 id='prerequisites'>Prerequisites</h3><pre class="highlight shell tab-shell"><code>git clone --recursive https://github.com/gunrock/gunrock -b dev-refactor
-<span class="nb">cd </span>gunrock
+<h2 id='how-to-run-this-application-on-darpa-39-s-dgx-1'>How To Run This Application on DARPA's DGX-1</h2><h3 id='prerequisites'>Prerequisites</h3>
+<pre class="mid-column-code">
+git clone --recursive https://github.com/gunrock/gunrock -b dev-refactor
+cd gunrock
 mkdir build
 ctest ..
-<span class="nb">cd</span> ../tests/geo/
-make clean <span class="o">&amp;&amp;</span> make
-</code></pre><h3 id='hive-data-preparation'>HIVE Data Preparation</h3>
+cd ../tests/geo/
+make clean && make
+</pre>
+<h3 id='hive-data-preparation'>HIVE Data Preparation</h3>
 <p>Prepare the data, skip this step if you are just running the sample dataset. Assuming we are in <code>tests/geo</code> directory:</p>
-<pre class="highlight shell tab-shell"><code><span class="nb">export </span><span class="nv">TOKEN</span><span class="o">=</span> <span class="c"># get this Authentication TOKEN from</span>
-              <span class="c"># https://api-token.hiveprogram.com/#!/user</span>
-wget --header <span class="s2">"Authorization:</span><span class="nv">$TOKEN</span><span class="s2">"</span> <span class="se">\</span>
+
+<pre class="mid-column-code">
+export TOKEN= # get this Authentication TOKEN from
+              # https://api-token.hiveprogram.com/#!/user
+wget --header "Authorization:$TOKEN" \
   https://hiveprogram.com/data/_v0/geotagging/instagram/instagram.tar.gz
-tar -xzvf instagram.tar.gz <span class="o">&amp;&amp;</span> rm instagram.tar.gz
-<span class="nb">cd </span>instagram/graph
+tar -xzvf instagram.tar.gz && rm instagram.tar.gz
+cd instagram/graph
 cp ../../generate-data.py ./
 python generate-data.py
-</code></pre>
+</pre>
+
 <p>This will generate two files, <code>instagram.mtx</code> and <code>instagram.labels</code>, which can be used as an input to the geolocation app.</p>
 <h3 id='running-the-application'>Running the application</h3>
 <p>Application specific parameters:</p>
-<pre class="highlight plaintext"><code>--labels-file
+
+<pre class="mid-column-code">
+--labels-file
     file name containing node ids and their locations.
 
 --geo-iter
@@ -374,14 +388,20 @@ python generate-data.py
     Debug label values, this prints out the entire labels
     array (longitude, latitude).
     (default = false)
-</code></pre>
+</pre>
+
 <p>Example command-line:</p>
-<pre class="highlight shell tab-shell"><code><span class="c"># geolocation.mtx is a graph based on chesapeake.mtx dataset</span>
-./bin/test_geo_10.0_x86_64 --graph-type<span class="o">=</span>market --graph-file<span class="o">=</span>./geolocation.mtx <span class="se">\</span>
-  --labels-file<span class="o">=</span>./locations.labels --geo-iter<span class="o">=</span>2 --geo-complete<span class="o">=</span><span class="nb">false</span>
-</code></pre>
+
+<pre class="mid-column-code">
+# geolocation.mtx is a graph based on chesapeake.mtx dataset
+./bin/test_geo_10.0_x86_64 --graph-type=market --graph-file=./geolocation.mtx \
+  --labels-file=./locations.labels --geo-iter=2 --geo-complete=false
+</pre>
+
 <p>Sample input (labels):</p>
-<pre class="highlight plaintext"><code>% Nodes Latitude Longitude
+
+<pre class="mid-column-code">
+% Nodes Latitude Longitude
 39 2 2
 1 37.7449063493 -122.009432884
 2 37.8668048274 -122.257973253
@@ -394,9 +414,12 @@ python generate-data.py
 30 39.2598884729 -106.804662071
 31 37.880443573 -122.230147039
 39 9.4276164485 -110.640705659
-</code></pre>
+</pre>
+
 <p>Sample output:</p>
-<pre class="highlight plaintext"><code>Loading Matrix-market coordinate-formatted graph ...
+
+<pre class="mid-column-code">
+Loading Matrix-market coordinate-formatted graph ...
 Reading from ./geolocation.mtx:
   Parsing MARKET COO format edge-value-seed = 1539674096
  (39 nodes, 340 directed edges)...
@@ -454,7 +477,8 @@ Node [ 38 ]: Predicted = < 9.427616 , -110.640709 > Reference = < 9.427616 , -11
  preprocess time: 496.136000 ms
  postprocess time: 0.463009 ms
  total time: 508.110046 ms
-</code></pre><h3 id='output'>Output</h3>
+</pre>
+<h3 id='output'>Output</h3>
 <p>When <code>quick</code> mode is disabled, the application performs the CPU reference implementation, which is used to validate the results from the GPU implementation by comparing the predicted latitudes and longitudes of each vertex with the CPU reference implementation. Further correctness checking was performed by comparing results to the <a href="https://gitlab.hiveprogram.com/ggillary/geotagging.git">HIVE reference implementation</a>.</p>
 
 <p>Geolocation application also supports the <code>quiet</code> mode, which allows the user to skip the output and just report the performance metrics (note, this will run the CPU implementation in the background without any output).</p>
@@ -499,11 +523,14 @@ Node [ 38 ]: Predicted = < 9.427616 , -110.640709 > Reference = < 9.427616 , -11
 </ul>
 <h3 id='notes-on-multi-gpu-parallelization'>Notes on multi-GPU parallelization</h3>
 <p>The challenging part for a multi-GPU Geolocation would be to obtain the updated node location from a separate device if the two vertices on different devices share an edge. An interesting approach here would be leveraging the P2P memory bandwidth with the new NVLink connectors to exchange a small amount of updates across the NVLink's memory lane; other ways are simply using direct accesses or explicit data movement. This is detailed more in the scaling documentation, but the communication model for multi-gpu geolocation could be done in the following way:</p>
-<pre class="highlight plaintext"><code>do
+
+<pre class="mid-column-code">
+do
     Local geo location updates on local vertices;
     Broadcast local vertices' updates;
 while no more update.
-</code></pre><h3 id='notes-on-dynamic-graphs'>Notes on dynamic graphs</h3>
+</pre>
+<h3 id='notes-on-dynamic-graphs'>Notes on dynamic graphs</h3>
 <p>Streaming graphs is an interesting problem for the Geolocation application, because when predicting the location of a certain node, if another edge is introduced, the location of the vertex has to be recomputed entirely. This can still be done in an iterative manner, where if a node was inserted as a neighbor to a vertex, that vertex's predicted location will be marked invalid and during the next iteration it will be computed again along with all the other invalid vertices (locations).</p>
 <h3 id='notes-on-larger-datasets'>Notes on larger datasets</h3>
 <p>If the datasets are larger than a single or multi-GPU's aggregate memory, the straightforward solution would be to let Unified Virtual Memory (UVM) in CUDA automatically handle memory movement.</p>
