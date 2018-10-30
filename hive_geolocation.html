@@ -325,17 +325,17 @@ def spatial_center(Vertex v):
 </thead><tbody>
 <tr>
 <td>Global Gather</td>
-<td>O(3x\</td>
-<td>E\</td>
-<td>)</td>
+<td>O(3x[E])</td>
 <td># of valid locations</td>
+<td>1</td>
+<td>~160M Edges</td>
 </tr>
 <tr>
 <td>Repeated Compute</td>
-<td>O(\</td>
-<td>E\</td>
-<td>)</td>
+<td>O([E])</td>
 <td>degree of vertex</td>
+<td>0</td>
+<td>~500M Edges</td>
 </tr>
 </tbody></table>
 
@@ -495,11 +495,53 @@ Node [ 38 ]: Predicted = < 9.427616 , -110.640709 > Reference = < 9.427616 , -11
 
 <p>One way to implement this will use the <code>ForAll()</code> operator for the parallel compute across the nodes, a simple while loop for the serial compute per node, and finally multiple <code>neighbor_reduce()</code> operators for the parallel work within the serial while loop. Currently, we do not have a way to support this within Gunrock, but moving forward we can potentially leverage kernel launch within a kernel ("dynamic parallelism") to address this limitation.</p>
 <h3 id='comparison-against-existing-implementations'>Comparison against existing implementations</h3>
-<p>| GPU  | Dataset            | |V|    | |E|     | Iterations | Spatial Iters | GTUSC (16 threads) | Gunrock (CPU)  | Gunrock (GPU) |
-|------|--------------------|----------|-----------|------------|---------------|--------------------|----------------|---------------|
-| P100 | sample             | 39       | 170       | 10         | 1000          | N/A                | 0.144005 ms    | 0.022888 ms   |
-| P100 | instagram          | 23731995 | 82711740  | 10         | 1000          | 8009.491 ms        | 1589.884033 ms | 15.113831 ms  |
-| V100 | twitter            | 50190344 | 488078602 | 10         | 1000          | N/A                | 9216.666016 ms | 46.108007 ms  |</p>
+<table><thead>
+<tr>
+<th>GPU</th>
+<th>Dataset</th>
+<th># of V</th>
+<th># of E</th>
+<th>Iterations</th>
+<th>Spatial Iters</th>
+<th>GTUSC (16 threads)</th>
+<th>Gunrock (CPU)</th>
+<th>Gunrock (GPU)</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>P100</td>
+<td>sample</td>
+<td>39</td>
+<td>170</td>
+<td>10</td>
+<td>1000</td>
+<td>N/A</td>
+<td>0.144005 ms</td>
+<td>0.022888 ms</td>
+</tr>
+<tr>
+<td>P100</td>
+<td>instagram</td>
+<td>23731995</td>
+<td>82711740</td>
+<td>10</td>
+<td>1000</td>
+<td>8009.491 ms</td>
+<td>1589.884033 ms</td>
+<td>15.113831 ms</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>twitter</td>
+<td>50190344</td>
+<td>488078602</td>
+<td>10</td>
+<td>1000</td>
+<td>N/A</td>
+<td>9216.666016 ms</td>
+<td>46.108007 ms</td>
+</tr>
+</tbody></table>
 
 <p>On a workload that fills the GPU, gunrock outperforms GT's OpenMP C++ implementation by ~533x. Comparing gunrock's GPU vs. CPU performance, we see that gunrock's GPU version outperforms the CPU implementation by 100x. There is a lack of available datasets against which we can compare performance, so we use only the provided instagram and twitter datasets, and a toy sample for a sanity check on NVIDIA's P100 with 16GB of global memory and V100 with 32GB of global memory. All tested implementations meet the criteria of accuracy, which is validated against the output of the original python implementation.</p>
 
