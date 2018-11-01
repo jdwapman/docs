@@ -263,9 +263,6 @@
                   <li>
                     <a href="#vertex-nomination" class="toc-h2 toc-link" data-title="Vertex Nomination">Vertex Nomination</a>
                   </li>
-                  <li>
-                    <a href="#full_length-true" class="toc-h2 toc-link" data-title="full_length: true">full_length: true</a>
-                  </li>
               </ul>
           </li>
           <li>
@@ -377,17 +374,7 @@ SGM is a fruitful workflow to optimize, because the existing implementations wer
 <h2 id='vertex-nomination'>Vertex Nomination</h2>
 <p><strong><a href="https://gunrock.github.io/docs/hive_vn.html">Vertex Nomination</a></strong> 
 The term "vertex nomination" covers a variety of different node ranking schemes that fuse "content" and "context" information.  The HIVE reference code implements a "multiple-source shortest path" context scoring function, but uses a very suboptimal algorithm.  By using a more efficient algorithm, our serial CPU implementation achieves 1-2 orders of magnitude speedup over the HIVE implementation and our GPU implementation achieves another 1-2 orders of magnitude on top of that.  Implementation was straightforward, involving only a small modification to the existing Gunrock SSSP app.</p>
-
-<hr>
-
-<p>title: Scaling analysis for HIVE applications</p>
-
-<p>toc_footers:
-  - <a href='https://github.com/gunrock/gunrock'>Gunrock&colon; GPU Graph Analytics</a>
-  - Gunrock &copy; 2018 The Regents of the University of California.</p>
-
-<p>search: true</p>
-<h2 id='full_length-true'>full_length: true</h2><h1 id='scaling-analysis-for-hive-applications'>Scaling analysis for HIVE applications</h1>
+<h1 id='scaling-analysis-for-hive-applications'>Scaling analysis for HIVE applications</h1>
 <p>The purpose of this document is to understand how the HIVE v0
 applications would scale out on multiple GPUs, with a focus on the
 DGX-1 platform. Before diving into per-application analysis, we give a
@@ -878,7 +865,7 @@ marginal scalability. For GPUs newer than P100, the computation power
 and memory bandwidth improve faster than interconnect bandwidth, so
 the compute-to-communicate ratio needs to grow even more to start
 seeing positive scaling.</p>
-<h3 id='community-detection-louvain-2'>Community Detection (Louvain)</h3>
+<h3 id='community-detection-louvain'>Community Detection (Louvain)</h3>
 <p>The main and most time-consuming part of the Louvain algorithm is the
 modularity optimization iterations. The aggregated edge weights
 between vertices and their respective adjacent communities, as well as
@@ -963,7 +950,7 @@ is dominant.</p>
 <p>Louvain could be hard to implement on multiple GPUs, especially for the graph
 contraction phase, as it forms a new graph and distributes it across the GPUs.
 But the scalability should be okay.</p>
-<h3 id='graphsage-2'>GraphSAGE</h3>
+<h3 id='graphsage'>GraphSAGE</h3>
 <p>The main memory usage and computation of SAGE are related to the features of
 vertices. While directly accessing the feature data of neighbors via peer
 access is possible and memory-efficient, it will create a huge amount of
@@ -1261,7 +1248,7 @@ it will increase the computation workload to Wd /p, where d is the average
 degree of vertices in the graph. As a result, the computation-to-communication
 ratio will increase to d:24; for most graphs, this is still not high enough to
 have good scalability.</p>
-<h3 id='geolocation-2'>Geolocation</h3>
+<h3 id='geolocation'>Geolocation</h3>
 <p>In each iteration, Geolocation updates a vertex's location based on
 its neighbors. For multiple GPUs, neighboring vertices's location
 information needs to be available, either by direct access, UVM, or
@@ -1312,7 +1299,7 @@ is low.</p>
 <td></td>
 </tr>
 </tbody></table>
-<h3 id='vertex-nomination-2'>Vertex Nomination</h3>
+<h3 id='vertex-nomination'>Vertex Nomination</h3>
 <p>Vertex nomination is very similar to a single source shortest path
 (SSSP) problem, except it starts from a group of vertices, instead of
 a single source. One possible multi-GPU implementation is:</p>
