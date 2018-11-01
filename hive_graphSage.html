@@ -246,14 +246,6 @@
                     <a href="#how-to-run-this-application-on-darpa-39-s-dgx-1" class="toc-h2 toc-link" data-title="How To Run This Application on DARPA's DGX-1">How To Run This Application on DARPA's DGX-1</a>
                   </li>
                   <li>
-                    <a href="#rand-seed-1540498523" class="toc-h2 toc-link" data-title="rand-seed = 1540498523">rand-seed = 1540498523</a>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#embedding-validation-pass" class="toc-h1 toc-link" data-title="Embedding validation: PASS">EMBEDDING VALIDATION: PASS</a>
-              <ul class="toc-list-h2">
-                  <li>
                     <a href="#performance-and-analysis" class="toc-h2 toc-link" data-title="Performance and Analysis">Performance and Analysis</a>
                   </li>
                   <li>
@@ -464,9 +456,8 @@ inputs are used. Using the random inputs enable us to test on any graph without
 requiring the associative arrays.</p>
 <h3 id='output'>Output</h3>
 <p>The outputs are in the <code>sage</code> directory; look for the .txt files. An example is
-shown below for the <code>pokec</code> dataset:
-```
-Loading Matrix-market coordinate-formatted graph ...
+shown below for the <code>pokec</code> dataset:</p>
+<pre class="highlight mid-column-code plaintext"><code>Loading Matrix-market coordinate-formatted graph ...
   ... Loading progress ...
 Converting 1632803 vertices, 44603928 directed edges ( ordered tuples) to CSR format...Done (0s).
 Degree Histogram (1632803 vertices, 44603928 edges):
@@ -484,17 +475,18 @@ Degree Histogram (1632803 vertices, 44603928 edges):
     Degree 2^10: 23 (0.001409 %)
     Degree 2^11: 3 (0.000184 %)
     Degree 2^12: 3 (0.000184 %)
-    Degree 2^13: 3 (0.000184 %)</p>
+    Degree 2^13: 3 (0.000184 %)
 
-<p>==============================================
+==============================================
  feature-column=64 num-children-per-source=10 num-leafs-per-child=-1
-Computing reference value ...</p>
-
-<hr>
-<h2 id='rand-seed-1540498523'>rand-seed = 1540498523</h2>
-<p>CPU Reference elapsed: 25242.941406 ms.</p>
-<h1 id='embedding-validation-pass'>Embedding validation: PASS</h1>
-<p>batch-size=512
+Computing reference value ...
+==============================================
+rand-seed = 1540498523
+==============================================
+CPU Reference elapsed: 25242.941406 ms.
+Embedding validation: PASS
+==============================================
+ batch-size=512
 Using randomly generated Wf1
 Using randomly generated Wa1
 Using randomly generated Wf2
@@ -502,20 +494,14 @@ Using randomly generated Wa2
 Using randomly generated features
 Using advance mode LB
 Using filter mode CULL
-rand-seed = 1540498553</p>
-
-<hr>
-
-<hr>
-
-<p>Run 0 elapsed: 2047.366858 ms, #iterations = 3190
-... More runs</p>
-
-<hr>
-
-<hr>
-
-<p>Run 9 elapsed: 2013.216972 ms, #iterations = 3190
+rand-seed = 1540498553
+==============================================
+==============================================
+Run 0 elapsed: 2047.366858 ms, #iterations = 3190
+... More runs
+==============================================
+==============================================
+Run 9 elapsed: 2013.216972 ms, #iterations = 3190
 Embedding validation: PASS
 [Sage] finished.
  avg. elapsed: 2042.503190 ms
@@ -526,8 +512,7 @@ Embedding validation: PASS
  preprocess time: 3997.880000 ms
  postprocess time: 2106.487989 ms
  total time: 26634.360075 ms
-```</p>
-
+</code></pre>
 <p>There is 1 OMP reference run on the CPU for each combination of {<code>feature-column</code>,
 <code>num-children-per-source</code>, <code>num-leafs-per-child</code>}, with the timing reported after
 <code>CPU Reference elapsed</code>. There are 10 GPU runs for each combination of the
