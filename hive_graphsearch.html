@@ -1147,7 +1147,7 @@ Validate_Results: total_steps_taken=914397206
 <h3 id='notes-on-multi-gpu-parallelization'>Notes on multi-GPU parallelization</h3>
 <p>If the graph is small enough to be duplicated on each GPU, the implementation is trivial: just do a subset of the walks on each GPU.  The scalability will be perfect, as there is no communication involved at all.</p>
 
-<p>When the graph is distributed across multiple GPUs, we expect to have very poor scalability, as the ratio of computation to communication is very low.  A more detailed discussion is available <a href="hive_scaling.html">here</a>.</p>
+<p>When the graph is distributed across multiple GPUs, we expect to have very poor scalability, as the ratio of computation to communication is very low.  A more detailed discussion is available <a href="https://gunrock.github.io/docs/hive_year1_summary.html#scaling-analysis-for-hive-applications">here</a>.</p>
 <h3 id='notes-on-dynamic-graphs'>Notes on dynamic graphs</h3>
 <p>This workflow does not have an explicit dynamic component. However, because steps only depend on the current node, the underlying graph could change during the walks.</p>
 <h3 id='notes-on-larger-datasets'>Notes on larger datasets</h3>

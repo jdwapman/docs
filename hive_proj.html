@@ -760,7 +760,7 @@ while this function (from the HIVE reference implementation) is not easy to impl
 
 <p>Even though extending matrix multiplication to multiple GPUs can be straightforward, doing so in a backend-agnostic fashion that abstracts away the placement (i.e. which part of matrix A goes on which GPU) may still be quite challenging.</p>
 
-<p>Further discussion can be found <a href="https://github.com/sgpyc/docs/blob/scaling/source/hive_scaling.html.md">here</a>.</p>
+<p>Further discussion can be found <a href="https://gunrock.github.io/docs/hive_year1_summary.html#scaling-analysis-for-hive-applications">here</a>.</p>
 <h3 id='notes-on-dynamic-graphs'>Notes on dynamic graphs</h3>
 <p>This workflow does not have an explicit dynamic component.  The graph projection operation seems like it would be fairly straightforward to adapt to dynamic graphs -- as nodes/edges are added to <code>G</code>, we create/increment the weight of the appropriate edges in <code>H</code>.  However, this adds an additional layer of complexity to the memory allocation step, as we can't use the two-pass approach to allocate memory conservatively.</p>
 <h3 id='notes-on-larger-datasets'>Notes on larger datasets</h3>
