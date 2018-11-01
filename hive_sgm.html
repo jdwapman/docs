@@ -266,7 +266,10 @@
       <div class="content">
         <h1 id='seeded-graph-matching-sgm'>Seeded Graph Matching (SGM)</h1>
 <p>From <a href="https://arxiv.org/pdf/1209.0367.pdf">Fishkind et al.</a>:</p>
-<pre class="highlight mid-column-code plaintext"><code>Given two graphs, the graph matching problem is to align the two vertex sets so as to minimize the number of adjacency disagreements between the two graphs. The seeded graph matching problem is the graph matching problem when we are first given a partial alignment that we are tasked with completing.
+<pre class="highlight mid-column-code plaintext"><code>Given two graphs, the graph matching problem is to align the two vertex sets
+so as to minimize the number of adjacency disagreements between the two graphs.
+The seeded graph matching problem is the graph matching problem when we are
+first given a partial alignment that we are tasked with completing.
 </code></pre>
 <p>That is, given two graphs <code>A</code> and <code>B</code>, we seek to find the permutation matrix <code>P</code> that maximizes the number of adjacency agreements between <code>A</code> and <code>P * B * P.T</code>, where <code>*</code> represents matrix multiplication.  The algorithm Fishkind et al. propose first relaxes the hard 0-1 constraints on <code>P</code> to the set of doubly stochastic matrices (each row and column sums to 1), then uses the Frank-Wolfe algorithm to minimize the objective function  <code>sum((A - P * B * P.T) ** 2)</code>.  Finally, the relaxed solution is projected back onto the set of permutation matrices to yield a feasible solution.</p>
 <h2 id='summary-of-results'>Summary of Results</h2>
