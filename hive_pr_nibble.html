@@ -1,0 +1,589 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" type="image/ico" href="images/favicon.ico">
+    <title>Local Graph Clustering (HIVE)</title>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
+
+    <style media="screen">
+      /* Add space between vega-embed links */
+      /* http://vega.github.io/vega-tutorials/airports/ */
+      .vega-embed .vega-actions a {
+        margin-left: 1em;
+        visibility: hidden;
+      }
+      .vega-embed:hover .vega-actions a {
+        visibility: visible;
+      }
+    </style>
+  </head>
+
+  <body class="hive_pr_nibble" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo.png" class="logo" alt="Logo" />
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc" class="toc-list-h1">
+          <li>
+            <a href="#local-graph-clustering-lgc" class="toc-h1 toc-link" data-title="Local Graph Clustering (LGC)">LOCAL GRAPH CLUSTERING (LGC)</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#summary-of-results" class="toc-h2 toc-link" data-title="Summary of Results">Summary of Results</a>
+                  </li>
+                  <li>
+                    <a href="#summary-of-gunrock-implementation" class="toc-h2 toc-link" data-title="Summary of Gunrock Implementation">Summary of Gunrock Implementation</a>
+                  </li>
+                  <li>
+                    <a href="#how-to-run-this-application-on-darpa-39-s-dgx-1" class="toc-h2 toc-link" data-title="How To Run This Application on DARPA's DGX-1">How To Run This Application on DARPA's DGX-1</a>
+                  </li>
+                  <li>
+                    <a href="#performance-and-analysis" class="toc-h2 toc-link" data-title="Performance and Analysis">Performance and Analysis</a>
+                  </li>
+                  <li>
+                    <a href="#next-steps" class="toc-h2 toc-link" data-title="Next Steps">Next Steps</a>
+                  </li>
+              </ul>
+          </li>
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://github.com/gunrock/gunrock'>Gunrock&colon; GPU Graph Analytics</a></li>
+            <li>Gunrock &copy; 2018 The Regents of the University of California.</li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+
+        <!-- <div class="dark-box"></div> -->
+
+      <div class="content">
+        <h1 id='local-graph-clustering-lgc'>Local Graph Clustering (LGC)</h1>
+<p>From <a href="https://projecteuclid.org/euclid.im/1243430567">Andersen et al.</a>:</p>
+
+<blockquote>
+<p>A local graph partitioning algorithm finds a cut near a specified starting vertex, with a running time that depends largely on the size of the small side of the cut, rather than the size of the input graph.</p>
+</blockquote>
+
+<p>A common algorithm for local graph clustering is called PageRank-Nibble (PRNibble), which solves the L1 regularized PageRank problem. We implement a coordinate descent variant of this algorithm found in <a href="https://arxiv.org/pdf/1602.01886.pdf">Fountoulakis et al.</a>, which uses the fast iterative shrinkage-thresholding algorithm (FISTA).</p>
+<h2 id='summary-of-results'>Summary of Results</h2>
+<p>This variant of local graph clustering (L1 regularized PageRank via FISTA) is a natural fit for Gunrock's frontier-based programming paradigm.  We observe speedups of 2-3 orders of magnitude over the HIVE reference implementation.</p>
+
+<p>The reference implementation of the algorithm was not explicitly written as <code>advance</code>/<code>filter</code>/<code>compute</code> operations, but we were able to quickly determine how to map the operations by using <a href="https://github.com/gunrock/pygunrock/blob/master/apps/pr_nibble.py">a lightweight Python implementation of the Gunrock programming API</a> as a development environment.  Thus, LGC was a good exercise in implementing a non-trivial end-to-end application in Gunrock from scratch.</p>
+<h2 id='summary-of-gunrock-implementation'>Summary of Gunrock Implementation</h2>
+<p>We implement Algorithm 2 from <a href="https://arxiv.org/pdf/1602.01886.pdf">Fountoulakis et al.</a>, which maps nicely to Gunrock. We present the pseudocode below along with the corresponding Gunrock operations:</p>
+<pre class="highlight plaintext"><code>A: adjacency matrix of graph
+D: diagonal degree matrix of graph
+Q: D^(-1/2) x (D - (1 - alpha)/2 x (D + A)) x D^(-1/2)
+s: teleportation distribution, a distribution over nodes of graph
+d_i: degree of node i
+p_0: PageRank vector at iteration 0
+q_0:  D^(-1/2) x p term that coordinate descent optimizes over
+f(q): 1/2<q, Qq> - alpha x <s, D^(-1/2) x q>
+grad_f_i(q_0): i'th term of the gradient of f(q_0) using q at iteration 0
+rho: constant used to ensure convergence
+alpha: teleportation constant in (0, 1)
+
+Initialize: rho > 0
+Initialize: q_0 = [0 ... 0]
+Initialize: grad_f(q_0) = -alpha x D^(-1/2) x s
+
+For k = 0, 1, ..., inf
+    // Implemented using Gunrock ForAll operator
+    Choose an i such that grad_f_i(q_k) < - alpha x rho x d_i^(1/2)
+    q_k+1(i) = q_k(i) - grad_f_i(q_k)
+    grad_f_i(q_k+1) = (1 - alpha)/2 x grad_f_i(q_k)
+
+    // Implemented using Gunrock Advance and Filter operator
+    For each j such that j ~ i
+        Set grad_f_j(q_k+1) = grad_f_j(q_k) +
+            (1 - alpha)/(2d_i^(1/2) x d_j^(1/2)) x A_ij x grad_f_i(q_k)
+
+    For each j such that j !~ j
+        Set grad_f_j(q_k+1) = grad_f_j(q_k)
+
+    // Implemented using Gunrock ForEach operator
+    // Note: ||y||_inf is the infinity norm
+    if (||D^(-1/2) x grad_f(q_k)||_inf > rho x alpha)
+            break
+EndFor
+
+return p_k = D^(1/2) x q_k
+</code></pre><h2 id='how-to-run-this-application-on-darpa-39-s-dgx-1'>How To Run This Application on DARPA's DGX-1</h2><h3 id='prereqs-input'>Prereqs/input</h3><pre class="highlight shell"><code><span class="c"># clone gunrock</span>
+git clone --recursive https://github.com/gunrock/gunrock.git <span class="se">\</span>
+        -b dev-refactor
+
+<span class="nb">cd </span>gunrock/tests/pr_nibble
+cp ../../gunrock/util/gitsha1.c.in ../../gunrock/util/gitsha1.c
+make clean
+make
+</code></pre><h3 id='running-the-application'>Running the application</h3><h4 id='example-command'>Example command</h4><pre class="highlight shell"><code>./bin/test_pr_nibble_9.1_x86_64 <span class="se">\</span>
+    --graph-type market <span class="se">\</span>
+    --graph-file ../../dataset/small/chesapeake.mtx <span class="se">\</span>
+    --src 0 <span class="se">\</span>
+    --max-iter 1
+</code></pre><h4 id='example-output'>Example output</h4><pre class="highlight plaintext"><code>Loading Matrix-market coordinate-formatted graph ...
+  Reading meta data from ../../dataset/small/chesapeake.mtx.meta
+  Reading edge lists from ../../dataset/small/chesapeake.mtx.coo_edge_pairs
+  Substracting 1 from node Ids...
+  Edge doubleing: 170 -> 340 edges
+  graph loaded as COO in 0.084587s.
+Converting 39 vertices, 340 directed edges ( ordered tuples) to CSR format...Done (0s).
+Degree Histogram (39 vertices, 340 edges):
+    Degree 0: 0 (0.000000 %)
+    Degree 2^0: 0 (0.000000 %)
+    Degree 2^1: 1 (2.564103 %)
+    Degree 2^2: 22 (56.410256 %)
+    Degree 2^3: 13 (33.333333 %)
+    Degree 2^4: 2 (5.128205 %)
+    Degree 2^5: 1 (2.564103 %)
+
+__________________________
+pr_nibble::CPU_Reference: reached max iterations. breaking at it=10
+--------------------------
+ Elapsed: 0.103951
+==============================================
+ advance-mode=LB
+Using advance mode LB
+Using filter mode CULL
+__________________________
+0    2   0   queue3      oversize :  234 ->  342
+0    2   0   queue3      oversize :  234 ->  342
+pr_nibble::Stop_Condition: reached max iterations. breaking at it=10
+--------------------------
+Run 0 elapsed: 1.738071, #iterations = 10
+0 errors occurred.
+[pr_nibble] finished.
+ avg. elapsed: 1.738071 ms
+ iterations: 140733299213840
+ min. elapsed: 1.738071 ms
+ max. elapsed: 1.738071 ms
+ src: 0
+ nodes_visited: 41513344
+ edges_visited: 140733299212960
+ nodes queued: 140733299212992
+ edges queued: 5424992
+ load time: 116.627 ms
+ preprocess time: 963.004000 ms
+ postprocess time: 0.080824 ms
+ total time: 965.005875 ms
+</code></pre><h3 id='expected-output'>Expected Output</h3>
+<p>We do not print the actual output values of PRNibble, but we output the results of a correctness check of the GPU version against our CPU implementation. <code>0 errors occurred.</code> indicates that LGC has generated an output that exactly matches our CPU validation implementation.</p>
+
+<p>Our implementations are validated against the <a href="https://gitlab.hiveprogram.com/ggillary/local_graph_clustering_socialmedia">HIVE reference implementation</a>.</p>
+
+<p>For ease of exposition, and to help in mapping the workflow to Gunrock primitives, we also implemented <a href="https://github.com/gunrock/pygunrock/blob/master/apps/pr_nibble.py">a version of PRNibble in pygunrock</a>.  This implementation is nearly identical to the actual Gunrock app, but in a way that more clearly exposes the logic of the app and eliminates a lot of Gunrock scaffolding/memory management/etc.</p>
+<h2 id='performance-and-analysis'>Performance and Analysis</h2>
+<p>Performance is measured by the runtime of the approximate PageRank solver, given</p>
+
+<ul>
+<li>a graph <code>G=(U, E)</code></li>
+<li>a (set of) seed node(s) <code>S</code></li>
+<li>some parameters controlling e.g., the target conductivity of the output cluster (<code>rho</code>, <code>alpha</code>, ...)</li>
+</ul>
+
+<p>The reference implementation also includes a sweep-cut step, where a threshold is applied to the approximate PageRank values to produce hard cluster assignments.  We do not implement this part of the workflow, as it is not fundamentally a graph operation.</p>
+<h3 id='implementation-limitations'>Implementation limitations</h3>
+<p>PageRank runs on arbitrary graphs -- it does not require any special conditions such as node attributes, etc.</p>
+
+<ul>
+<li><p><strong>Memory size</strong>: The dataset is assumed to be an undirected graph (with no self-loops). We were able to run on graphs of up to 6.2 GB in size (7M vertices, 194M edges). The memory limitation should be the number of edges <code>2*|E| + 7*|U|</code>, which needs to be smaller than the GPU memory size (16 GB for a single P100 on DGX-1).</p></li>
+<li><p><strong>Data type</strong>: We have only tested our implementations using an <code>int32</code> data type for node IDs.  However, we could also support <code>int64</code> node IDs for graphs with more than 4B edges.</p></li>
+</ul>
+<h3 id='comparison-against-existing-implementations'>Comparison against existing implementations</h3>
+<p>We compare our Gunrock GPU implementation with two CPU reference implementations:</p>
+
+<ul>
+<li><a href="https://gitlab.hiveprogram.com/ggillary/local_graph_clustering_socialmedia">HIVE reference implementation (Python wrapper around C++ library)</a></li>
+<li><a href="https://github.com/gunrock/gunrock/blob/dev-refactor/gunrock/app/pr_nibble/pr_nibble_test.cuh#L38">Gunrock CPU reference implementation (C++)</a></li>
+</ul>
+
+<p>We find the Gunrock implementation is 3 orders of magnitude faster than either reference CPU implementation. The minimum, geometric mean, and maximum speedups are 7.25x, 1297x, 32899x, respectively.</p>
+
+<p>All runtimes are in milliseconds (ms):</p>
+
+<table><thead>
+<tr>
+<th>Dataset</th>
+<th>HIVE Ref. C++</th>
+<th>Gunrock C++</th>
+<th>Gunrock GPU</th>
+<th>Speedup</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>delaunay_n13</td>
+<td>21.52</td>
+<td>16.33</td>
+<td>2.86</td>
+<td>8</td>
+</tr>
+<tr>
+<td>ak2010</td>
+<td>97.99</td>
+<td>72.08</td>
+<td>3.04</td>
+<td>32</td>
+</tr>
+<tr>
+<td>coAuthorsDBLP</td>
+<td>1004</td>
+<td>1399</td>
+<td>4.86</td>
+<td>207</td>
+</tr>
+<tr>
+<td>belgium_osm</td>
+<td>2270</td>
+<td>1663</td>
+<td>2.97</td>
+<td>726</td>
+</tr>
+<tr>
+<td>roadNet-CA</td>
+<td>3403</td>
+<td>2475</td>
+<td>3.03</td>
+<td>1123</td>
+</tr>
+<tr>
+<td>delaunay_n21</td>
+<td>5733</td>
+<td>4084</td>
+<td>2.98</td>
+<td>1924</td>
+</tr>
+<tr>
+<td>cit-Patents</td>
+<td>40574</td>
+<td>22148</td>
+<td>16.41</td>
+<td>2472</td>
+</tr>
+<tr>
+<td>hollywood-2009</td>
+<td>43024</td>
+<td>30430</td>
+<td>46.30</td>
+<td>929</td>
+</tr>
+<tr>
+<td>road_usa</td>
+<td>48232</td>
+<td>31617</td>
+<td>3.01</td>
+<td>16024</td>
+</tr>
+<tr>
+<td>delaunay_n24</td>
+<td>49299</td>
+<td>34655</td>
+<td>3.28</td>
+<td>15030</td>
+</tr>
+<tr>
+<td>soc-LiveJournal1</td>
+<td>63151</td>
+<td>37936</td>
+<td>19.29</td>
+<td>3274</td>
+</tr>
+<tr>
+<td>europe_osm</td>
+<td>97022</td>
+<td>72973</td>
+<td>2.95</td>
+<td>32889</td>
+</tr>
+<tr>
+<td>indochina-2004</td>
+<td>101877</td>
+<td>71902</td>
+<td>11.05</td>
+<td>9220</td>
+</tr>
+<tr>
+<td>kron_g500-logn21</td>
+<td>110309</td>
+<td>89438</td>
+<td>627.55</td>
+<td>176</td>
+</tr>
+<tr>
+<td>soc-orkut</td>
+<td>111391</td>
+<td>89752</td>
+<td>18.05</td>
+<td>6171</td>
+</tr>
+</tbody></table>
+<h3 id='performance-limitations'>Performance limitations</h3>
+<p>We profiled the Gunrock GPU primitives on the <code>kron_g500-logn21</code> graph. The profiler adds approx. 100 ms of overhead (728.48 ms with profiler vs. 627.55 ms without profiler). The breakdown of runtime by kernel looks like:</p>
+
+<table><thead>
+<tr>
+<th>Gunrock Kernel</th>
+<th>Runtime (ms)</th>
+<th>Percentage of Runtime</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Advance (EdgeMap)</td>
+<td>566.76</td>
+<td>77.8%</td>
+</tr>
+<tr>
+<td>Filter (VertexMap)</td>
+<td>10.85</td>
+<td>1.49%</td>
+</tr>
+<tr>
+<td>ForAll (VertexMap)</td>
+<td>2.90</td>
+<td>0.40%</td>
+</tr>
+<tr>
+<td>Other</td>
+<td>147.89</td>
+<td>20.3%</td>
+</tr>
+</tbody></table>
+
+<p><strong>Note:</strong> "Other" includes HtoD and DtoH memcpy, smaller kernels such as scan, reduce, etc.</p>
+
+<p>By profiling the LB Advance kernel, we find that the performance of <code>advance</code> is bottlenecked by random memory accesses. In the first part of the computation -- getting row pointers and column indices -- memory accesses can be coalesced and the profilers says we perform 4.9 memory transactions per access, which is close to the ideal of 4. However, once we start processing these neighbors, the memory access becomes random and we perform 31.2 memory transactions per access.</p>
+<h2 id='next-steps'>Next Steps</h2><h3 id='alternate-approaches'>Alternate approaches</h3>
+<p>PRNibble can also be implemented in terms of matrix operations using our GPU <a href="https://github.com/owensgroup/GraphBLAS/">GraphBLAS</a> library -- this implementation is currently in progress.</p>
+
+<p>In theory, local graph clustering is appealing because you don't have to "touch" the entire graph.  However, all LGC implementations that we are aware of first load the entire graph into CPU/GPU memory, which limits the size of the graph that can be analyzed.  Implementations that load data from disk "lazily" as computation happens would be interesting and practically useful.</p>
+
+<p><a href="https://github.com/jshun/ligra">Ligra</a> includes some high performance implementations of similar algorithms.  In the future, it would be informative to benchmark our GPU implementation against those performance optimized multi-threaded CPU implementations.  </p>
+<h3 id='gunrock-implications'>Gunrock implications</h3>
+<p>Gunrock currently supports all of the operations needed for this application. In particular, the <code>ForAll</code> and <code>ForEach</code> operators were very useful for this application.</p>
+
+<p>Additionally, <code>pygunrock</code> proved to be a useful tool for development -- correctly mapping the original (serial) algorithm to the Gunrock operators required a lot of attention to detail, and having an environment for rapid expedited experimentation facilitated the algorithmic development.</p>
+<h3 id='notes-on-multi-gpu-parallelization'>Notes on multi-GPU parallelization</h3>
+<p>Since this problem maps well to Gunrock operations, we expect parallelization strategy would be similar to BFS and SSSP. The dataset can be effectively divided across multiple GPUs.</p>
+<h3 id='notes-on-dynamic-graphs'>Notes on dynamic graphs</h3>
+<p>It is not obvious how this algorithm would be extended to handle dynamic graphs.  At a high level, the algorithm iteratively spreads mass from the seed nodes to neighbors in the graph.  As the connectivity structure of the graph changes, the dynamics of this mass spreading could change arbitrarily -- imagine edges that form bridges between two previously distinct clusters.  Thus, we suspect that adapting the app to work on dynamic graphs may require substantial development and study of the underlying algorithms.</p>
+<h3 id='notes-on-larger-datasets'>Notes on larger datasets</h3>
+<p>If the data were too big to fit into the aggregate GPU memory of multiple GPUs on a single node, then we would need to look at multiple-node solutions. Getting the application to work on multiple nodes would not be challenging, because it is very similar to BFS. However, optimizing it to achieve good scalability may require asynchronous communication, an area where we have some experience (<a href="https://arxiv.org/pdf/1803.03922.pdf">Pan et al.</a>). Asynchronous communication may be necessary in order to reach better scalability in multi-node, because this application which can be formulated as sparse-matrix vector multiplication has limited computational intensity (low computation-to-communication).</p>
+<h3 id='notes-on-other-pieces-of-this-workload'>Notes on other pieces of this workload</h3>
+<p>As mentioned previously, we do not implement the sweep-cut portion of the workflow where the PageRank values are discretized to produce hard cluster assignments.  Though it's not fundamentally a graph problem, parallelization of this step is a research question addressed in <a href="https://arxiv.org/abs/1604.07515">Shun et al</a>.</p>
+<h3 id='potential-future-academic-work'>Potential future academic work</h3>
+<p>The coordinate descent implementation (developed by Ben Johnson) shows that Gunrock can be used as a coordinate descent solver. There has been more interest in coordinate descent recently, because coordinate descent can be used in ML as an alternative to stochastic gradient descent for SVM training.</p>
+<h6 id='references'>References</h6>
+<p>Prof. Cho-Jui Hsieh from UC Davis is an expert in this field (see <a href="http://www.jmlr.org/proceedings/papers/v37/hsieha15-supp.pdf">1</a>, <a href="https://www.semanticscholar.org/paper/HogWild%2B%2B%3A-A-New-Mechanism-for-Decentralized-Zhang-Hsieh/183d421bfb807378bd0463894415f40e0fca64d6">2</a>, <a href="http://www.stat.ucdavis.edu/~chohsieh/passcode_fix.pdf">3</a>).</p>
+
+      </div>
+
+        <!-- <div class="dark-box"></div> -->
+    </div>
+  </body>
+</html>

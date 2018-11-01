@@ -1,0 +1,778 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" type="image/ico" href="images/favicon.ico">
+    <title>Seeded Graph Matching (HIVE)</title>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
+
+    <style media="screen">
+      /* Add space between vega-embed links */
+      /* http://vega.github.io/vega-tutorials/airports/ */
+      .vega-embed .vega-actions a {
+        margin-left: 1em;
+        visibility: hidden;
+      }
+      .vega-embed:hover .vega-actions a {
+        visibility: visible;
+      }
+    </style>
+  </head>
+
+  <body class="hive_sgm" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo.png" class="logo" alt="Logo" />
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc" class="toc-list-h1">
+          <li>
+            <a href="#seeded-graph-matching-sgm" class="toc-h1 toc-link" data-title="Seeded Graph Matching (SGM)">SEEDED GRAPH MATCHING (SGM)</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#summary-of-results" class="toc-h2 toc-link" data-title="Summary of Results">Summary of Results</a>
+                  </li>
+                  <li>
+                    <a href="#summary-of-gunrock-implementation" class="toc-h2 toc-link" data-title="Summary of Gunrock Implementation">Summary of Gunrock Implementation</a>
+                  </li>
+                  <li>
+                    <a href="#how-to-run-this-application-on-darpa-39-s-dgx-1" class="toc-h2 toc-link" data-title="How To Run This Application on DARPA's DGX-1">How To Run This Application on DARPA's DGX-1</a>
+                  </li>
+                  <li>
+                    <a href="#performance-and-analysis" class="toc-h2 toc-link" data-title="Performance and Analysis">Performance and Analysis</a>
+                  </li>
+                  <li>
+                    <a href="#next-steps" class="toc-h2 toc-link" data-title="Next Steps">Next Steps</a>
+                  </li>
+              </ul>
+          </li>
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://github.com/gunrock/gunrock'>Gunrock&colon; GPU Graph Analytics</a></li>
+            <li>Gunrock &copy; 2018 The Regents of the University of California.</li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+
+        <!-- <div class="dark-box"></div> -->
+
+      <div class="content">
+        <h1 id='seeded-graph-matching-sgm'>Seeded Graph Matching (SGM)</h1>
+<p>From <a href="https://arxiv.org/pdf/1209.0367.pdf">Fishkind et al.</a>:</p>
+
+<blockquote>
+<p>Given two graphs, the graph matching problem is to align the two vertex sets so as to minimize the number of adjacency disagreements between the two graphs. The seeded graph matching problem is the graph matching problem when we are first given a partial alignment that we are tasked with completing.</p>
+</blockquote>
+
+<p>That is, given two graphs <code>A</code> and <code>B</code>, we seek to find the permutation matrix <code>P</code> that maximizes the number of adjacency agreements between <code>A</code> and <code>P * B * P.T</code>, where <code>*</code> represents matrix multiplication.  The algorithm Fishkind et al. propose first relaxes the hard 0-1 constraints on <code>P</code> to the set of doubly stochastic matrices (each row and column sums to 1), then uses the Frank-Wolfe algorithm to minimize the objective function  <code>sum((A - P * B * P.T) ** 2)</code>.  Finally, the relaxed solution is projected back onto the set of permutation matrices to yield a feasible solution.</p>
+<h2 id='summary-of-results'>Summary of Results</h2>
+<p>SGM is a fruitful workflow to optimize, because the existing implementations were not written with performance in mind.  By making minor modifications to the algorithm that allow use of sparse data structures, we enable scaling to larger datasets than previously possible.  </p>
+
+<p>The application involves solving a linear assignment problem (LSAP) as a subproblem.  Solving these problems on the GPU is an active area of research -- though papers have been written describing high-performance parallel LSAP solvers, reference implementations are not available.  We implement a GPU LSAP solver via Bertsekas' auction algorithm, and make it available as as <a href="https://github.com/bkj/cbert">standalone library</a>.</p>
+
+<p>SGM is an approximate algorithm that minimizes graph adjacency disagreements via the Frank-Wolfe algorithm. Certain uses of the auction algorithm can introduce additional approximation in the gradients of the Frank-Wolfe iterations.  An interesting direction for future work would be   a rigorous study of the effects of this kind of approximation on a variety of different graph tolopogies.  Understanding of those dynamics could allow further scaling beyond what our current implementations can handle.</p>
+<h2 id='summary-of-gunrock-implementation'>Summary of Gunrock Implementation</h2>
+<p>The SGM algorithm consists of:</p>
+
+<ul>
+<li>several matrix-matrix and matrix-vector multiplies</li>
+<li>solving a linear assignment problem at each iteration</li>
+<li>computing the trace of matrix products (e.g., <code>trace(A * B))</code>)</li>
+</ul>
+
+<p>The formulation of SGM in the <a href="https://gitlab.hiveprogram.com/ggillary/seeded_graph_matching_brain_connectome/blob/master/sgm.py">HIVE reference implementation</a> does not take advantage of the sparsity of the problem.  This is due to two algorithmic design choices:</p>
+
+<ol>
+<li>In order to penalize adjacency disagreements, they convert the 0s in the input matrices <code>A</code> and <code>B</code> to -1s</li>
+<li>They initialize the solution matrix <code>P</code> near the barycenter of the Birkhoff polytope of doubly-stochastic matrices, so almost all entries are nonzero.</li>
+</ol>
+
+<p>In order to take advantage of sparsity and make SGM more suitable for HIVE analysis, we make two relatively small modifications to the SGM algorithm:</p>
+
+<ol>
+<li>Rework the equations so we can express the objective function as a function of the sparse adjacency matrices plus some simple functions of node degree</li>
+<li>Initialize <code>P</code> to a vertex of the Birkhoff polytope</li>
+</ol>
+
+<p>A nice property of the Frank-Wolfe algorithm is that the number of nonzero entries in the intermediate solutions grows slowly -- after the <code>n</code>th step, the solution is the convex combination of (at most) <code>n</code> vertices of the polytope (e.g., permutation matrices).  Thus, starting from a sparse initialization point means that all of the Frank-Wolfe steps are fairly sparse.</p>
+
+<p>The reference implementation uses the Jonker-Volgenant algorithm to solve the linear assignment subproblem.  However, the JV algorithm (and the similar Hungarian algorithm) do not admit straightforward parallel implementations.  Thus, we replace the JV algorithm with <a href="http://web.mit.edu/dimitrib/www/Auction_Encycl.pdf">Bertsekas' auction algorithm</a>, which is much more natural to parallelize.</p>
+
+<p>Because SGM consists of linear algebra plus an LSAP solver, we implement it outside of the Gunrock framework, using <a href="https://arxiv.org/abs/1804.03327">a GPU GraphBLAS implementation</a> from John Owens' lab, as well as the <a href="https://nvlabs.github.io/cub/">CUDA CUB</a> library.</p>
+<h2 id='how-to-run-this-application-on-darpa-39-s-dgx-1'>How To Run This Application on DARPA's DGX-1</h2><h3 id='prereqs-input'>Prereqs/input</h3><pre class="highlight shell"><code>git clone --recursive https://github.com/owensgroup/csgm.git
+<span class="nb">cd </span>csgm
+
+<span class="c"># build</span>
+make clean
+make
+
+<span class="c"># make data (A = random sparse matrix, B = permuted version of A, except first `num-seeds` vertices)</span>
+python data/make-random.py --num-seeds 100
+wc -l data/<span class="o">{</span>A,B<span class="o">}</span>.mtx
+</code></pre><h3 id='running-the-application'>Running the application</h3>
+<p>Command:</p>
+<pre class="highlight shell"><code>./csgm --A data/A.mtx --B data/B.mtx --num-seeds 100 --sgm-debug 1
+</code></pre>
+<p>Output:</p>
+<pre class="highlight plaintext"><code>===== iter=0 ================================
+APB_num_entries=659238
+counter=17
+run_num=0 | h_numAssign=4096 | milliseconds=21.3737
+APPB_trace = 196
+APTB_trace = 7760
+ATPB_trace = 7760
+ATTB_trace = 109460
+ps_grad_P  = 393620
+ps_grad_T  = 16124208
+ps_gradt_P = 407896
+ps_gradt_T = 15879704
+alpha      = -29.4213314
+falpha     = 224003776
+f1         = -15486084
+num_diff   = 448756
+------------
+f1 < 0
+iter_timer=74.0615005
+...
+===== iter=2 ================================
+APB_num_entries=13464050
+counter=1
+run_num=0 | h_numAssign=4096 | milliseconds=5.71267223
+APPB_trace = 333838
+APTB_trace = 333838
+ATPB_trace = 333838
+ATTB_trace = 333838
+ps_grad_P  = 16777216
+ps_grad_T  = 16777216
+ps_gradt_P = 16777216
+ps_gradt_T = 16777216
+alpha      = 0
+falpha     = -1
+f1         = 0
+num_diff   = 0
+------------
+iter_timer=45.222271
+total_timer=170.153473 | num_diff=0
+</code></pre>
+<p><strong>Note:</strong> Here, the final <code>num_diff=0</code> indicates that the algorithm has found a perfect match between the input graphs.</p>
+<h3 id='output'>Output</h3>
+<p>When run with <code>--sgm-debug 1</code>, we output information about the quality of the match in each iteration.  The most important number is <code>num_diff</code>, which gives the number of disagreements between <code>A</code> and <code>P * B * P.T</code>.  <code>num_diff=0</code> indicates that SGM has found a perfect matching between <code>A</code> and <code>B</code> (eg, there are no adjacency disagreements).</p>
+
+<p>This implementation is validated against the <a href="https://gitlab.hiveprogram.com/ggillary/seeded_graph_matching_brain_connectome/blob/master/sgm.py">HIVE reference implementation</a>.  Additionally, since the original reference implementation code was posted, Ben Johnson has worked with Johns Hopkins to produce other more performant implementations of SGM, found <a href="https://github.com/bkj/sgm/tree/v2">here</a>.</p>
+<h2 id='performance-and-analysis'>Performance and Analysis</h2>
+<p>Given:</p>
+
+<ul>
+<li>two input graphs <code>A</code> and <code>B</code></li>
+<li>a set of seeds <code>S</code></li>
+<li>some parameters controlling convergence (<code>num_iters</code>, <code>tolerance</code>)</li>
+</ul>
+
+<p>Performance is measured by runtime of the entire SGM procedure as well as the final number of adjacency disagreements between <code>A</code> and <code>P * B * P.T</code>.</p>
+
+<p>Per-iteration runtime is not necessarily meaningful, because different iterations present dramatically more difficult LSAP instances than others.  In particular, the LSAP solver in the first iteration tends to take 10-100x longer than in subsequent iterations.</p>
+
+<p>Bertsekas' auction algorithm allows us to make a tradeoff between runtime and accuracy.  With appropriate parameter settings, it produces the exact same answer as the JV or Hungarian algorithms.  However, with different parameter settings, the auction algorithm may run substantially faster (>10x), at the cost of a lower quality assignment.  Since SGM is already an approximate algorithm, <em>we do not currently know the SGM's sensitivity to this kind of approximation.</em>  Experiments to explore these tradeoffs would be an interesting direction for future research.  In general, we run our SGM implementation with some approximation, and thus we rarely produce the exactly optimal solution for the LSAP subproblems.  However, we often produce <em>SGM solutions</em> of comparable quality to those SGM implementations that exactly solve the LSAP subproblems.</p>
+<h3 id='implementation-limitations'>Implementation limitations</h3>
+<p>SGM is only appropriate for pairs of graphs w/ some kind of correspondence between the nodes.  This could be an explicit correspondance (users on Twitter and users on Instagram, people in a cell phone network and people on an email network), or an implicit correspondence (two people play similar roles at similar companies).</p>
+
+<p>Currently, our implementation of SGM only supports undirected graphs -- an extension to directed graphs is mathematically straightforward, but requires a bit of code refactoring.  We have only tested on unweighted graphs, though the code should also work on weighted graphs out-of-the-box.</p>
+
+<p>We also currently assume that the number of nodes in <code>A</code> and <code>B</code> are identical.  Fishkind et al. discuss various padding schemes to address the cases where <code>A</code> and <code>B</code> have a different number of nodes, but we assume all of these could be done in a preprocessing step before the graph is passed to our SGM implementation.</p>
+
+<p>At the moment, the primary scaling bottleneck is that we allocate two <code>|V|x|V|</code> arrays as part of the LSAP auction algorithm.  These could be replaced w/ 3 <code>|E|</code> arrays without much effort.</p>
+
+<p>Currently, the auction algorithm does not take advantage of all available parallelism.  Each CUDA thread gets a row of the cost matrix, and then does a serial reduction across the entries of the row.  As the auction algorithm runs, the number of "active" rows rapidly decreases.  This means that the majority of auction iterations have a small number of active rows, and thus use a small number of GPU threads.  We could better utilize the GPU by using multiple threads per row.  We have a preliminary implementation of this using the CUB library, but it has not been tested on various relevant edge cases. Preliminary experiments suggest the CUB implementation may be 2--5x faster than our current implementation.</p>
+<h3 id='comparison-against-existing-implementations'>Comparison against existing implementations</h3><h4 id='python-sgm-code'>Python SGM code</h4>
+<p>The <a href="https://github.com/youngser/VN/">original SGM implementation</a> is a single-threaded R program.  Preliminary tests on small graphs show that this implementation is not very performant.  As part of other work, we've written a <a href="https://github.com/bkj/sgm">modular SGM package</a> that allows the programmer to plug in different backends for the LSAP solver and the linear algebra operations.  This package includes modes that transform the SGM problem to take advantage of sparsity to improve runtime.  In particular, we benchmark our CUDA SGM implementation against the <code>scipy.sparse.jv</code> mode, which uses <code>scipy</code> for linear algebra and the <a href="https://github.com/gatagat/lap">gatagat/lap</a> implementation of the JV algorithm for the LSAP solver.</p>
+<h4 id='experiments'>Experiments</h4><h5 id='connectome'>Connectome</h5>
+<p>The connectome graphs are generated from brain MRIs.  Nodes represent a voxel in the MRI and edges indicate some kind of flow between voxels. By using voxels of different spatial resolutions, the researchers that collected the data produced pairs of graphs at a variety of sizes (smaller voxel = larger graph).  Each graph in a pair represents one hemisphere of the brain.  Thus, we know there is an actual approximate correspondence between nodes.</p>
+
+<p>Note that these graphs are already partially aligned -- the distance between the input graphs is far smaller than would be expected by chance.  We attempt to use SGM to further improve this initial alignment, using all nodes as "soft seeds" (see Fishkind et al. for further discussion).</p>
+
+<p>The size of the connectome graphs we consider are as follows:</p>
+
+<table><thead>
+<tr>
+<th>name</th>
+<th>num_nodes</th>
+<th>num_edges</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>DS00833</td>
+<td>00833</td>
+<td>12497</td>
+</tr>
+<tr>
+<td>DS01216</td>
+<td>01216</td>
+<td>19692</td>
+</tr>
+<tr>
+<td>DS01876</td>
+<td>01876</td>
+<td>34780</td>
+</tr>
+<tr>
+<td>DS03231</td>
+<td>03231</td>
+<td>64662</td>
+</tr>
+<tr>
+<td>DS06481</td>
+<td>06481</td>
+<td>150012</td>
+</tr>
+<tr>
+<td>DS16784</td>
+<td>16784</td>
+<td>445821</td>
+</tr>
+<tr>
+<td>DS72784</td>
+<td>72784</td>
+<td>2418304</td>
+</tr>
+</tbody></table>
+
+<p>In the tables below, <code>orig_dist</code> indicates the number of adjacency disagreements between <code>A</code> and <code>B</code>, and <code>final_dist</code> indicates the number of adjacency disagreements between <code>A</code> and <code>P * B * P.T</code> w/ <code>P</code> found by SGM.  We run CSGM w/ two values of <code>eps</code>, which controls the precision of the auction algorithm (lower values = more precise but slower).</p>
+<h6 id='python-runtimes'>Python runtimes</h6>
+<table><thead>
+<tr>
+<th>name</th>
+<th>orig_dist</th>
+<th>final_dist</th>
+<th>time_ms</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>DS00833</td>
+<td>11650</td>
+<td>11486</td>
+<td>122.656</td>
+</tr>
+<tr>
+<td>DS01216</td>
+<td>20004</td>
+<td>19264</td>
+<td>278.739</td>
+</tr>
+<tr>
+<td>DS01876</td>
+<td>38228</td>
+<td>36740</td>
+<td>2275.141</td>
+</tr>
+<tr>
+<td>DS03231</td>
+<td>78058</td>
+<td>73282</td>
+<td>8900.371</td>
+</tr>
+<tr>
+<td>DS06481</td>
+<td>201084</td>
+<td>183908</td>
+<td>97658.378</td>
+</tr>
+<tr>
+<td>DS16784</td>
+<td>677754</td>
+<td>593590</td>
+<td>920436.387</td>
+</tr>
+</tbody></table>
+<h6 id='csgm-runtimes'>CSGM runtimes</h6>
+<table><thead>
+<tr>
+<th>eps</th>
+<th>name</th>
+<th>orig_dist</th>
+<th>final_dist</th>
+<th>time_ms</th>
+<th>speedup</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1.0</td>
+<td>DS00833</td>
+<td>11650</td>
+<td>11538</td>
+<td>181.481</td>
+<td>0.6</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>DS01216</td>
+<td>20004</td>
+<td>19360</td>
+<td>324.908</td>
+<td>0.8</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>DS01876</td>
+<td>38228</td>
+<td>36936</td>
+<td>807.148</td>
+<td>2.8</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>DS03231</td>
+<td>78058</td>
+<td>73746</td>
+<td>3078.78</td>
+<td>2.9</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>DS06481</td>
+<td>201084</td>
+<td>184832</td>
+<td>9056.55</td>
+<td>10.7</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>DS16784</td>
+<td>677754</td>
+<td>596370</td>
+<td>42220.5</td>
+<td>21.8</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>DS72784</td>
+<td>---</td>
+<td>---</td>
+<td>OOM</td>
+<td>---</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>DS00833</td>
+<td>11650</td>
+<td>11466</td>
+<td>378.056</td>
+<td>0.3 *</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>DS01216</td>
+<td>20004</td>
+<td>19288</td>
+<td>965.915</td>
+<td>0.3</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>DS01876</td>
+<td>38228</td>
+<td>36764</td>
+<td>1258.65</td>
+<td>1.8</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>DS03231</td>
+<td>78058</td>
+<td>73346</td>
+<td>6257.87</td>
+<td>1.4</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>DS06481</td>
+<td>201084</td>
+<td>183796</td>
+<td>25931.2</td>
+<td>3.7 *</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>DS16784</td>
+<td>677754</td>
+<td>592822</td>
+<td>120799</td>
+<td>7.6 *</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>DS72784</td>
+<td>---</td>
+<td>---</td>
+<td>OOM</td>
+<td>---</td>
+</tr>
+</tbody></table>
+
+<p><strong>Takeaway:</strong> For small graphs (<code>|U| < ~2000</code>) the Python implementation is faster.  However, as the size of the graph grows, CSGM becomes significantly faster -- up to 20x faster in the low accuracy setting and up to 7.6x faster in the higher accuracy setting.  Also, though in general the auction algorithm does not compute exact solutions to the LSAP, in several cases CSGM's accuracy outperforms the Python implementation, which uses an exact LSAP solver -- these are denoted with a <code>*</code>.</p>
+<h5 id='kasios'>Kasios</h5>
+<p>The Kasios call graph shows the communication pattern inside of a corporation -- nodes represent a person and edges indicate that two people spoke on the phone.  The whole graph has 10M edges and 500K nodes, which is too large for any of our SGM implementations to handle.  Thus, we sample subgraphs of size 2**10 - 2**15 by running a random walk until the desired number of nodes are observed, and then extracting the subgraph induced by those nodes.  We generate pairs of graphs by random permutations (except for the first <code>num_seeds=100</code> nodes).  Interestingly, with 100 seeds, SGM can almost always perfectly "reidentify" the permuted graph.</p>
+<h6 id='python-runtimes-2'>Python runtimes</h6>
+<table><thead>
+<tr>
+<th>num_nodes</th>
+<th>orig_dist</th>
+<th>final_dist</th>
+<th>time_ms</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1024</td>
+<td>66636</td>
+<td>0</td>
+<td>242</td>
+</tr>
+<tr>
+<td>2048</td>
+<td>208144</td>
+<td>0</td>
+<td>1275</td>
+</tr>
+<tr>
+<td>4096</td>
+<td>580988</td>
+<td>0</td>
+<td>6530</td>
+</tr>
+<tr>
+<td>8192</td>
+<td>1449712</td>
+<td>0</td>
+<td>30763</td>
+</tr>
+<tr>
+<td>16384</td>
+<td>3235356</td>
+<td>0</td>
+<td>118072</td>
+</tr>
+<tr>
+<td>32768</td>
+<td>6587656</td>
+<td>0</td>
+<td>479181</td>
+</tr>
+</tbody></table>
+<h6 id='csgm-runtimes-eps-1'>CSGM runtimes (<code>eps=1</code>)</h6>
+<table><thead>
+<tr>
+<th>num_nodes</th>
+<th>orig_dist</th>
+<th>final_dist</th>
+<th>time_ms</th>
+<th>speedup</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1024</td>
+<td>66636</td>
+<td>0</td>
+<td>182.445</td>
+<td>1.3</td>
+</tr>
+<tr>
+<td>2048</td>
+<td>208144</td>
+<td>4</td>
+<td>310.566</td>
+<td>4.1</td>
+</tr>
+<tr>
+<td>4096</td>
+<td>580988</td>
+<td>4</td>
+<td>1026.07</td>
+<td>6.4</td>
+</tr>
+<tr>
+<td>8192</td>
+<td>1449712</td>
+<td>8</td>
+<td>3108.9</td>
+<td>9.9</td>
+</tr>
+<tr>
+<td>16384</td>
+<td>3235356</td>
+<td>16</td>
+<td>4926.85</td>
+<td>24.0</td>
+</tr>
+<tr>
+<td>32768</td>
+<td>6587656</td>
+<td>OOM!</td>
+<td>---</td>
+<td>---</td>
+</tr>
+</tbody></table>
+
+<p><strong>Takeaway:</strong> Similar to in the connectome experiments, we see the advantage of CSGM increase as the graphs grow larger.  In these examples, CSGM does not <em>quite</em> match the performance of the exact LSAP solver.  However, this could be addressed by tuning and/or scheduling the <code>eps</code> parameter.</p>
+<h3 id='performance-limitations'>Performance limitations</h3>
+<ul>
+<li>Results from profiling indicate that all of the SGM kernels are memory latency bound.</li>
+<li>50% of time is spent in sparse-sparse matrix-multiply (SpMM)</li>
+<li>39% of time is spent in the auction algorithm. Of this 39%:
+
+<ul>
+<li>65% of time is spent in <code>run_bidding</code></li>
+<li>26% of time is spent in <code>cudaMemset</code></li>
+<li>9% of time is spent in <code>run_assignment</code></li>
+</ul></li>
+</ul>
+<h2 id='next-steps'>Next Steps</h2><h3 id='alternate-approaches'>Alternate approaches</h3>
+<p>It would be worthwhile to look into parallel versions of the Hungarian or JV algorithms, as even a single-threaded CPU version of those algorithms is somewhat competitive with Bertseka's auction algorithm implemented on the GPU.  It's unclear whether it would be better to implement parallel JV/Hungarian as multi-threaded CPU programs or GPU programs.  If the former, SGM would be a good example of an application that makes good use of both the CPU (for LSAP) and GPU (for SpMM) at different steps.</p>
+<h3 id='gunrock-implications'>Gunrock implications</h3>
+<p>N/A</p>
+<h3 id='notes-on-multi-gpu-parallelization'>Notes on multi-GPU parallelization</h3><h4 id='graphblas'>GraphBLAS</h4>
+<p>Multiple GPU support for GraphBLAS is on the roadmap. This will involve dividing the dataset across multiple GPUs, which can be challenging, because the GraphBLAS primitives required by SGM (<code>mxm</code>, <code>mxv</code> and <code>vxm</code>) have optimal layouts that vary depending on data and each other. There will need to be a tri-lemma between inter-GPU communication, layout transformation, and compute time for optimal vs. sub-optimal layout.</p>
+
+<p>Although extending matrix-multiplication to multiple GPUs can be straightforward, doing so in a backend-agnostic fashion that abstracts away the placement (i.e., which part of matrix <code>A</code> goes on which GPU) from the user may be quite challenging. This can be done in two ways:</p>
+
+<ol>
+<li>Manually analyze the algorithm and specify the layout in a way that is application-specific to SGM (easier, but not as generalizable)</li>
+<li>Write a sophisticated runtime that will automatically build a directed acyclic graph (DAG), analyze the optimal layouts, communication volume and required layout transformations, and schedule them to different GPUs (difficult and may require additional research, but generalizable)</li>
+</ol>
+<h4 id='auction-algorithm'>Auction algorithm</h4>
+<p>The auction algorithm can be parallelized across GPUs in several ways:</p>
+
+<ol>
+<li>Move data onto a single GPU and run the existing auction algorithm (simple, but not scalable).</li>
+<li>Bulk-synchronous algorithm: Run auction kernel, communicate, then run next iteration of auction kernel (medium difficulty, scalable).</li>
+<li>Asynchronous algorithm: Run auction kernel and communicate to other GPUs from within kernel (difficult, most scalable).</li>
+</ol>
+<h3 id='notes-on-dynamic-graphs'>Notes on dynamic graphs</h3>
+<p>Real-world applications of SGM to eg. social media or communications networks often involve dynamic graphs.  Application of SGM to streaming garphs could be a very interesting new research direction.  To our knowledge, this problem has not been studied by the JHU group responsible for the algorithm.  Given an initial view of two graphs, we could compute an initial match, and then update the match via a few iterations of SGM as new edges arrive.</p>
+<h3 id='notes-on-larger-datasets'>Notes on larger datasets</h3>
+<p>If the dataset were too big to fit into the aggregate GPU memory of multiple GPUs on a node, then two directions can be taken in order to be able to tackle these larger datasets:</p>
+
+<ol>
+<li>Out-of-memory: Compute using part of the dataset at a time on the GPU, and save the completed result to CPU memory. This method is slower than distributed, but cheaper and easier to implement.</li>
+<li>Distributed memory: If the GPU memory on a single node is not enough, use multiple nodes. This method can be made to scale for arbitrarily large datasets provided the implementation is good enough (faster than out-of-memory, but more expensive and difficult).</li>
+</ol>
+<h3 id='notes-on-other-pieces-of-this-workload'>Notes on other pieces of this workload</h3>
+<p>There are no non-graph pieces of the SGM workload.</p>
+<h3 id='how-this-work-can-lead-to-a-paper-publication'>How this work can lead to a paper publication</h3>
+<p>Ben and Carl think this work can lead to a nice paper, because there aren't a lot of highly optimized parallel Linear Assignment Problem (LAP) solvers. A lot of the research Ben could find from 20+ years ago tends to assume that the input matrices are uniformly random. However, our use case is on cost matrices formed by the dot product of sparse matrices (so the <code>(i, j)</code>th entry is the number of neighbors node i and j have in common), which has a totally different distribution (closer to a power law). There may be some optimizations we can find that target this distribution (similar to how direction-optimized BFS targets power law graphs).</p>
+
+<p>There is potential research in tie-breaking for the auction algorithm. In one of the popular Python/C++ LAP solvers, they're clearly not handling ties smartly, and the runtime can be improved ~10x by adding random values in a specific way. For these types of data, we find a lot of people assuming there aren't many ties. But with graphs, Ben notices many entries are ties, so some randomization is clearly beneficial.</p>
+
+<p>Further development on the standalone auction algorithm will happen <a href="https://github.com/bkj/cbert">here</a>.  This will include porting the current implementation to CUDA CUB to take better advantage of available parallelism, as well as writing Python bindings for ease of use.</p>
+
+      </div>
+
+        <!-- <div class="dark-box"></div> -->
+    </div>
+  </body>
+</html>

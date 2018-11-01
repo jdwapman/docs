@@ -1,0 +1,617 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" type="image/ico" href="images/favicon.ico">
+    <title>Application Classification (HIVE)</title>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
+
+    <style media="screen">
+      /* Add space between vega-embed links */
+      /* http://vega.github.io/vega-tutorials/airports/ */
+      .vega-embed .vega-actions a {
+        margin-left: 1em;
+        visibility: hidden;
+      }
+      .vega-embed:hover .vega-actions a {
+        visibility: visible;
+      }
+    </style>
+  </head>
+
+  <body class="hive_application_classification" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo.png" class="logo" alt="Logo" />
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc" class="toc-list-h1">
+          <li>
+            <a href="#application-classification" class="toc-h1 toc-link" data-title="Application Classification">APPLICATION CLASSIFICATION</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#summary-of-results" class="toc-h2 toc-link" data-title="Summary of Results">Summary of Results</a>
+                  </li>
+                  <li>
+                    <a href="#summary-of-cuda-implementation" class="toc-h2 toc-link" data-title="Summary of CUDA Implementation">Summary of CUDA Implementation</a>
+                  </li>
+                  <li>
+                    <a href="#how-to-run-this-application-on-darpa-39-s-dgx-1" class="toc-h2 toc-link" data-title="How To Run This Application on DARPA's DGX-1">How To Run This Application on DARPA's DGX-1</a>
+                  </li>
+                  <li>
+                    <a href="#performance-and-analysis" class="toc-h2 toc-link" data-title="Performance and Analysis">Performance and Analysis</a>
+                  </li>
+                  <li>
+                    <a href="#next-steps" class="toc-h2 toc-link" data-title="Next Steps">Next Steps</a>
+                  </li>
+              </ul>
+          </li>
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://github.com/gunrock/gunrock'>Gunrock&colon; GPU Graph Analytics</a></li>
+            <li>Gunrock &copy; 2018 The Regents of the University of California.</li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+
+        <!-- <div class="dark-box"></div> -->
+
+      <div class="content">
+        <h1 id='application-classification'>Application Classification</h1>
+<p>The application classification (AC) workflow is an implementation of probabalistic graph matching via belief propagation.  The workflow takes two node- and edge-attributed graphs as input -- a data graph <code>G = (U_G, E_G)</code> and a pattern graph <code>P = (U_P, E_P)</code>.  The goal is to find a subgraph <code>S</code> of <code>G</code> such that the dissimilarity between the node/edge features of <code>P</code> and <code>S</code> is minimized. The matching is optimized via loopy belief propagation, which consists of iteratively passing messages between nodes then updating beliefs about the optimal match.</p>
+<h2 id='summary-of-results'>Summary of Results</h2>
+<p>Application classification involves a number of dense-matrix operations, which did not make it an obvious candidate for implementation in Gunrock.  However, our GPU implementation using the CUDA CUB library shows substantial speedups (10-50x) over the multi-threaded OpenMP implementations.</p>
+
+<p>However, there are two neighbor reduce operations that may benefit from the kind of load balancing implemented in Gunrock.  Thus, it would be useful to either expose lightweight wrappers of high-performance Gunrock primitives for easy intergration into outside projects <em>or</em> come up with a workflow inside of Gunrock that makes programming applications with lots of non-graph operations straightforward.</p>
+<h2 id='summary-of-cuda-implementation'>Summary of CUDA Implementation</h2>
+<p>We implement application classification from scratch in CUDA using <a href="https://nvlabs.github.io/cub/">CUB</a> rather than Gunrock. Application classification requires the following kernels:</p>
+
+<ul>
+<li>compute pairwise distance between rows of dense matrices</li>
+<li>normalize the columns of a dense matrix</li>
+<li>compute maximum of columns in a dense matrix</li>
+<li>gather/scatter rows of dense matrix</li>
+<li>sum/max neighborhood reduce on the data/pattern graphs</li>
+</ul>
+
+<p>Apart from the last one, these kernels do not obviously map to Gunrock's advance/filter model.</p>
+
+<p>Pseudocode for the core belief propagation algorithm is as follows:</p>
+<pre class="highlight plaintext"><code>for iteration in range(num_iterations):
+
+    # Update edge messages
+    edge_msg_f = diff_r[data_edges.srcs] - edge_distances # data.num_edges x pattern.num_edges
+    edge_msg_r = diff_f[data_edges.srcs] - edge_distances # data.num_edges x pattern.num_edges
+
+    # Normalize edge messages
+    edge_msg_f = normprob(edge_msg_f)
+    edge_msg_r = normprob(edge_msg_r)
+
+    # Max of forward/backward messages
+    f_null = columnwise_max(diff_f)                           # 1 x pattern.num_edges
+    r_null = columnwise_max(diff_r)                           # 1 x pattern.num_edges
+    for edge_idx, (src, dst) in enumerate(data_edges):
+        max_r[src] = max(max_r[src], edge_msg_r[edge_idx], f_null)
+        max_f[dst] = max(max_f[dst], edge_msg_f[edge_idx], r_null)
+
+    # Update beliefs
+    belief = - node_distances                              # data.num_nodes x patt.num_nodes
+    for edge_idx, (src, dst) in enumerate(pattern_edges):
+        belief[:,dst] += max_f[:,edge_idx]
+        belief[:,src] += max_r[:,edge_idx]
+
+    # Normalize beliefs
+    belief = normprob(belief)
+
+    diff_f = belief[:,pattern_edges.dsts] - max_f          # data.num_nodes x pattern.num_edges
+    diff_r = belief[:,pattern_edges.srcs] - max_r          # data.num_nodes x pattern.num_edges
+</code></pre>
+<p>where <code>normprob</code> is the column-wise log-softmax function.  That is, since <code>belief</code> is <code>data.num_nodes x patt.num_nodes</code>, each node in the <code>pattern</code> graph gets assigned a probability distribution over nodes in the <code>data</code> graph.</p>
+
+<p>Our implementation is based on the <a href="https://gitlab.hiveprogram.com/pnnl/ApplicationClassification">PNNL implementation</a> rather than the <a href="https://gitlab.hiveprogram.com/jcromano/applicationClassification">distributed GraphX reference implementation</a>.  On all of the graphs we've tested, the output of our implementation exactly matches the output of the PNNL code.  According to PNNL, their implementation may give different results than the HIVE reference implementation (due to e.g., different normalization schemes).</p>
+<h2 id='how-to-run-this-application-on-darpa-39-s-dgx-1'>How To Run This Application on DARPA's DGX-1</h2><h3 id='prereqs-input'>Prereqs/input</h3><pre class="highlight shell"><code>git clone --recursive <span class="se">\</span>
+        https://github.com/owensgroup/application_classification
+<span class="nb">cd </span>application_classification
+make clean
+make
+</code></pre><h3 id='running-the-application'>Running the application</h3><h4 id='example-command'>Example Command</h4><pre class="highlight shell"><code>mkdir -p results
+./main <span class="se">\</span>
+    ./data/georgiyData.Vertex.csv <span class="se">\</span>
+    ./data/georgiyData.Edges.csv <span class="se">\</span>
+    ./data/georgiyPattern.Vertex.csv <span class="se">\</span>
+    ./data/georgiyPattern.Edges.csv > results/georgiy
+</code></pre><h4 id='example-output'>Example output</h4><pre class="highlight shell"><code><span class="gp">$ </span>head -n 5 results/georgiy
+-8.985810e+00
+-3.859019e+01
+-4.470994e+01
+-1.673157e+01
+-1.730952e+01
+<span class="gp">$ </span>tail -n 5 results/georgiy
+-2.886186e+01
+-1.499165e+01
+-4.034595e+01
+-1.060496e+01
+-7.684015e+00
+<span class="gp">$ </span>cat results/georgiy | openssl md5
+<span class="o">(</span>stdin<span class="o">)=</span> bd57a5126d5f943ad5c15408d410790d
+</code></pre><h3 id='expected-output'>Expected Output</h3>
+<p>The output of the program is a <code>data.num_nodes x pattern.num_nodes</code> matrix, where each column represents a log-probability distribution of assignments of pattern node <code>j</code> to data node <code>i</code>.  This matrix is printed in row major order as a file with <code>data.num_nodes x pattern.num_nodes</code> lines.</p>
+
+<p>In python, you could inspect the output like:</p>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="c"># load results</span>
+<span class="n">x</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'./results/georgiy'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="k">for</span> <span class="n">xx</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+
+<span class="c"># reshape to (data.num_nodes, pattern.num_nodes)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="c"># exponentiate</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c"># columns should sum to 1</span>
+<span class="n">x</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c"># array([1.0000001 , 1.00000001, 1.00000004, 0.99999999, 0.99999988,</span>
+       <span class="c"># 0.99999994, 0.99999985, 1.00000001, 1.        , 0.99999988])</span>
+</code></pre>
+<p>As previously mentioned, our output exactly matches the output of the PNNL implementation on all of the graphs we have tested.</p>
+<h2 id='performance-and-analysis'>Performance and Analysis</h2>
+<p>We measure performance by runtime of the algorithm given</p>
+
+<ul>
+<li>a node- and edge-attributed data graph</li>
+<li>a node- and edge-attributed pattern graph</li>
+</ul>
+
+<p>Though AC computes probabilities of matches between data and pattern nodes, this is a deterministic and parameterless algorithm, so we do not measure performance in terms of accuracy.  Further, runtime does not depend on the <em>values</em> of the node/edge attributes, so we can reasonably run experiments using randomly generated values.</p>
+<h3 id='implementation-limitations'>Implementation limitations</h3>
+<p>As currently implemented, the algorithm allocates a number of arrays of floats:</p>
+
+<ul>
+<li>3 arrays of size <code>data.num_edges * pattern.num_edges</code></li>
+<li>3 arrays of size <code>data.num_nodes * pattern.num_edges</code></li>
+<li>2 arrays of size <code>data.num_nodes * pattern.num_nodes</code></li>
+</ul>
+
+<p>The combined memory usage of these arrays will be the primary bottleneck for scaling.  For example, if</p>
+
+<ul>
+<li>data.num_nodes = 6M</li>
+<li>data.num_edges = 18M</li>
+<li>pattern.num_nodes = 10</li>
+<li>pattern.num_edges = 20</li>
+</ul>
+
+<p>then the memory footprint will be on the order of 13 GB.  (<em>Note:</em> It's likely that reordering of operations could reduce the number of intermediate data structures required.)</p>
+
+<p>AC is only applicable to graphs with node and edge features.  However, the runtime of the algorithm is only dependent on the <em>dimension</em> of these features, rather than the values.  Thus, for benchmarking purposes, we can pick a <code>node_feature_dim</code> and <code>edge_feature_dim</code> and use randomly generated features.  This is helpful becaus we do not have a good real-world dataset for benchmarking.</p>
+
+<p>The algorithm requires both a data graph and a smaller pattern graph.  Both the size and topology of the pattern graph may affect the runtime of the algorithm.  However, we do not have examples of actual pattern graphs apart from <code>georgiyPattern</code>, so we are forced to generate them synthetically.  Specifically, we do this by sampling a node <code>q</code>, sampling up to <code>max_pattern_nodes</code> number of <code>u</code> to form set <code>Q</code>, and using the subgraph induced by <code>Q + q</code> as the pattern graph.</p>
+
+<p>We suspect the PNNL implementation may have a couple of minor bugs:</p>
+
+<ul>
+<li>the <code>CV</code> matrix is log-softmax normalized in the initialization phase, updated with values from <code>FMax</code> and <code>RMax</code>, and log-softmax normalized again.  This kind of double normalization seems strange, and is perhaps incorrect.</li>
+<li>In our <code>RepeatColumnsByDataEdges</code>, <code>FE</code> and <code>RE</code> both use the <code>src</code> of an edge, which conflicts with the algorithm description in the paper.  One of these should probably be using the <code>src</code> and the other the <code>dst</code>.</li>
+</ul>
+
+<p>These bugs are easy to fix, but we left them "as is" because a) we have no easy way to verify which is correct and b) we'd like consistency of results w/ the PNNL implementation.</p>
+<h3 id='comparison-against-existing-implementations'>Comparison against existing implementations</h3>
+<p><em>The original reference implementation consisted of a large amount of distributed Spark and GraphX Scala code.  For ease of implementation, and to make sure performance comparisons are meaningful, we instead based our implementation on the <a href="https://gitlab.hiveprogram.com/pnnl/ApplicationClassification">PNNL ApplicationClassification</a> OpenMP code.</em></p>
+
+<p>Overall, the CUDA implementation is between 10x and 100x faster than the best run of the PNNL OpenMP code.</p>
+
+<p>We compare our CUDA implementation to PNNL's C++ OpenMP implementation on several different graphs:</p>
+<h6 id='georgiydata'>georgiyData</h6>
+<ul>
+<li>a small graph included w/ real (source unknown) node/edge features (included in PNNL repo)</li>
+<li><code>|U|=1000 |E|=20135 node_feat_dim=13 edge_feat_dim=17</code></li>
+</ul>
+<h6 id='rmat18'>rmat18</h6>
+<ul>
+<li>a scale 18 RMAT synthetic graph w/ random node/edge features (included in PNNL repo)</li>
+<li><code>|U|=262145 |E|=2008660 node_feat_dim=13 edge_feat_dim=17</code></li>
+</ul>
+<h6 id='johnshopkins_random'>JohnsHopkins_random</h6>
+<ul>
+<li>Social network graph w/ random node/edge features</li>
+<li><code>|U|=5157 |E|=186572 node_feat_dim=12 edge_feat_dim=16</code></li>
+</ul>
+
+<p>For the first two, we use the <code>georgiyPattern</code> pattern graph included in the PNNL repo.  For the latter, we generate a pattern graph using the neighborhood induction mentioned above.</p>
+<h4 id='georgiydata-2'>georgiyData</h4>
+<table><thead>
+<tr>
+<th>implementation</th>
+<th>threads</th>
+<th>elapsed_ms</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>PNNL OpenMP</td>
+<td>1</td>
+<td>1635.774136</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>2</td>
+<td>1405.072927</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>4</td>
+<td>1005.914927</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>8</td>
+<td>831.342936</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>16</td>
+<td>793.069839</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>32</td>
+<td>546.305180</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>64</td>
+<td>706.761122</td>
+</tr>
+<tr>
+<td>Our CUDA</td>
+<td>1xP100</td>
+<td><strong>42.533</strong></td>
+</tr>
+</tbody></table>
+
+<p><strong>Takeaway:</strong> Our CUDA implementation is approximately 12.8x faster than the fastest OpenMP run (32 threads).  However, this problem is quite small and both implementations run in under 1 second.</p>
+<h4 id='rmat18-2'>rmat18</h4>
+<table><thead>
+<tr>
+<th>implementation</th>
+<th>threads</th>
+<th>elapsed_ms</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>PNNL OpenMP</td>
+<td>1</td>
+<td>113337.949038</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>2</td>
+<td>142036.607981</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>4</td>
+<td>109564.634800</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>8</td>
+<td>95680.689096</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>16</td>
+<td>87083.579063</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>32</td>
+<td>88772.798061</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>64</td>
+<td>82495.028973</td>
+</tr>
+<tr>
+<td>Our CUDA</td>
+<td>1xP100</td>
+<td><strong>827.573</strong></td>
+</tr>
+</tbody></table>
+
+<p><strong>Takeaway:</strong> Our CUDA implementation is approximately 99x faster than the fastest PNNL run (64 threads).  The absolute magnitude of the differences is much more substantial here --  the CUDA implementation runs in < 1 second while the OpenMP version runs in ~ 1.5 minutes.</p>
+<h4 id='johnshopkins_random-2'>JohnsHopkins_random</h4>
+<table><thead>
+<tr>
+<th>implementation</th>
+<th>threads</th>
+<th>elapsed_ms</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>PNNL OpenMP</td>
+<td>1</td>
+<td>71190.566063</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>2</td>
+<td>44293.390989</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>4</td>
+<td>31736.392021</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>8</td>
+<td>24292.662144</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>16</td>
+<td>21556.239128</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>32</td>
+<td>17082.650900</td>
+</tr>
+<tr>
+<td>PNNL OpenMP</td>
+<td>64</td>
+<td>19473.608017</td>
+</tr>
+<tr>
+<td>Our CUDA</td>
+<td>1xP100</td>
+<td><strong>450.897</strong></td>
+</tr>
+</tbody></table>
+
+<p><strong>Takeaway:</strong> Our CUDA implementation is approximately 37x faster than the fastest PNNL run (32 threads).  Again, the absolute difference in runtimes is more substantial, with our code running in < 1 second vs. ~ 20 seconds.</p>
+<h3 id='performance-limitations'>Performance limitations</h3>
+<p>Profiling (on the RMAT graph) reveals that the distribution of runtime over kernels is flatter in AC than for many applications -- often, a single kernel will account for > 80% of runtime, but here the most expensive kernel only accounts for 12.8% of compute time.</p>
+
+<ul>
+<li>12.8% of time spent in <code>__reorderColumns</code>, which is a gather/scatter operation (memory bandwidth = 281 GB/s)</li>
+<li>10.5% of time spent in <code>__transpose</code></li>
+<li>12.1% of time spend in <code>__rowSubLog</code>, an edgewise arithmetic operation</li>
+<li>9.5% of time computing <code>data.num_edges x pattern.num_edges</code> similarity matrix</li>
+<li>8.1% of time doing neighborhood reductions (293 GB/s)</li>
+</ul>
+
+<p>All of these are memory bound operations.</p>
+
+<p>As mentioned above, the memory use of the app could be reduced (if need be) by reducing the number of intermediate data structures.  This would come at the cost of increased (re)computation time.</p>
+<h2 id='next-steps'>Next Steps</h2><h3 id='alternate-approaches-gunrock-implications'>Alternate approaches + Gunrock implications</h3>
+<p>In the CUDA implementation, there are a number of places where we could take advantage of multiple streams to reduce runtimes.  For example, in the initialization phase, we compute the pairwise distance between a) data/pattern node features and b) data/pattern edge features.  These operations are completely independent of one another, and so could happen asynchronously on different streams.</p>
+
+<p>The application was implemented outside of the Gunrock framework because it had a large number of (dense matrix) operations that are not explicitly supported by Gunrock, and a relatively small number of kernels that map well to Gunrock's advance/filter paradigm.  However, the code uses CUB's <code>DeviceSegmentedReduce</code> a number of times -- Gunrock recently added a similar operator that is load-balanced for better performance.  In the future, it would be worthwhile to see what kind of speedup we could get from the Gunrock version, which should roughly be a drop-in replacement.</p>
+<h3 id='notes-on-multi-gpu-parallelization'>Notes on multi-GPU parallelization</h3>
+<p>Most of the kernels are either row or column operations (reductions) over dense matrices, and thus relatively easy to partition over multiple nodes.  They would either end up being embarrassingly parallel or would require a per-node reduction and then a reduction across nodes.   Replacing CUB's <code>DeviceSegmentedReduce</code> with Gunrock's implementation would give us multi-GPU support for the remaining kernel.</p>
+
+<p>Alternatively, depending on the topology of the graph, we may be able to partition the data graph so that we can duplicate the pattern graph across nodes and run an independent instance of application classification on each partition.  The partition would need to be constructed in a way that ensures that every subgraph is intact on <em>some</em> GPU, which implies some partial duplication of the data graph.  If the data graph has a large diameter, or the pattern graph has a small diameter, this may be possible without excessive duplication.  If the data graph has a small diameter, we may still be able to partition the graph by e.g. removing edges that are particularly dissimilar from edges in the pattern graph.  This kind of approach is clearly very application specific, and may not be possible at all in some cases.</p>
+<h3 id='notes-on-dynamic-graphs'>Notes on dynamic graphs</h3>
+<p>In practice, it's likely that practitioners would like to run application classification on a dynamic graph (e.g., the HIVE use case was for detecting certain suspicious patterns of communication in a cybersecurity graph). However, it is not obvious how the current algorithm would be applied in a streaming fashion without relatively major modifications.  It's more likely that the current AC algorithm would be applied to a dynamic graph via some kind of sliding window.</p>
+<h3 id='notes-on-larger-datasets'>Notes on larger datasets</h3>
+<p>We may be able to use a partitioning scheme like the one described in the multi-GPU section above to handle data graphs that are larger than GPU memory.</p>
+<h3 id='notes-on-other-pieces-of-this-workload'>Notes on other pieces of this workload</h3>
+<p>The documentation on the wiki includes discussion of the various featurization methods used to produce the node/edge attributes.  These are beyond the scope of this work, but do include things such as computing degree, number of triangles, betweenness centrality, etc.  If we wanted to build a high-performance end-to-end application classification system, we would want to implement some of these featurization methods in Gunrock as well.</p>
+
+      </div>
+
+        <!-- <div class="dark-box"></div> -->
+    </div>
+  </body>
+</html>
