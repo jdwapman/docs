@@ -56,7 +56,7 @@ with open('hive_year1_summary.html.md', 'a') as dest:
             title = re.search('\n# (.*)\n', contents).group(1)
             summary = re.search(
                 '\n## Summary of Results\n\n([^#]*)\n\n#', contents).group(1)
-            dest.write(f'##[{title}](https://gunrock.github.io/docs/{fname}) \n{summary}\n\n')
+            dest.write(f'##{title} \n\n**[{title}](https://gunrock.github.io/docs/{fname})** \n{summary}\n\n')
 
 files.insert(0, 'hive_year1_summary.html.md')
 

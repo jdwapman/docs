@@ -291,8 +291,8 @@ operations, and the year 1 deliverable only focuses on the graph related
 portion, which is the GraphSAGE implementation.</p>
 <h2 id='summary-of-results'>Summary of Results</h2>
 <p>The vertex embedding part of the GraphSAGE algorithm is implemented in the
-Gunrock framework using custom CUDA kernels to utilize block-level
-parallelism that allows a shorter running time. For the embedding part alone, the GPU
+Gunrock framework using custom CUDA kernels, utilizing block-level
+parallelism, that allow a shorter running time. For the embedding part alone, the GPU
 implementation is 7.5X to 15X on P100, and 20X to 30X on V100,
 faster than an OpenMP implementation using 32 threads. The GPU hardware, especially
 the memory system, has high utilizations from these custom kernels. It is still
@@ -305,7 +305,7 @@ Testing on the complete workflow for prediction accuracy and running speed will
 be more meaningful.</p>
 <h2 id='summary-of-gunrock-implementation'>Summary of Gunrock Implementation</h2>
 <p>Gunrock's implementation for the 1st year is only the embedding / inferencing
-phase, without the training phase. It is based on Algorithm 2 with K=2 of the GraphSage
+phase, without the training phase. It is based on Algorithm 2 with K=2 of the GraphSAGE
 paper ("Inductive Representation Learning on Large Graphs",
 <a href="https://arxiv.org/abs/1706.02216">https://arxiv.org/abs/1706.02216</a>).</p>
 
@@ -528,8 +528,8 @@ Embedding validation: PASS
  total time: 26634.360075 ms
 ```</p>
 
-<p>There is 1 OMP reference run on the CPU for each combination of <<code>feature-column</code>,
-<code>num-children-per-source</code>, <code>num-leafs-per-child</code>>, with the timing reported after
+<p>There is 1 OMP reference run on the CPU for each combination of {<code>feature-column</code>,
+<code>num-children-per-source</code>, <code>num-leafs-per-child</code>}, with the timing reported after
 <code>CPU Reference elapsed</code>. There are 10 GPU runs for each combination of the
 previous three parameters, plus <code>batch-size</code>. The computation workload of the
 GPU runs are the same as the reference CPU run, with different batch sizes. The
@@ -590,7 +590,7 @@ additionally useful to validate the successful rate of the whole pipeline with t
 </tr>
 </tbody></table>
 
-<p>The running times in milliseconds are list below, for both machines. F stands
+<p>The running times in milliseconds are listed below, for both machines. F stands
 for the length of features, C stands for the number of children per source,
 the same as the number of leafs per child, and B notes the batch size that
 produces the shortest running time on GPU among {512, 1024, 2048, 4096, 8192,
@@ -1280,7 +1280,7 @@ the source vertex itself.</p></li>
 <p>Because computation on each vertex is independent from other vertices, GraphSAGE is an
 embarrassingly parallel problem when parallelized across vertices. Running a simple
 test with the <code>pokec</code> dataset, feature length as 64, num_children_per_source and
-num_leafs_per_child both at 10, the serial run (iwith omp-threads forced to 1)
+num_leafs_per_child both at 10, the serial run (with omp-threads forced to 1)
 on the DGX-1 takes 366390.250 ms, as compared to 25242.941 ms using 32 threads;
 using 32 threads is about 14.5X faster than a single thread, which shows GraphSAGE
 scales pretty well on the CPU.</p>
@@ -1305,7 +1305,7 @@ details are in the the Performance limitations section. Compared to OpenMP, the 
 is about 20X to 30X faster.</p>
 <h3 id='performance-limitations'>Performance limitations</h3>
 <p>We profiled GraphSAGE with the <code>pokec</code> dataset on a Titan Xp GPU (profiling on P100
-caused internal error in the profiler itself; Titan Xp has roughly the same SM
+caused an internal error in the profiler itself; Titan Xp has roughly the same SM
 design as P100, but has only 30 SMs vs. 56 on the P100; P100 also has 16 GB
 HMB2 memory, and Titan Xp only has 12 GB GDDR5X; runtime on Titan Xp and
 P100 is similar). kernel2 takes up about 60% of
@@ -1420,7 +1420,7 @@ utilization of the memory system:</p>
 
 <p>It's clear that the unified cache is almost fully utilized, at 4 TBps out of
 the 5 TBps theoretical upper bound, and is the bottleneck.
-This is because the W arrays and the intermediate arrays are highly reusable.</p>
+This is because the <code>W</code> arrays and the intermediate arrays are highly reusable.</p>
 
 <p>Running the same experiment on the V100 shows a different picture within the memory
 system:</p>
@@ -1580,6 +1580,21 @@ the OpenMP implementation is still unknown.</p>
 outside of Gunrock, provided by TensorFlow, PyTorch or other machine learning
 libraries. How to connect the training with the Gunrock GPU implementation is
 the main task for this workload going forward.</p>
+<h3 id='research-potential'>Research potential</h3>
+<p>The GPU implementation of the embedding part runs a lot faster than on the CPU,
+and hits a few GPU hardware limitations. It should have comparable runtime
+to other GPU implementations.
+But it's only useful as a part of the whole workload and achieves comparable
+prediction accuracy as conventional / reference implementations.</p>
+
+<p>An interesting question raised from the GraphSAGE GPU implementation is
+whether it is useful to expose block-level parallelism to higher-level
+programming models/APIs, and if so, how to do that. It's clear that working at the block level
+provides benefits, such as the ability to use block-level primitives like scan
+and reduce. But it also comes with costs, most importantly, requiring the programmer to have
+knowledge about the GPU hardware. It also reduces the
+portability of the implementation, because two-level parallelism may not
+exist on other processors.</p>
 
       </div>
 
