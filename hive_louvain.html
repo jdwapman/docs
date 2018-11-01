@@ -1,0 +1,1416 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" type="image/ico" href="images/favicon.ico">
+    <title>HIVE workflow report for Louvain GPU implementation</title>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
+
+    <style media="screen">
+      /* Add space between vega-embed links */
+      /* http://vega.github.io/vega-tutorials/airports/ */
+      .vega-embed .vega-actions a {
+        margin-left: 1em;
+        visibility: hidden;
+      }
+      .vega-embed:hover .vega-actions a {
+        visibility: visible;
+      }
+    </style>
+  </head>
+
+  <body class="hive_louvain" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo.png" class="logo" alt="Logo" />
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc" class="toc-list-h1">
+          <li>
+            <a href="#community-detection-louvain" class="toc-h1 toc-link" data-title="Community Detection (Louvain)">COMMUNITY DETECTION (LOUVAIN)</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#summary-of-results" class="toc-h2 toc-link" data-title="Summary of Results">Summary of Results</a>
+                  </li>
+                  <li>
+                    <a href="#summary-of-gunrock-implementation" class="toc-h2 toc-link" data-title="Summary of Gunrock Implementation">Summary of Gunrock Implementation</a>
+                  </li>
+                  <li>
+                    <a href="#how-to-run-this-application-on-darpa-39-s-dgx-1" class="toc-h2 toc-link" data-title="How To Run This Application on DARPA's DGX-1">How To Run This Application on DARPA's DGX-1</a>
+                  </li>
+                  <li>
+                    <a href="#performance-and-analysis" class="toc-h2 toc-link" data-title="Performance and Analysis">Performance and Analysis</a>
+                  </li>
+                  <li>
+                    <a href="#next-steps" class="toc-h2 toc-link" data-title="Next Steps">Next Steps</a>
+                  </li>
+              </ul>
+          </li>
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://github.com/gunrock/gunrock'>Gunrock&colon; GPU Graph Analytics</a></li>
+            <li>Gunrock &copy; 2018 The Regents of the University of California.</li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+
+        <!-- <div class="dark-box"></div> -->
+
+      <div class="content">
+        <h1 id='community-detection-louvain'>Community Detection (Louvain)</h1>
+<p>Community detection in graphs is to group vertices together, such that those
+that are closer (have more connections) to each other are placed in the same cluster.
+A commonly used algorithm for community detection is Louvain
+(<a href="https://arxiv.org/pdf/0803.0476.pdf">https://arxiv.org/pdf/0803.0476.pdf</a>).</p>
+<h2 id='summary-of-results'>Summary of Results</h2>
+<p>The Gunrock uses sort and segmented reduce to implement the
+Louvain algorithm, different from the commonly used hash table mapping. The GPU
+implementation is about ~1.5X faster than the OpenMP implementation, and also
+faster than pervious GPU works. It is still unknown whether the sort and
+segmented reduce formulation maps the problem batter than hash table on the GPU. The
+modularities resulted from the GPU implementation are within small differences
+as the serial implementation, and are better when the graph is larger. A custom
+hash table can potentially improve the running time. The GPU Louvain
+implementation should have moderate scalability across multiple GPUs in an
+DGX-1.</p>
+<h2 id='summary-of-gunrock-implementation'>Summary of Gunrock Implementation</h2>
+<p>The commonly used approach to implement the Louvain algorithm uses a hash table. However, the memory access pattern that results from a hash table is almost totally random, and not GPU-friendly (more in the Alternative approaches section). Instead of using a hash table to accumulate the values associated with the same key, the Gunrock implementation on GPU tries another method: sort all key-value pairs, and use segmented reduce to accumulate the values in the continuous segments. Because Louvain always visits all edges in the graph, there is no need to use Gunrock frontiers, and the <code>advance</code> operator with the <code>ALL_EDGES</code> advance mode or a simple <code>ForAll</code> loop should be sufficient. The pseudocode is listed below:</p>
+<pre class="highlight mid-column-code plaintext"><code>m2 <- sum(edge_weights);
+//Outer-loop
+Do
+    // Pass-initialization, assign each vertex to its own community
+    For each vertex v in graph:
+        current_communities[v] <- v;
+        weights_v2any      [v] <- 0;
+        weights_v2self     [v] <- 0;
+    For each edge e<v, u> in graph: //an advance operator on all edges
+        weights_v2any[v] += edge_weights[e];
+        if (v == u)
+            weights_v2self[v] += edge_weights[e];
+    For each vertex v in graph:
+        weights_community2any[v] <- weights_v2any[v];
+    pass_gain <- 0;
+
+    // Modularity optimizing iterations
+    Do
+        // Get weights between vertex and community
+        For each edge e<v, u> in graph:
+            edge_pairs  [e] <- <v, current_communities[u]>;
+            pair_weights[e] <- edge_weights[e];
+        Sort(edge_pairs, pair_weights)
+            by edge_pair.first, then edge_pair.second if tie;
+        segment_offsets <- offsets of continuous edge_pairs;
+        segment_weights <- SegmentedReduce(pair_weights, segment_offsets, sum);
+
+        // Compute base modularity gains
+        // if moving vertices out of current communities
+        For each vertex v in graph:
+            comm <- current_communities[v];
+            w_v2comm <- Find weights from v to comm in segment_weights;
+            gain_bases[v] = weights_v2self[v] - w_v2comm
+                - (weights_v2any[v] - weights_community2any[comm])
+                    * weights_v2any[v] / m2;
+
+        // Find the max gains if moving vertices into adjacent communities
+        For each vertex v in graph:
+            gains[v] <- 0;
+            next_communities[v] <- current_communities[v];
+        For each seg<v, comm> segment:
+            if (comm == current_communities[v])
+                continue;
+            gain <- gain_bases[v] + segment_weights[seg]
+                - weights_community2any[comm] * weights_v2any[v] / m2;
+            atomicMax(max_gains + v, gain);
+            seg_gains[seg] <- gain;
+        For each seg<v, comm> segment:
+            if (seg_gains[seg] != max_gains[v])
+                continue;
+            next_communities[v] <- comm;
+
+        // Update communities
+        For each vertex v in graph:
+            curr_comm <- current_communities[v];
+            next_comm <- next_communities[v];
+            if (curr_comm == next_comm)
+                continue;
+
+            atomicAdd(weights_community2any[next_comm],  weights_v2any[v]);
+            atomicAdd(weights_community2any[curr_comm], -weights_v2any[v]);
+            current_communities[v] <- next_comm;
+
+        iteration_gain <- Reduce(max_gains, sum);
+        pass_gain += iteration_gain;
+    While iterations stop condition not met
+    // End of modularity optimizing iterations
+
+    // Contract the graph
+    // renumber occupied communities
+    new_communities <- Renumber(current_communities);
+    For each edge e<v, u> in graph: //an advance operator on all edges
+        edge_pairs[e] <- <new_communities[current_communities[v]],
+                          new_communities[current_communities[u]]>
+    Sort(edge_pairs, edge_weights) by pair.x, then pair.y if tie;
+    segment_offsets <- offsets of continuous edge_pairs;
+    new_graph.Allocate(|new_communities|, |segments|);
+    new_graph.edges <- first pair of each segments;
+    new_graph.edge_values <- SegmentedReduce(edge_weights, segment_offsets, sum);
+
+While pass stop condition not met
+</code></pre><h2 id='how-to-run-this-application-on-darpa-39-s-dgx-1'>How To Run This Application on DARPA's DGX-1</h2><h3 id='prereqs-input'>Prereqs/input</h3>
+<p>CUDA should have been installed; <code>$PATH</code> and <code>$LD_LIBRARY_PATH</code> should have been
+set correctly to use CUDA. The current Gunrock configuration assumes boost
+(1.58.0 or 1.59.0) and Metis are installed; if not, changes need to be made in
+the Makefiles. DARPA's DGX-1 has both installed when the tests are performed.</p>
+<pre class="highlight mid-column-code shell tab-shell"><code>git clone --recursive https://github.com/gunrock/gunrock/
+<span class="nb">cd </span>gunrock
+git checkout dev-refactor
+git submodule init
+git submodule update
+mkdir build
+<span class="nb">cd </span>build
+cmake ..
+<span class="nb">cd</span> ../tests/louvain
+make
+</code></pre>
+<p>At this point, there should be an executable <code>louvain_main_<CUDA version>_x86_64</code> in <code>tests/louvain/bin</code>.</p>
+
+<p>The datasets are assumed to have been placed in <code>/raid/data/hive</code>, and converted to proper matrix market format (.mtx). At the time of testing, <code>ca</code>, <code>amazon</code>, <code>akamai</code>, and <code>pokec</code> are available in that directory. <code>ca</code> and <code>amazon</code> are taken from PNNL's implementation, and originally use 0-based vertex indices; 1 is added to each vertex id to make them proper .mtx files.</p>
+
+<p>The testing is done with Gunrock using the <code>dev-refactor</code> branch at commit <code>2699252</code>
+(Oct. 18, 2018), using CUDA 9.1 with NVIDIA driver 390.30.</p>
+<h3 id='running-the-application'>Running the application</h3><pre class="highlight mid-column-code shell tab-shell"><code>./bin/louvain_main_9.1_x86_64 --omp-threads<span class="o">=</span>32 --iter-stats --pass-stats <span class="se">\</span>
+--advance-mode<span class="o">=</span>ALL_EDGES --unify-segments<span class="o">=</span><span class="nb">true</span> --validation<span class="o">=</span>each --num-runs<span class="o">=</span>10 <span class="se">\</span>
+--graph-type<span class="o">=</span>market --graph-file<span class="o">=</span>/raid/data/hive/[DataSet]/[DataSet].mtx <span class="se">\</span>
+--jsondir<span class="o">=[</span>LogDir] > <span class="o">[</span>LogDir]/[DataSet].txt 2>&amp;1
+</code></pre>
+<ul>
+<li>Add <code>--undirected</code>, if the graph is indeed undirected.</li>
+<li>Remove <code>--iter-stats</code> or <code>--pass-stats</code>, if detailed timings are not required.</li>
+<li>Remove <code>--validation=each</code>, to only compute the modularity for the last run.</li>
+</ul>
+
+<p>For example, when DataSet = <code>akamai</code>, and LogDir = <code>eval/DGX1-P100x1</code>, the command is
+<code>shell
+./bin/louvain_main_9.1_x86_64 --omp-threads=32 --iter-stats --pass-stats \
+--advance-mode=ALL_EDGES --unify-segments=true --validation=each --num-runs=10 \
+--graph-type=market --graph-file=/raid/data/hive/akamai/akamai.mtx \
+--jsondir=eval/DGX1-P100x1 > eval/DGX1-P100x1/akamai.txt 2>&amp;1
+</code></p>
+<h3 id='output'>Output</h3>
+<p>The outputs are in the <a href="attachments/louvain" title="louvain">louvain</a> directory. Look for the <code>.txt</code> files: running time is after <code>Run x elapsed:</code>, and the number of communities and the resulting modularity is in the line that starts with <code>Computed:</code>. There are 12 runs in each <code>.txt</code> file: 1 single thread CPU run for reference, 1 OpenMP multiple-thread (32 threads in the example, may not be optimal) run, and 10 GPU runs.</p>
+
+<p>The output was compared against PNNL's results on the number of communities and
+modularity for the amazon and ca datasets. Note that PNNL's code does not count
+dangling vertices in communities. The results listed below use the number of
+communities minus dangling vertices; the dataset details are can be found in
+the next section.</p>
+
+<p>The modularity of resulting communities:</p>
+
+<table style="font-size: 12px;"><thead>
+<tr>
+<th>DataSet</th>
+<th>Gunrock GPU</th>
+<th>OMP (32T)</th>
+<th>Serial</th>
+<th>PNNL (8T)</th>
+<th>PNNL (serial)</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>amazon</td>
+<td>0.908073</td>
+<td>0.925721</td>
+<td>0.926442</td>
+<td>0.923728</td>
+<td>0.925557</td>
+</tr>
+<tr>
+<td>ca</td>
+<td>0.711971</td>
+<td>0.730217</td>
+<td>0.731292</td>
+<td>0.713885</td>
+<td>0.727127</td>
+</tr>
+</tbody></table>
+
+<p>Note for these kind of small graphs, more parallelism could hurt the resulting modularity. Multi-thread CPU implementations from both Gunrock and PNNL yield modularities a little less than the serial versions, and the GPU implementation sees a ~0.02 drop. The reason could be concurrent updates to communities: vertex A moves to community C, thinking vertex B is in C; but B may have simultaneously moved to other communities.</p>
+
+<p>However, when input graphs are larger in size, this issue seems to disappear, and modularities from the GPU implementation are sometimes even better than the serial implementation. (See detailed results below.)</p>
+
+<p>The number of resulting communities:</p>
+
+<table style="font-size: 12px;"><thead>
+<tr>
+<th>DataSet</th>
+<th>Gunrock GPU</th>
+<th>OMP (32T)</th>
+<th>Serial</th>
+<th>PNNL (8T)</th>
+<th>PNNL (serial)</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>amazon</td>
+<td>7667</td>
+<td>213</td>
+<td>240</td>
+<td>298</td>
+<td>251</td>
+</tr>
+<tr>
+<td>ca</td>
+<td>1120</td>
+<td>616</td>
+<td>617</td>
+<td>654</td>
+<td>623</td>
+</tr>
+</tbody></table>
+
+<p>More parallelism also affects the number of resulting communities. On these two small datasets, the GPU implementation produces significantly more communities than all CPU implementations; on large datasets, the differences in the number of communities are much smaller. We believe the reason may also be concurrent community updates, especially when whole-community migration happens: all vertices in community A decide to move to community B, and all vertices in community B decide to move to community A. In the serial implementation, we may see these two communities combine into a single community, but on the GPU, we instead see that community A and B just swap their labels and never become a single community.</p>
+<h2 id='performance-and-analysis'>Performance and Analysis</h2>
+<p>We measure Louvain performance with three metrics: the number of resulting communities (#Comm), the modularity of resulting communities (Q), and the running time (Time, in seconds). Higher Q and lower running time are better. * indicates the graph is given as undirected, and the number of edges is counted after edge doubling and removing of self loops or duplicate edges; otherwise, the graph is taken as directed, and self loops or duplicate edges are also removed. If edge weights are available in the input graph, they follow the input; otherwise, the initial edge weights are set to 1.</p>
+
+<p>Details of the datasets:</p>
+
+<table style="font-size: 12px;"><thead>
+<tr>
+<th>DataSet</th>
+<th style="text-align: right">#V</th>
+<th style="text-align: right">#E</th>
+<th style="text-align: right">#dangling vertices</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ca</td>
+<td style="text-align: right">108299</td>
+<td style="text-align: right">186878</td>
+<td style="text-align: right">85166</td>
+</tr>
+<tr>
+<td>preferentialAttachment</td>
+<td style="text-align: right">100000</td>
+<td style="text-align: right">999970*</td>
+<td style="text-align: right">0</td>
+</tr>
+<tr>
+<td>caidaRouterLevel</td>
+<td style="text-align: right">192244</td>
+<td style="text-align: right">1218132*</td>
+<td style="text-align: right">0</td>
+</tr>
+<tr>
+<td>amazon</td>
+<td style="text-align: right">548551</td>
+<td style="text-align: right">1851744</td>
+<td style="text-align: right">213688</td>
+</tr>
+<tr>
+<td>coAuthorsDBLP</td>
+<td style="text-align: right">299067</td>
+<td style="text-align: right">1955352*</td>
+<td style="text-align: right">0</td>
+</tr>
+<tr>
+<td>webbase-1M</td>
+<td style="text-align: right">1000005</td>
+<td style="text-align: right">2105531</td>
+<td style="text-align: right">2453</td>
+</tr>
+<tr>
+<td>citationCiteseer</td>
+<td style="text-align: right">268495</td>
+<td style="text-align: right">2313294*</td>
+<td style="text-align: right">0</td>
+</tr>
+<tr>
+<td>cnr-2000</td>
+<td style="text-align: right">325557</td>
+<td style="text-align: right">3128710</td>
+<td style="text-align: right">0</td>
+</tr>
+<tr>
+<td>as-Skitter</td>
+<td style="text-align: right">1696415</td>
+<td style="text-align: right">22190596*</td>
+<td style="text-align: right">0</td>
+</tr>
+<tr>
+<td>coPapersDBLP</td>
+<td style="text-align: right">540486</td>
+<td style="text-align: right">30481458*</td>
+<td style="text-align: right">0</td>
+</tr>
+<tr>
+<td>pokec</td>
+<td style="text-align: right">1632803</td>
+<td style="text-align: right">30622564</td>
+<td style="text-align: right">0</td>
+</tr>
+<tr>
+<td>coPapersCiteseer</td>
+<td style="text-align: right">434102</td>
+<td style="text-align: right">32073440*</td>
+<td style="text-align: right">0</td>
+</tr>
+<tr>
+<td>akamai</td>
+<td style="text-align: right">16956250</td>
+<td style="text-align: right">53300364</td>
+<td style="text-align: right">0</td>
+</tr>
+<tr>
+<td>soc-LiveJournal1</td>
+<td style="text-align: right">4847571</td>
+<td style="text-align: right">68475391</td>
+<td style="text-align: right">962</td>
+</tr>
+<tr>
+<td>channel-500x100x100-b050</td>
+<td style="text-align: right">4802000</td>
+<td style="text-align: right">85362744</td>
+<td style="text-align: right">0</td>
+</tr>
+<tr>
+<td>europe_osm</td>
+<td style="text-align: right">50912018</td>
+<td style="text-align: right">108109320*</td>
+<td style="text-align: right">0</td>
+</tr>
+<tr>
+<td>hollywood-2009</td>
+<td style="text-align: right">11399905</td>
+<td style="text-align: right">112751422*</td>
+<td style="text-align: right">32662</td>
+</tr>
+<tr>
+<td>rgg_n_2_24_s0</td>
+<td style="text-align: right">16777216</td>
+<td style="text-align: right">265114400*</td>
+<td style="text-align: right">1</td>
+</tr>
+<tr>
+<td>uk-2002</td>
+<td style="text-align: right">18520486</td>
+<td style="text-align: right">292243663</td>
+<td style="text-align: right">37300</td>
+</tr>
+</tbody></table>
+
+<p>Running time in seconds:</p>
+
+<table style="font-size: 12px;"><thead>
+<tr>
+<th>GPU</th>
+<th>Dataset</th>
+<th style="text-align: right">Gunrock GPU</th>
+<th style="text-align: right">Speedup vs. OMP</th>
+<th style="text-align: right">OMP</th>
+<th style="text-align: right">Serial</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>P100</td>
+<td>ca</td>
+<td style="text-align: right">0.108</td>
+<td style="text-align: right">0.24</td>
+<td style="text-align: right"><strong>0.026</strong></td>
+<td style="text-align: right">0.065</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>ca</td>
+<td style="text-align: right">0.089</td>
+<td style="text-align: right">0.33</td>
+<td style="text-align: right"><strong>0.029</strong></td>
+<td style="text-align: right">0.067</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>preferentialAttachment</td>
+<td style="text-align: right"><strong>0.076</strong></td>
+<td style="text-align: right">1.26</td>
+<td style="text-align: right">0.096</td>
+<td style="text-align: right">0.235</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>caidaRouterLevel</td>
+<td style="text-align: right"><strong>0.063</strong></td>
+<td style="text-align: right">1.03</td>
+<td style="text-align: right">0.065</td>
+<td style="text-align: right">0.229</td>
+</tr>
+<tr>
+<td>P100</td>
+<td>amazon</td>
+<td style="text-align: right"><strong>0.160</strong></td>
+<td style="text-align: right">1.27</td>
+<td style="text-align: right">0.203</td>
+<td style="text-align: right">0.648</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>amazon</td>
+<td style="text-align: right"><strong>0.122</strong></td>
+<td style="text-align: right">1.62</td>
+<td style="text-align: right">0.198</td>
+<td style="text-align: right">0.631</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>coAuthorsDBLP</td>
+<td style="text-align: right"><strong>0.082</strong></td>
+<td style="text-align: right">1.62</td>
+<td style="text-align: right">0.133</td>
+<td style="text-align: right">0.414</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>webbase-1M</td>
+<td style="text-align: right"><strong>0.107</strong></td>
+<td style="text-align: right">1.57</td>
+<td style="text-align: right">0.168</td>
+<td style="text-align: right">0.318</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>citationCiteseer</td>
+<td style="text-align: right"><strong>0.074</strong></td>
+<td style="text-align: right">1.50</td>
+<td style="text-align: right">0.111</td>
+<td style="text-align: right">0.432</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>cnr-2000</td>
+<td style="text-align: right">0.235</td>
+<td style="text-align: right">0.57</td>
+<td style="text-align: right"><strong>0.133</strong></td>
+<td style="text-align: right">0.388</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>as-Skitter</td>
+<td style="text-align: right"><strong>0.376</strong></td>
+<td style="text-align: right">1.76</td>
+<td style="text-align: right">0.660</td>
+<td style="text-align: right">2.480</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>coPapersDBLP</td>
+<td style="text-align: right"><strong>0.358</strong></td>
+<td style="text-align: right">1.22</td>
+<td style="text-align: right">0.437</td>
+<td style="text-align: right">1.860</td>
+</tr>
+<tr>
+<td>P100</td>
+<td>pokec</td>
+<td style="text-align: right"><strong>0.929</strong></td>
+<td style="text-align: right">1.34</td>
+<td style="text-align: right">1.244</td>
+<td style="text-align: right">6.521</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>pokec</td>
+<td style="text-align: right"><strong>0.624</strong></td>
+<td style="text-align: right">1.74</td>
+<td style="text-align: right">1.083</td>
+<td style="text-align: right">6.110</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>coPapersCiteseer</td>
+<td style="text-align: right"><strong>0.353</strong></td>
+<td style="text-align: right">1.11</td>
+<td style="text-align: right">0.391</td>
+<td style="text-align: right">1.592</td>
+</tr>
+<tr>
+<td>P100</td>
+<td>akamai</td>
+<td style="text-align: right"><strong>1.278</strong></td>
+<td style="text-align: right">5.13</td>
+<td style="text-align: right">6.560</td>
+<td style="text-align: right">14.427</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>akamai</td>
+<td style="text-align: right"><strong>0.934</strong></td>
+<td style="text-align: right">6.79</td>
+<td style="text-align: right">6.343</td>
+<td style="text-align: right">13.266</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>soc-LiveJournal1</td>
+<td style="text-align: right"><strong>1.548</strong></td>
+<td style="text-align: right">2.59</td>
+<td style="text-align: right">4.016</td>
+<td style="text-align: right">16.311</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>channel-500x100x100-b050</td>
+<td style="text-align: right">1.133</td>
+<td style="text-align: right">0.68</td>
+<td style="text-align: right"><strong>0.768</strong></td>
+<td style="text-align: right">4.449</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>europe_osm</td>
+<td style="text-align: right"><strong>4.902</strong></td>
+<td style="text-align: right">7.11</td>
+<td style="text-align: right">34.875</td>
+<td style="text-align: right">101.320</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>hollywood-2009</td>
+<td style="text-align: right"><strong>1.230</strong></td>
+<td style="text-align: right">1.40</td>
+<td style="text-align: right">1.721</td>
+<td style="text-align: right">9.419</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>rgg_n_2_24_s0</td>
+<td style="text-align: right">3.378</td>
+<td style="text-align: right">0.79</td>
+<td style="text-align: right"><strong>2.664</strong></td>
+<td style="text-align: right">17.816</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>uk-2002</td>
+<td style="text-align: right"><strong>4.921</strong></td>
+<td style="text-align: right">1.15</td>
+<td style="text-align: right">5.682</td>
+<td style="text-align: right">31.006</td>
+</tr>
+</tbody></table>
+
+<p>Resulting modularity:</p>
+
+<table style="font-size: 12px;"><thead>
+<tr>
+<th>GPU</th>
+<th>DataSet</th>
+<th style="text-align: right">Gunrock GPU</th>
+<th style="text-align: right">Gunrock - Serial</th>
+<th style="text-align: right">OMP</th>
+<th style="text-align: right">OMP - Serial</th>
+<th style="text-align: right">Serial</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>P100</td>
+<td>ca</td>
+<td style="text-align: right">0.7112</td>
+<td style="text-align: right">-0.0193</td>
+<td style="text-align: right">0.7302</td>
+<td style="text-align: right">-0.0011</td>
+<td style="text-align: right"><strong>0.7313</strong></td>
+</tr>
+<tr>
+<td>V100</td>
+<td>ca</td>
+<td style="text-align: right">0.7166</td>
+<td style="text-align: right">-0.0147</td>
+<td style="text-align: right">0.7290</td>
+<td style="text-align: right">-0.0025</td>
+<td style="text-align: right"><strong>0.7313</strong></td>
+</tr>
+<tr>
+<td>V100</td>
+<td>preferentialAttachment</td>
+<td style="text-align: right">0.1758</td>
+<td style="text-align: right">-0.1095</td>
+<td style="text-align: right">0.2287</td>
+<td style="text-align: right">-0.0565</td>
+<td style="text-align: right"><strong>0.2852</strong></td>
+</tr>
+<tr>
+<td>V100</td>
+<td>caidaRouterLevel</td>
+<td style="text-align: right"><strong>0.8500</strong></td>
+<td style="text-align: right">+0.0065</td>
+<td style="text-align: right">0.8362</td>
+<td style="text-align: right">-0.0073</td>
+<td style="text-align: right">0.8436</td>
+</tr>
+<tr>
+<td>P100</td>
+<td>amazon</td>
+<td style="text-align: right">0.9081</td>
+<td style="text-align: right">-0.0184</td>
+<td style="text-align: right">0.9257</td>
+<td style="text-align: right">-0.0007</td>
+<td style="text-align: right"><strong>0.9264</strong></td>
+</tr>
+<tr>
+<td>V100</td>
+<td>amazon</td>
+<td style="text-align: right">0.9089</td>
+<td style="text-align: right">-0.0175</td>
+<td style="text-align: right">0.9258</td>
+<td style="text-align: right">-0.0006</td>
+<td style="text-align: right"><strong>0.9264</strong></td>
+</tr>
+<tr>
+<td>V100</td>
+<td>coAuthorsDBLP</td>
+<td style="text-align: right">0.8092</td>
+<td style="text-align: right">-0.0179</td>
+<td style="text-align: right">0.8136</td>
+<td style="text-align: right">-0.0135</td>
+<td style="text-align: right"><strong>0.8271</strong></td>
+</tr>
+<tr>
+<td>V100</td>
+<td>webbase-1M</td>
+<td style="text-align: right">0.8945</td>
+<td style="text-align: right">-0.0613</td>
+<td style="text-align: right">0.9471</td>
+<td style="text-align: right">-0.0087</td>
+<td style="text-align: right"><strong>0.9558</strong></td>
+</tr>
+<tr>
+<td>V100</td>
+<td>citationCiteseer</td>
+<td style="text-align: right">0.7888</td>
+<td style="text-align: right">-0.0137</td>
+<td style="text-align: right">0.7605</td>
+<td style="text-align: right">-0.0420</td>
+<td style="text-align: right"><strong>0.8025</strong></td>
+</tr>
+<tr>
+<td>V100</td>
+<td>cnr-2000</td>
+<td style="text-align: right">0.8766</td>
+<td style="text-align: right">-0.0031</td>
+<td style="text-align: right">0.8784</td>
+<td style="text-align: right">-0.0013</td>
+<td style="text-align: right"><strong>0.8797</strong></td>
+</tr>
+<tr>
+<td>V100</td>
+<td>as-Skitter</td>
+<td style="text-align: right"><strong>0.8366</strong></td>
+<td style="text-align: right">+0.0234</td>
+<td style="text-align: right">0.8223</td>
+<td style="text-align: right">+0.0091</td>
+<td style="text-align: right">0.8132</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>coPapersDBLP</td>
+<td style="text-align: right"><strong>0.8494</strong></td>
+<td style="text-align: right">+0.0003</td>
+<td style="text-align: right">0.8440</td>
+<td style="text-align: right">-0.0051</td>
+<td style="text-align: right">0.8492</td>
+</tr>
+<tr>
+<td>P100</td>
+<td>pokec</td>
+<td style="text-align: right">0.6933</td>
+<td style="text-align: right">-0.0012</td>
+<td style="text-align: right">0.6914</td>
+<td style="text-align: right">-0.0032</td>
+<td style="text-align: right"><strong>0.6945</strong></td>
+</tr>
+<tr>
+<td>V100</td>
+<td>pokec</td>
+<td style="text-align: right">0.6741</td>
+<td style="text-align: right">-0.0204</td>
+<td style="text-align: right">0.6763</td>
+<td style="text-align: right">-0.0183</td>
+<td style="text-align: right"><strong>0.6945</strong></td>
+</tr>
+<tr>
+<td>V100</td>
+<td>coPapersCiteseer</td>
+<td style="text-align: right">0.9075</td>
+<td style="text-align: right">-0.0035</td>
+<td style="text-align: right">0.9059</td>
+<td style="text-align: right">-0.0051</td>
+<td style="text-align: right"><strong>0.9110</strong></td>
+</tr>
+<tr>
+<td>P100</td>
+<td>akamai</td>
+<td style="text-align: right"><strong>0.9334</strong></td>
+<td style="text-align: right">+0.0329</td>
+<td style="text-align: right">0.9072</td>
+<td style="text-align: right">+0.0067</td>
+<td style="text-align: right">0.9005</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>akamai</td>
+<td style="text-align: right"><strong>0.9333</strong></td>
+<td style="text-align: right">+0.0328</td>
+<td style="text-align: right">0.9074</td>
+<td style="text-align: right">+0.0070</td>
+<td style="text-align: right">0.9005</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>soc-LiveJournal1</td>
+<td style="text-align: right"><strong>0.7336</strong></td>
+<td style="text-align: right">+0.0097</td>
+<td style="text-align: right">0.5456</td>
+<td style="text-align: right">-0.1782</td>
+<td style="text-align: right">0.7239</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>channel-500x100x100-b050</td>
+<td style="text-align: right">0.9004</td>
+<td style="text-align: right">+0.0498</td>
+<td style="text-align: right"><strong>0.9512</strong></td>
+<td style="text-align: right">+0.1007</td>
+<td style="text-align: right">0.8505</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>europe_osm</td>
+<td style="text-align: right"><strong>0.9979</strong></td>
+<td style="text-align: right">+0.0142</td>
+<td style="text-align: right">0.9844</td>
+<td style="text-align: right">+0.0008</td>
+<td style="text-align: right">0.9836</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>hollywood-2009</td>
+<td style="text-align: right">0.7432</td>
+<td style="text-align: right">-0.0079</td>
+<td style="text-align: right">0.7502</td>
+<td style="text-align: right">-0.0010</td>
+<td style="text-align: right"><strong>0.7511</strong></td>
+</tr>
+<tr>
+<td>V100</td>
+<td>rgg_n_2_24_s0</td>
+<td style="text-align: right"><strong>0.9921</strong></td>
+<td style="text-align: right">+0.0026</td>
+<td style="text-align: right">0.9920</td>
+<td style="text-align: right">+0.0024</td>
+<td style="text-align: right">0.9896</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>uk-2002</td>
+<td style="text-align: right">0.9507</td>
+<td style="text-align: right">-0.0098</td>
+<td style="text-align: right">0.9604</td>
+<td style="text-align: right">+0.0000</td>
+<td style="text-align: right"><strong>0.9604</strong></td>
+</tr>
+</tbody></table>
+
+<p>The number of resulting communities:</p>
+
+<table style="font-size: 12px;"><thead>
+<tr>
+<th>GPU</th>
+<th>DataSet</th>
+<th style="text-align: right">Gunrock GPU</th>
+<th style="text-align: right">OMP</th>
+<th style="text-align: right">Serial</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>P100</td>
+<td>ca</td>
+<td style="text-align: right">1120</td>
+<td style="text-align: right">616</td>
+<td style="text-align: right">617</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>ca</td>
+<td style="text-align: right">1076</td>
+<td style="text-align: right">615</td>
+<td style="text-align: right">617</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>preferentialAttachment</td>
+<td style="text-align: right">18</td>
+<td style="text-align: right">14</td>
+<td style="text-align: right">39</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>caidaRouterLevel</td>
+<td style="text-align: right">410</td>
+<td style="text-align: right">467</td>
+<td style="text-align: right">745</td>
+</tr>
+<tr>
+<td>P100</td>
+<td>amazon</td>
+<td style="text-align: right">7667</td>
+<td style="text-align: right">213</td>
+<td style="text-align: right">240</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>amazon</td>
+<td style="text-align: right">7671</td>
+<td style="text-align: right">233</td>
+<td style="text-align: right">240</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>coAuthorsDBLP</td>
+<td style="text-align: right">95</td>
+<td style="text-align: right">138</td>
+<td style="text-align: right">273</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>webbase-1M</td>
+<td style="text-align: right">4430</td>
+<td style="text-align: right">1469</td>
+<td style="text-align: right">1362</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>citationCiteseer</td>
+<td style="text-align: right">67</td>
+<td style="text-align: right">48</td>
+<td style="text-align: right">141</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>cnr-2000</td>
+<td style="text-align: right">65621</td>
+<td style="text-align: right">59219</td>
+<td style="text-align: right">59253</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>as-Skitter</td>
+<td style="text-align: right">924</td>
+<td style="text-align: right">1945</td>
+<td style="text-align: right">2531</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>coPapersDBLP</td>
+<td style="text-align: right">70</td>
+<td style="text-align: right">111</td>
+<td style="text-align: right">237</td>
+</tr>
+<tr>
+<td>P100</td>
+<td>pokec</td>
+<td style="text-align: right">154988</td>
+<td style="text-align: right">161709</td>
+<td style="text-align: right">166156</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>pokec</td>
+<td style="text-align: right">155100</td>
+<td style="text-align: right">162464</td>
+<td style="text-align: right">166156</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>coPapersCiteseer</td>
+<td style="text-align: right">108</td>
+<td style="text-align: right">110</td>
+<td style="text-align: right">358</td>
+</tr>
+<tr>
+<td>P100</td>
+<td>akamai</td>
+<td style="text-align: right">90285</td>
+<td style="text-align: right">130639</td>
+<td style="text-align: right">145785</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>akamai</td>
+<td style="text-align: right">90245</td>
+<td style="text-align: right">127843</td>
+<td style="text-align: right">145785</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>soc-LiveJournal1</td>
+<td style="text-align: right">506826</td>
+<td style="text-align: right">434272</td>
+<td style="text-align: right">447426</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>channel-500x100x100-b050</td>
+<td style="text-align: right">24</td>
+<td style="text-align: right">54</td>
+<td style="text-align: right">12</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>europe_osm</td>
+<td style="text-align: right">17320</td>
+<td style="text-align: right">784171</td>
+<td style="text-align: right">828662</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>hollywood-2009</td>
+<td style="text-align: right">12218</td>
+<td style="text-align: right">12593</td>
+<td style="text-align: right">12741</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>rgg_n_2_24_s0</td>
+<td style="text-align: right">344</td>
+<td style="text-align: right">359</td>
+<td style="text-align: right">311</td>
+</tr>
+<tr>
+<td>V100</td>
+<td>uk-2002</td>
+<td style="text-align: right">2402560</td>
+<td style="text-align: right">2245355</td>
+<td style="text-align: right">2245678</td>
+</tr>
+</tbody></table>
+<h3 id='implementation-limitations'>Implementation limitations</h3>
+<ul>
+<li><p><strong>Memory usage</strong> Each edge in the graph needs at least 88 bytes of GPU device memory:  32 bits for the destination vertex, 64 bits for edge weight, 64 bits x 2 x 4 for edge pairs and sorting, 32 bits for segment offsets and 64 bits for segment weights (assuming both vertex and edge ids are represented as 32-bit integers and edge weights are represented as 64-bit floating point numbers). So using a 32 GB GPU, the maximum graph the Louvain implementation can process is roughly 300 million edges. The largest graph successfully run so far is <code>uk-2002</code> with 292M edges and 18.5M  vertices.</p></li>
+<li><p><strong>Data types</strong> The edge weights and all computation around them are double-precision floating point values (64-bit <code>double</code> in C/C++); we tried single precision and found it resulted in very poor modularities. The <code>weight * weight / m2</code> part in the modularity calculation may be the reason for this limitation. Vertex ids should be 32-bit, as the implementation uses 64-bit integers to represent an edge pair for the sort function; if fast GPU sorting is available for 128-bit integers, 64-bit vertex ids might be used.</p></li>
+</ul>
+<h3 id='comparison-against-existing-implementations'>Comparison against existing implementations</h3>
+<p>We compare against serial CPU and OpenMP implementations; both are Gunrock's CPU reference routines. PNNL's results and previous published works are also referenced, to make sure the resulting modularities and running times are sane.</p>
+
+<ul>
+<li><p><strong>Modularity</strong> The modularities have some variation from different
+implementations, mostly within +/- 0.05. On small graphs, the GPU
+implementation sees some modularity drops; on large graphs, the GPU
+implementation is more likely to yield modularity at least as good as the serial
+implementation. The larger the graph is, the better relative modularity is
+expected from Gunrock, as compared to the serial implementation. As mentioned
+in the output section, that variation could be caused by concurrent movement of vertices. Small graphs could suffer more than larger graphs, as movements to a community have a higher chance to happen concurrently.</p></li>
+<li><p><strong>Running time</strong> Overall, the Gunrock implementation is 2x to 5x faster than
+previous work on GPU (Naim 2017, Cheong 2013). Our OMP implementation is a bit
+faster than PNNL's, and much faster than previous work using multiple CPU
+threads (Lu 2015, Naim 2016). The sequential CPU is an order faster than previous
+sequential CPU work (Naim 2017, Naim 2016, Blondel 2008, Cheong 2013, Lu 2015).
+Comparing across different Gunrock implementations, the GPU is not always the
+fastest: on small graphs, GPU could actually be slower, caused by GPU kernel
+overheads and hardware underutilization; so for small graphs, the OpenMP
+implementation may be a better choice. Gunrock's GPU implementation particaully
+runs slower than OpenMP for mesh-like graphs, in which every vertex only has a
+very small neighbor list; the parallel formulation Gunrock uses does not work
+well on this kind of graphs.</p></li>
+</ul>
+
+<p>Published results (timing and modularity) from previous work are summarized in
+the <a href="attachments/louvain/louvain_results.xlsx" title="Louvain
+results">louvain_results.xlsx</a> file in the <code>louvain</code> directory.</p>
+<h3 id='performance-limitations'>Performance limitations</h3>
+<p>The GPU performance bottleneck is the sort function, especially in the first pass. It's true that sort on GPU is much faster than CPU; but the CPU implementations use hash tables, which may not be suitable for the GPU; the alternative approaches section has more details on this.</p>
+
+<p>Using the <code>akamai</code> dataset to profile the GPU Louvain implementation on a V100, an iteration in the first pass takes 64.08 ms, and the sort takes 42.05 ms, which is two-thirds of the iteration time. The Louvain implementation uses CUB's radix-sort-pair function. CUB is considered to be one of the GPU primitive libraries that provide the best performance. Further profiling shows during the sort kernel, the device memory controller is ~75% utilized; in other words, the sort is memory bound. This is as expected, as in each iteration of radix sort, the whole <code>edge_pairs</code> and <code>pair_weights</code> arrays are shuffled, with cost on the order of <code>O(|E|)</code>, although the memory accesses are mostly coalesced. The memory system utilizations are as below (from NVIDIA profiler):</p>
+
+<table style="font-size: 12px;"><thead>
+<tr>
+<th>Type</th>
+<th style="text-align: right">Transactions</th>
+<th style="text-align: right">Bandwidth</th>
+<th>Utilization</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Shared Loads</td>
+<td style="text-align: right">2141139</td>
+<td style="text-align: right">1168.859 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Shared Stores</td>
+<td style="text-align: right">2486946</td>
+<td style="text-align: right">1357.636 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Shared Total</td>
+<td style="text-align: right">4628085</td>
+<td style="text-align: right">2526.495 GB/s</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>L2 Reads</td>
+<td style="text-align: right">2533302</td>
+<td style="text-align: right">345.736 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>L2 Writes</td>
+<td style="text-align: right">2831732</td>
+<td style="text-align: right">386.464 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>L2 Total</td>
+<td style="text-align: right">5365034</td>
+<td style="text-align: right">732.200 GB/s</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>Local Loads</td>
+<td style="text-align: right">588</td>
+<td style="text-align: right">80.248 MB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Local Stores</td>
+<td style="text-align: right">588</td>
+<td style="text-align: right">80.248 MB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Global Loads</td>
+<td style="text-align: right">2541637</td>
+<td style="text-align: right">346.873 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Global Stores</td>
+<td style="text-align: right">2675820</td>
+<td style="text-align: right">365.186 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Texture Reads</td>
+<td style="text-align: right">2515533</td>
+<td style="text-align: right">1373.242 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Unified Cache Total</td>
+<td style="text-align: right">7734166</td>
+<td style="text-align: right">2085.462 GB/s</td>
+<td>Idle to Low</td>
+</tr>
+<tr>
+<td>Device Reads</td>
+<td style="text-align: right">2469290</td>
+<td style="text-align: right">336.999 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Device Writes</td>
+<td style="text-align: right">2596403</td>
+<td style="text-align: right">354.347 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Device Memory Total</strong></td>
+<td style="text-align: right"><strong>5065693</strong></td>
+<td style="text-align: right"><strong>691.347 GB/s</strong></td>
+<td><strong>High</strong></td>
+</tr>
+<tr>
+<td>PCIe Reads</td>
+<td style="text-align: right">0</td>
+<td style="text-align: right">0 B/s</td>
+<td>None</td>
+</tr>
+<tr>
+<td>PCIe Writes</td>
+<td style="text-align: right">5</td>
+<td style="text-align: right">682.381 kB/s</td>
+<td>Idle to Low</td>
+</tr>
+</tbody></table>
+
+<p><img src="attachments/louvain/Louvain_akamai.png" title="Memory statistics" alt="Louvain_akamai" /></p>
+
+<p>It's clear that the bottleneck is at the device memory: most data are read-once and write-once,  with little possibility to reuse the data. The kernel achieved 691 GB/s bandwidth utilization, ~77% of the 32GB HBM2's 900 GB/s capability. This high-bandwidth utilization fits the memory access pattern: mostly regular and coalesced.</p>
+
+<p>The particular issue here is not the kernel implementation itself, it's the usage of sorting: fully sorting the whole edge list is perhaps overkill. One possible improvement is to use a custom hash table on the GPU, to replace the sort + segmented reduce part. The hash table could also cut the memory requirement by about 50%.</p>
+<h2 id='next-steps'>Next Steps</h2><h3 id='alternate-approaches'>Alternate approaches</h3><h4 id='things-we-tried-that-didn-39-t-work-well'>Things we tried that didn't work well</h4>
+<p><strong>Segmented sort and CUB segmented reduce</strong>: the original idea for modularity optimization is to use CUB's segmented sort and segmented reduce within each vertex's neighborhood to get the vertex-community weights. However, CUB uses one block per each segment in these two routines, and that creates huge load imbalance, as the neighbor list length can have large differences. The solution is 1) use vertex-community pairs as keys, and CUB's unsegmented sort; 2) implement a load-balanced segmented-reduce kernel. This solution reduces the sort-reduce time by a few X, and can be enabled by the <code>--unify-segments</code> flag on the command line.</p>
+
+<p><strong>STL hash table on CPU</strong>: the <code>std::map</code> class has performance issues when used in a multi-threading environment, and yields poor scalability; it might be caused by using locks in the STL. The solution is to use a size |V| array per thread for the vertices that thread processes. Since within a thread, vertices are processed one by one, and the maximum number of communities is |V|, so instead of a hash table, a flat size |V| array can replace the hash table. This solution significantly reduces the running time, even using a single thread. The multi-thread scalability is also much better.</p>
+
+<p><strong>Vanilla hash table on GPU</strong>: this can't be used, as keys (vertex-community or community-community pair) and the values (edge weights) are both 64-bit, and there is currently no support of atomic-compare-and-exchange operations for 128-bit data. Even if that's available, a vanilla table only provides insert and query operations, but not accumulation of values for the same key.</p>
+<h4 id='custom-hash-table'>Custom hash table</h4>
+<p>Hash tables can be used to accumulate the vertex-to-community weights during modularity optimization iterations, and to get the community-to-community edge weights during the graph contraction part of the algorithm. Previous implementations use hash tables as a common practice. However, as mentioned above, vanilla hash tables that store key-value pairs are not a good choice for Louvain.</p>
+
+<p>Louvain not only needs to store the key-value pairs, but also to accumulate  values associated with the same key. That key may be the same vertex-community pair for modularity optimization, or the same community-community pair for graph contraction. Ideally, if the hash table provides the following functionality, it would be much more suitable for Louvain:</p>
+
+<ul>
+<li>Only insert the key (in the first phase of using the hash table).</li>
+<li>In the next phase, query the <em>positions</em> of the keys, and use atomics to accumulate the values belonging to the same key, in a separate array.</li>
+<li>There must be a barrier between the two phases; all insertions of the first phase need to be visible to the second phase.</li>
+</ul>
+
+<p>This kind of hash table removes the strong restriction that the key-value pair needs to be able to support an atomic compare-and-exchange operation, which is imposed by vanilla hash table implementations. The custom hash table is also more value-accumulation-friendly. It replaces the sort-segmented reduce part, and can reduce the workload from about O(6|E|) to O(2|E|), and the memory requirement from 48|E| bytes to 24|E|. However, the memory access pattern now become irregular and uncoalesced, so it is still unknown whether it can actually yield a performance gain.</p>
+<h4 id='iteration-and-pass-stop-conditions'>Iteration and pass stop conditions</h4>
+<p>The concurrent nature of the GPU implementation makes modularity gain
+calculation inaccurate. Community migrations are also observed. Because of
+these, the optimization iterations and the passes may run more than needed,
+and resulted in longer running time, especially in the first pass. Preliminary
+experiments to cap the number of iterations for the first pass can reduce the
+running time by about 40%, with the modularity value roughly unchanged. The
+actual cap is dataset dependent, and more study is needed to get a better
+understand how to set the cap.</p>
+<h3 id='gunrock-implications'>Gunrock implications</h3>
+<p>The core of Louvain implementation mainly uses all-edges advance, sort, segmented reduce, and for loops. The sort-segmented reduce operation is actually a segmented keyed reduce; if that's a common operation that appears  in more algorithms, it could be made into a new operator. The all-edges advance is used quite often in several applications, so wrapping it with a simpler operator interface could be helpful.</p>
+<h3 id='notes-on-multi-gpu-parallelization'>Notes on multi-GPU parallelization</h3>
+<p>When parallelizing across multiple GPUs, the community assignment of local vertices and their neighbors needs to available locally, either explicitly by moving them using communication functions, or implicitly by peer memory access or unified virtual memory. The communication volume is in the order of O(|V|) and the computation workload is at least in O(|E|), so the scalability should be manageable.</p>
+
+<p>When the number of GPUs is small, 1D partitioning can be used to divide the edges, and replicate the vertices, so there is no need to do vertex id conversion across multiple GPUs. When the number of GPUs is large, the high-low degree vertex separation and partitioning scheme can be used: edges are still distributed across GPUs, high degree vertices are duplicated, and low degree vertices are owned by one GPU each. The boundary to use different partitioning scheme is still unclear, but it's likely that 8 GPUs within a DGX-1 can still be considered as a small number, and use the simple 1D partitioning.</p>
+<h3 id='notes-on-dynamic-graphs'>Notes on dynamic graphs</h3>
+<p>Louvain is not directly related to dynamic graphs. But it should be able to run on a dynamic graph, provided the way to access all the edges is the same. Community assignment from the previous graph can be used as a good starting point, if the vertex ids are consistent and the graph is not dramatically changed.</p>
+<h3 id='notes-on-larger-datasets'>Notes on larger datasets</h3>
+<p>The bottleneck of memory usage of the current implementation is in the edge pair-weight sort function: that makes up about half of the memory usage. Replacing sort-segmented reduce with a custom hash table could significantly lower the memory usage.</p>
+
+<p>Louvain needs to go over the whole graph once in each modularity optimization iteration. If the graph is larger than the combined GPU memory space, which forces streaming of the graph in each modularity optimization iteration, the performance bottleneck will be CPU-GPU bandwidth. That can be an order of magnitude slower than when the graph can fully fit in GPU memory. Considering the OpenMP implementation is not that slow, using that may well be faster than moving the graph multiple times across the CPU-GPU bridge.</p>
+<h3 id='notes-on-other-pieces-of-this-workload'>Notes on other pieces of this workload</h3>
+<p>All parts of Louvain are graph related, and fully implemented in Gunrock.</p>
+
+<p><strong>Reference</strong></p>
+
+<p>[1] Hao Lu, Mahantesh Halappanavar, Ananth Kalyanaraman. "Parallel Heuristics for Scalable Community Detection", https://arxiv.org/abs/1410.1237 (2015);</p>
+
+<p>[2] Cheong C.Y., Huynh H.P., Lo D., Goh R.S.M. "Hierarchical Parallel Algorithm for Modularity-Based Community Detection Using GPUs". Euro-Par 2013;</p>
+
+<p>[3] Md. Naim, Fredrik Manne, Mahantesh Halappanavar, and Antonio Tumeo. "Highly Scalable Community Detection Using a GPU", https://www.eecs.wsu.edu/~assefaw/CSC16/abstracts/naim-CSC16_paper_14.pdf (2016);</p>
+
+<p>[4] M. Naim, F. Manne, M. Halappanavar and A. Tumeo, "Community Detection on the GPU," IPDPS `17;</p>
+
+<p>[5] Vincent D. Blondel, Jean-Loup Guillaume, Renaud Lambiotte, Etienne Lefebvre, "Fast unfolding of communities in large networks". https://arxiv.org/abs/0803.0476 (2008);</p>
+
+      </div>
+
+        <!-- <div class="dark-box"></div> -->
+    </div>
+  </body>
+</html>

@@ -273,11 +273,11 @@
 
 <p>That is, given two graphs <code>A</code> and <code>B</code>, we seek to find the permutation matrix <code>P</code> that maximizes the number of adjacency agreements between <code>A</code> and <code>P * B * P.T</code>, where <code>*</code> represents matrix multiplication.  The algorithm Fishkind et al. propose first relaxes the hard 0-1 constraints on <code>P</code> to the set of doubly stochastic matrices (each row and column sums to 1), then uses the Frank-Wolfe algorithm to minimize the objective function  <code>sum((A - P * B * P.T) ** 2)</code>.  Finally, the relaxed solution is projected back onto the set of permutation matrices to yield a feasible solution.</p>
 <h2 id='summary-of-results'>Summary of Results</h2>
-<p>SGM is a fruitful workflow to optimize, because the existing implementations were not written with performance in mind.  By making minor modifications to the algorithm that allow use of sparse data structures, we enable scaling to larger datasets than previously possible.  </p>
+<p>SGM is a fruitful workflow to optimize, because the existing implementations were not written with performance in mind.  By making minor modifications to the algorithm that allow use of sparse data structures, we enable scaling to larger datasets than previously possible.</p>
 
-<p>The application involves solving a linear assignment problem (LSAP) as a subproblem.  Solving these problems on the GPU is an active area of research -- though papers have been written describing high-performance parallel LSAP solvers, reference implementations are not available.  We implement a GPU LSAP solver via Bertsekas' auction algorithm, and make it available as as <a href="https://github.com/bkj/cbert">standalone library</a>.</p>
+<p>The application involves solving a linear assignment problem (LSAP) as a subproblem.  Solving these problems on the GPU is an active area of research -- though papers have been written describing high-performance parallel LSAP solvers, reference implementations are not available.  We implement a GPU LSAP solver via Bertsekas' auction algorithm, and make it available as a <a href="https://github.com/bkj/cbert">standalone library</a>.</p>
 
-<p>SGM is an approximate algorithm that minimizes graph adjacency disagreements via the Frank-Wolfe algorithm. Certain uses of the auction algorithm can introduce additional approximation in the gradients of the Frank-Wolfe iterations.  An interesting direction for future work would be   a rigorous study of the effects of this kind of approximation on a variety of different graph tolopogies.  Understanding of those dynamics could allow further scaling beyond what our current implementations can handle.</p>
+<p>SGM is an approximate algorithm that minimizes graph adjacency disagreements via the Frank-Wolfe algorithm. Certain uses of the auction algorithm can introduce additional approximation in the gradients of the Frank-Wolfe iterations.  An interesting direction for future work would be a rigorous study of the effects of this kind of approximation on a variety of different graph tolopogies.  Understanding of those dynamics could allow further scaling beyond what our current implementations can handle.</p>
 <h2 id='summary-of-gunrock-implementation'>Summary of Gunrock Implementation</h2>
 <p>The SGM algorithm consists of:</p>
 
@@ -313,7 +313,8 @@
 make clean
 make
 
-<span class="c"># make data (A = random sparse matrix, B = permuted version of A, except first `num-seeds` vertices)</span>
+<span class="c"># make data (A = random sparse matrix, B = permuted version of A,</span>
+<span class="c"># except first `num-seeds` vertices)</span>
 python data/make-random.py --num-seeds 100
 wc -l data/<span class="o">{</span>A,B<span class="o">}</span>.mtx
 </code></pre><h3 id='running-the-application'>Running the application</h3>

@@ -1,0 +1,1589 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" type="image/ico" href="images/favicon.ico">
+    <title>HIVE workflow report for GraphSAGE GPU implementation</title>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
+
+    <style media="screen">
+      /* Add space between vega-embed links */
+      /* http://vega.github.io/vega-tutorials/airports/ */
+      .vega-embed .vega-actions a {
+        margin-left: 1em;
+        visibility: hidden;
+      }
+      .vega-embed:hover .vega-actions a {
+        visibility: visible;
+      }
+    </style>
+  </head>
+
+  <body class="hive_graphSage" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo.png" class="logo" alt="Logo" />
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc" class="toc-list-h1">
+          <li>
+            <a href="#graphsage" class="toc-h1 toc-link" data-title="GraphSAGE">GRAPHSAGE</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#summary-of-results" class="toc-h2 toc-link" data-title="Summary of Results">Summary of Results</a>
+                  </li>
+                  <li>
+                    <a href="#summary-of-gunrock-implementation" class="toc-h2 toc-link" data-title="Summary of Gunrock Implementation">Summary of Gunrock Implementation</a>
+                  </li>
+                  <li>
+                    <a href="#how-to-run-this-application-on-darpa-39-s-dgx-1" class="toc-h2 toc-link" data-title="How To Run This Application on DARPA's DGX-1">How To Run This Application on DARPA's DGX-1</a>
+                  </li>
+                  <li>
+                    <a href="#rand-seed-1540498523" class="toc-h2 toc-link" data-title="rand-seed = 1540498523">rand-seed = 1540498523</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#embedding-validation-pass" class="toc-h1 toc-link" data-title="Embedding validation: PASS">EMBEDDING VALIDATION: PASS</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#performance-and-analysis" class="toc-h2 toc-link" data-title="Performance and Analysis">Performance and Analysis</a>
+                  </li>
+                  <li>
+                    <a href="#next-steps" class="toc-h2 toc-link" data-title="Next Steps">Next Steps</a>
+                  </li>
+              </ul>
+          </li>
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://github.com/gunrock/gunrock'>Gunrock&colon; GPU Graph Analytics</a></li>
+            <li>Gunrock &copy; 2018 The Regents of the University of California.</li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+
+        <!-- <div class="dark-box"></div> -->
+
+      <div class="content">
+        <h1 id='graphsage'>GraphSAGE</h1>
+<p>GraphSAGE is a way to fit graphs into a neural network: instead of getting the
+embedding of a vertex from all its neighbors' features as in conventional
+implementations, GraphSAGE selects some 1-hop neighbors, some 2-hop neighbors
+connected to those 1-hop neighbors, and computes the embedding based on the
+features of the 1-hop and 2-hop neighbors. The embedding can be considered as
+a vector containing hash values describing the interesting properties of a
+vertex.</p>
+
+<p>During the training process, the adjacency matrix and features of the nodes in the graph are fed into a neural network. The
+parameters (the <code>W</code> arrays in the algorithm) are updated after each batch by the
+difference between the predicted labels and the real labels. The per-vertex
+features won't change, but the parameters will, so the GraphSAGE computation needs
+to be performed for each batch. Ultimately it should connect to the training
+process to complete a workflow. However, the training part is pure matrix
+operations, and the year 1 deliverable only focuses on the graph related
+portion, which is the GraphSAGE implementation.</p>
+<h2 id='summary-of-results'>Summary of Results</h2>
+<p>The vertex embedding part of the GraphSAGE algorithm is implemented in the
+Gunrock framework using custom CUDA kernels to utilize block-level
+parallelism that allows a shorter running time. For the embedding part alone, the GPU
+implementation is 7.5X to 15X on P100, and 20X to 30X on V100,
+faster than an OpenMP implementation using 32 threads. The GPU hardware, especially
+the memory system, has high utilizations from these custom kernels. It is still
+unclear how to expose block-level parallelism for more general usage in
+other applications in Gunrock.</p>
+
+<p>Connecting the vertex embedding with the neural network training part, and
+making the GraphSAGE workflow complete, would be an interesting task for year 2.
+Testing on the complete workflow for prediction accuracy and running speed will
+be more meaningful.</p>
+<h2 id='summary-of-gunrock-implementation'>Summary of Gunrock Implementation</h2>
+<p>Gunrock's implementation for the 1st year is only the embedding / inferencing
+phase, without the training phase. It is based on Algorithm 2 with K=2 of the GraphSage
+paper ("Inductive Representation Learning on Large Graphs",
+<a href="https://arxiv.org/abs/1706.02216">https://arxiv.org/abs/1706.02216</a>).</p>
+
+<p>Given a graph G, the inputs are per-vertex features, weight matrices W^k, and a
+non-linear activation function (ReLu); the output from GraphSAGE is the embedding vector
+of each vertex. The current Gunrock implementation randomly selects neighbors
+from the neighborhood, and simple changes to the code can enable other
+selection methods, such as weighted uniform, importance sampling (used by
+FaseGCN), or a random walk probability like DeepWalk or Node2Vec (used by
+PinSage). An aggregator is a function to accumulate data from the
+selected neighbors; the current implementation uses the Mean aggregator,
+and it can be changed to other accumulation functions easily.</p>
+
+<p>The pseudocode of Gunrock's implementation follows. The current
+implementation uses custom CUDA kernels, because block-level parallelism is critical for
+faster running speed; all other functions, such as memory management,
+load and store routines, block level parallel reduction, and graph accesses
+(get degree, get neighbors, etc.) are provided by the framework or the utility
+functions of Gunrock. The GraphSAGE  algorithm uses B2, B1 and B0 for the
+sources, the 1-hop neighbors and the 2-hop neighbors; for
+easier understanding of the code, we use <code>sources</code>, <code>children</code> and <code>leafs</code> for
+these three groups of vertices instead. To manage the memory usage of
+intermediate data, batches of source vertices are processed one by one, with each
+of size B.</p>
+<pre class="highlight mid-column-code plaintext"><code>source_start := 0;
+While (source_source < V)
+    num_sources := (source_start + B > V) ? V - source_start : B;
+
+    // Kernel1: pick children and leafs
+    For children# from 0 to num_children_per_source x num_sources:
+        source := source_start + (children# / num_children_per_source);
+        child := SelectNeighbor(source);
+        leafs_feature := {0};
+        For i from 1 to num_leafs_per_child:
+            leaf := SelectNeighbor(child);
+            leafs_feature += feature[leaf];
+
+        children[children#] := child;
+        leafs_features[children#] := leafs_feature;
+
+    // Kernel2: Child-centric computation
+    For children# from 0 to num_children_per_source x num_sources:
+        child_temp := ReLu(concatenate(
+            feature[children[children#]] x Wf1,
+            Mean(leafs_features[children#]) x Wa1));
+        child_temp /= sqrt(sum(child_temp));
+        children_temp    [children# / num_children_per_source] += child_temp;
+        children_features[children# / num_children_per_source] += feature[child];
+
+    // Kernel3: Source-centric computation
+    For source# from 0 to num_sources - 1:
+        source := source_start + source#;
+        source_temp := ReLu(concatenate(
+            feature[source] x Wf1,
+            Mean(children_features[source#] x Wa1)));
+        source_temp /= sqrt(sum(source_temp));
+
+        result := ReLu(concatenate(
+            source_temp x Wf2,
+            Mean(children_temp[source#]) x Wa2));
+        result /= sqrt(sum(result));
+        source_embedding[source#] := result;
+
+    Move source_embedding from GPU to CPU;
+    source_start += B;
+</code></pre><h2 id='how-to-run-this-application-on-darpa-39-s-dgx-1'>How To Run This Application on DARPA's DGX-1</h2><h3 id='prereqs-input'>Prereqs/input</h3>
+<p>CUDA should have been installed; <code>$PATH</code> and <code>$LD_LIBRARY_PATH</code> should have been
+set correctly to use CUDA. The current Gunrock configuration assumes boost
+(1.58.0 or 1.59.0) and Metis are installed; if not, changes need to be made in
+the Makefiles. DARPA's DGX-1 has both installed when the tests are performed.</p>
+<pre class="highlight mid-column-code plaintext"><code>git clone --recursive https://github.com/gunrock/gunrock/ \
+  -b dev-refactor
+cd gunrock
+git submodule init
+git submodule update
+mkdir build
+cd build
+cmake ..
+cd ../tests/sage
+make
+</code></pre>
+<p>At this point, there should be an executable <code>test_sage_<CUDA version>_x86_64</code>
+in <code>tests/sage/bin</code>.</p>
+
+<p>The datasets are assumed to have been placed in <code>/raid/data/hive</code>, and converted
+to proper matrix market format (<code>.mtx</code>). At the time of testing, <code>pokec</code>, <code>amazon</code>,
+<code>flickr</code>, <code>twitter</code> and <code>cit-Patents</code> are available in that directory.</p>
+
+<p>Note that GraphSage is an inductive representation learning algorithm,
+so it reasonable to assume that there is no dangling vertices in the graph.
+<strong>Before running GraphSAGE, please remove the dangling vertices from the graph.</strong>
+In the case when dangling vertices are present, the dangling vertices themselves
+will be treated as their neighbors.</p>
+
+<p>The testing is done with Gunrock using <code>dev-refactor</code> branch at commit <code>0ed72d5</code>
+(Oct. 25, 2018), using CUDA 9.2 with NVIDIA driver 390.30 on a Tesla P100 GPU in
+the DGX-1 machine, and using CUDA 10.0 with NVIDIA driver 410.66 on a Tesla V100
+GPU in Bowser (an machine used by the Gunrock team in UC Davis).</p>
+<h3 id='running-the-application'>Running the application</h3><h4 id='application-specific-parameters'>Application specific parameters</h4>
+<p>The W arrays used by GraphSAGE should be produced by the training process; without
+the training part at the moment, we use some given datasets or randomly generate
+them if not available. The array input files are floating-point values in plain
+text format; examples can be found in the <code>gunrock/app/sage</code> directory of the
+gunrock repo.</p>
+<pre class="highlight mid-column-code plaintext"><code>--Wa1 : std::string, default =
+        <weight matrix for W^1 matrix in algorithm 2, aggregation part>
+         dimension 64 by 128 for pokec;
+         It should be leaf feature length by a value you want for W2 layer
+--Wa1-dim1 : int, default = 128
+        Wa1 matrix column dimension
+--Wa2 : std::string, default =
+        <weight matrix for W^2 matrix in algorithm 2, aggregation part>
+         dimension 256 by 128 for pokec;
+         It should be child_temp length by output length
+--Wa2-dim1 : int, default = 128
+        Wa2 matrix column dimension
+--Wf1 : std::string, default =
+        <weight matrix for W^1 matrix in algorithm 2, feature part>
+         dimension 64 by 128 for pokec;
+         It should be child feature length by a value you want for W2 layer
+--Wf1-dim1 : int, default = 128
+        Wf1 matrix column dimension
+--Wf2 : std::string, default =
+        <weight matrix for W^2 matrix in algorithm 2, feature part>
+         dimension 256 by 128 for pokec;
+         It should be source_temp length by output length
+--Wf2-dim1 : int, default = 128
+        Wf2 matrix column dimension
+--feature-column : std::vector<int>, default = 64
+        feature column dimension
+--features : std::string, default =
+        <features matrix>
+    dimension |V| by 64 for pokec;
+--omp-threads : int, default = 32
+    number of threads to run CPU reference
+--num-children-per-source : std::vector<int>, default = 10
+        number of sampled children per source
+--num-leafs-per-child : std::vector<int>, default = -1
+        number of sampled leafs per child; default is the same as num-children-per-source
+--batch-size : std::vector<int>, default = 65536
+        number of source vertex to process in one iteration
+</code></pre><h4 id='example-command'>Example Command</h4><pre class="highlight mid-column-code shell"><code>./bin/test_sage_9.2_x86_64 <span class="se">\</span>
+ market /raid/data/hive/pokec/pokec.mtx  --undirected <span class="se">\</span>
+ --Wf1 ../../gunrock/app/sage/wf1.txt <span class="se">\</span>
+ --Wa1 ../../gunrock/app/sage/wa1.txt <span class="se">\</span>
+ --Wf2 ../../gunrock/app/sage/wf2.txt <span class="se">\</span>
+ --Wa2 ../../gunrock/app/sage/wa2.txt <span class="se">\</span>
+ --features ../../gunrock/app/sage/features.txt <span class="se">\</span>
+ --num-runs<span class="o">=</span>10 <span class="se">\</span>
+ --batch-size<span class="o">=</span>16384
+</code></pre>
+<p>When <code>Wf1</code>, <code>Wa1</code>, <code>Wf2</code>, <code>Wa2</code>, or <code>features</code> are not available, random values
+are used. The embeddings may be not useful at all, but the memory access patterns
+and the computation workload are the same, regardless of whether the random
+inputs are used. Using the random inputs enable us to test on any graph without
+requiring the associative arrays.</p>
+<h3 id='output'>Output</h3>
+<p>The outputs are in the <code>sage</code> directory; look for the .txt files. An example is
+shown below for the <code>pokec</code> dataset:
+```
+Loading Matrix-market coordinate-formatted graph ...
+  ... Loading progress ...
+Converting 1632803 vertices, 44603928 directed edges ( ordered tuples) to CSR format...Done (0s).
+Degree Histogram (1632803 vertices, 44603928 edges):
+    Degree 0: 0 (0.000000 %)
+    Degree 2^0: 163971 (10.042301 %)
+    Degree 2^1: 201604 (12.347111 %)
+    Degree 2^2: 238757 (14.622523 %)
+    Degree 2^3: 273268 (16.736128 %)
+    Degree 2^4: 298404 (18.275567 %)
+    Degree 2^5: 265002 (16.229882 %)
+    Degree 2^6: 148637 (9.103180 %)
+    Degree 2^7: 38621 (2.365319 %)
+    Degree 2^8: 4089 (0.250428 %)
+    Degree 2^9: 418 (0.025600 %)
+    Degree 2^10: 23 (0.001409 %)
+    Degree 2^11: 3 (0.000184 %)
+    Degree 2^12: 3 (0.000184 %)
+    Degree 2^13: 3 (0.000184 %)</p>
+
+<p>==============================================
+ feature-column=64 num-children-per-source=10 num-leafs-per-child=-1
+Computing reference value ...</p>
+
+<hr>
+<h2 id='rand-seed-1540498523'>rand-seed = 1540498523</h2>
+<p>CPU Reference elapsed: 25242.941406 ms.</p>
+<h1 id='embedding-validation-pass'>Embedding validation: PASS</h1>
+<p>batch-size=512
+Using randomly generated Wf1
+Using randomly generated Wa1
+Using randomly generated Wf2
+Using randomly generated Wa2
+Using randomly generated features
+Using advance mode LB
+Using filter mode CULL
+rand-seed = 1540498553</p>
+
+<hr>
+
+<hr>
+
+<p>Run 0 elapsed: 2047.366858 ms, #iterations = 3190
+... More runs</p>
+
+<hr>
+
+<hr>
+
+<p>Run 9 elapsed: 2013.216972 ms, #iterations = 3190
+Embedding validation: PASS
+[Sage] finished.
+ avg. elapsed: 2042.503190 ms
+ iterations: 3190
+ min. elapsed: 2009.524107 ms
+ max. elapsed: 2243.710995 ms
+ load time: 1600.46 ms
+ preprocess time: 3997.880000 ms
+ postprocess time: 2106.487989 ms
+ total time: 26634.360075 ms
+```</p>
+
+<p>There is 1 OMP reference run on the CPU for each combination of <<code>feature-column</code>,
+<code>num-children-per-source</code>, <code>num-leafs-per-child</code>>, with the timing reported after
+<code>CPU Reference elapsed</code>. There are 10 GPU runs for each combination of the
+previous three parameters, plus <code>batch-size</code>. The computation workload of the
+GPU runs are the same as the reference CPU run, with different batch sizes. The
+GPU timing is reported after <code>Run x elapsed:</code>, and the average running time of
+the 10 GPUs is reported after <code>avg. elapsed</code>.</p>
+
+<p>The mathematical formula of the GraphSAGE algorithm is relatively simple and repeats
+itself three times in the form of <code>Normalize(C x Wf + Mean(D) x Wa)</code>. Because of
+this simplicity, it is still possible to verify the implementation by visually
+inspecting the code. The resulted embeddings are also checked for the L2 norm,
+which should be close to 1 for every vertex. Because the neighbor selection
+process is inherently random, it would be very difficult to do a number-by-number checking with other implementations, including the reference. A more
+meaningful regression test will look at the training or validation
+accuracy when the full workflow is completed, which is a possibility for
+future work in year 2.</p>
+<h2 id='performance-and-analysis'>Performance and Analysis</h2>
+<p>The OpenMP and GPU implementations are measured for runtime. It would be
+additionally useful to validate the successful rate of the whole pipeline with the training process in place (perhaps in year 2).</p>
+
+<p>The datasets used for experiments are:</p>
+
+<table style="font-size: 12px;"><thead>
+<tr>
+<th>Dataset</th>
+<th style="text-align: right">V</th>
+<th style="text-align: right">E</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>flickr</td>
+<td style="text-align: right">105938</td>
+<td style="text-align: right">4633896</td>
+</tr>
+<tr>
+<td>amazon</td>
+<td style="text-align: right">548551</td>
+<td style="text-align: right">1851744</td>
+</tr>
+<tr>
+<td>pokec</td>
+<td style="text-align: right">1632803</td>
+<td style="text-align: right">44603928</td>
+</tr>
+<tr>
+<td>cit-Patents</td>
+<td style="text-align: right">3774768</td>
+<td style="text-align: right">33037894</td>
+</tr>
+<tr>
+<td>twitter</td>
+<td style="text-align: right">7199978</td>
+<td style="text-align: right">43483326</td>
+</tr>
+<tr>
+<td>europe-osm</td>
+<td style="text-align: right">50912018</td>
+<td style="text-align: right">108109320</td>
+</tr>
+</tbody></table>
+
+<p>The running times in milliseconds are list below, for both machines. F stands
+for the length of features, C stands for the number of children per source,
+the same as the number of leafs per child, and B notes the batch size that
+produces the shortest running time on GPU among {512, 1024, 2048, 4096, 8192,
+16384}.</p>
+
+<p>The running time on DGX-1 with Tesla P100 GPU:</p>
+
+<table style="font-size: 12px;"><thead>
+<tr>
+<th>Dataset</th>
+<th style="text-align: right">F</th>
+<th style="text-align: right">C</th>
+<th style="text-align: right">B</th>
+<th style="text-align: right">Gunrock GPU</th>
+<th style="text-align: right">OpenMP</th>
+<th style="text-align: right">Speedup</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>flickr</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">113.431</td>
+<td style="text-align: right">1607.468</td>
+<td style="text-align: right">14.17</td>
+</tr>
+<tr>
+<td>flickr</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">248.523</td>
+<td style="text-align: right">2630.659</td>
+<td style="text-align: right">10.59</td>
+</tr>
+<tr>
+<td>flickr</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">2048</td>
+<td style="text-align: right">1139.007</td>
+<td style="text-align: right">10702.981</td>
+<td style="text-align: right">9.40</td>
+</tr>
+<tr>
+<td>flickr</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">192.916</td>
+<td style="text-align: right">1800.150</td>
+<td style="text-align: right">9.33</td>
+</tr>
+<tr>
+<td>flickr</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">8192</td>
+<td style="text-align: right">442.226</td>
+<td style="text-align: right">4022.799</td>
+<td style="text-align: right">9.10</td>
+</tr>
+<tr>
+<td>flickr</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">2048</td>
+<td style="text-align: right">2116.955</td>
+<td style="text-align: right">20655.732</td>
+<td style="text-align: right">9.76</td>
+</tr>
+<tr>
+<td>amazon</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">579.342</td>
+<td style="text-align: right">8905.530</td>
+<td style="text-align: right">15.37</td>
+</tr>
+<tr>
+<td>amazon</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">1235.168</td>
+<td style="text-align: right">18034.229</td>
+<td style="text-align: right">14.60</td>
+</tr>
+<tr>
+<td>amazon</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">4096</td>
+<td style="text-align: right">5486.910</td>
+<td style="text-align: right">45337.011</td>
+<td style="text-align: right">8.26</td>
+</tr>
+<tr>
+<td>amazon</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">976.759</td>
+<td style="text-align: right">9418.961</td>
+<td style="text-align: right">9.64</td>
+</tr>
+<tr>
+<td>amazon</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">2193.159</td>
+<td style="text-align: right">29645.709</td>
+<td style="text-align: right">13.52</td>
+</tr>
+<tr>
+<td>amazon</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">4096</td>
+<td style="text-align: right">10112.228</td>
+<td style="text-align: right">80677.594</td>
+<td style="text-align: right">7.98</td>
+</tr>
+<tr>
+<td>pokec</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">1744.602</td>
+<td style="text-align: right">25242.941</td>
+<td style="text-align: right">14.47</td>
+</tr>
+<tr>
+<td>pokec</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">3806.404</td>
+<td style="text-align: right">34517.180</td>
+<td style="text-align: right">9.07</td>
+</tr>
+<tr>
+<td>pokec</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">2048</td>
+<td style="text-align: right">17486.692</td>
+<td style="text-align: right">133920.000</td>
+<td style="text-align: right">7.66</td>
+</tr>
+<tr>
+<td>pokec</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">2950.606</td>
+<td style="text-align: right">41414.535</td>
+<td style="text-align: right">14.04</td>
+</tr>
+<tr>
+<td>pokec</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">8192</td>
+<td style="text-align: right">6791.829</td>
+<td style="text-align: right">74983.391</td>
+<td style="text-align: right">11.04</td>
+</tr>
+<tr>
+<td>pokec</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">2048</td>
+<td style="text-align: right">32000.378</td>
+<td style="text-align: right">297979.438</td>
+<td style="text-align: right">9.31</td>
+</tr>
+<tr>
+<td>cit-Patents</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">4005.860</td>
+<td style="text-align: right">52094.125</td>
+<td style="text-align: right">13.00</td>
+</tr>
+<tr>
+<td>cit-Patents</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">8541.500</td>
+<td style="text-align: right">93715.789</td>
+<td style="text-align: right">10.97</td>
+</tr>
+<tr>
+<td>cit-Patents</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">4096</td>
+<td style="text-align: right">38494.688</td>
+<td style="text-align: right">293333.781</td>
+<td style="text-align: right">7.62</td>
+</tr>
+<tr>
+<td>cit-Patents</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">6784.752</td>
+<td style="text-align: right">95639.117</td>
+<td style="text-align: right">14.10</td>
+</tr>
+<tr>
+<td>cit-Patents</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">8192</td>
+<td style="text-align: right">15250.170</td>
+<td style="text-align: right">146539.250</td>
+<td style="text-align: right">9.61</td>
+</tr>
+<tr>
+<td>cit-Patents</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">4096</td>
+<td style="text-align: right">70074.883</td>
+<td style="text-align: right">530910.375</td>
+<td style="text-align: right">7.58</td>
+</tr>
+<tr>
+<td>twitter</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">7594.364</td>
+<td style="text-align: right">103753.961</td>
+<td style="text-align: right">13.66</td>
+</tr>
+<tr>
+<td>twitter</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">16212.790</td>
+<td style="text-align: right">162819.531</td>
+<td style="text-align: right">10.04</td>
+</tr>
+<tr>
+<td>twitter</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">4096</td>
+<td style="text-align: right">73488.745</td>
+<td style="text-align: right">636224.625</td>
+<td style="text-align: right">8.66</td>
+</tr>
+<tr>
+<td>twitter</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">12753.125</td>
+<td style="text-align: right">147705.375</td>
+<td style="text-align: right">11.58</td>
+</tr>
+<tr>
+<td>twitter</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">28827.354</td>
+<td style="text-align: right">282497.438</td>
+<td style="text-align: right">9.80</td>
+</tr>
+<tr>
+<td>twitter</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">4096</td>
+<td style="text-align: right">134027.966</td>
+<td style="text-align: right">1105741.500</td>
+<td style="text-align: right">8.25</td>
+</tr>
+<tr>
+<td>europe_osm</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">53521.982</td>
+<td style="text-align: right">611449.625</td>
+<td style="text-align: right">11.42</td>
+</tr>
+<tr>
+<td>europe_osm</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">113740.739</td>
+<td style="text-align: right">1016479.938</td>
+<td style="text-align: right">8.94</td>
+</tr>
+<tr>
+<td>europe_osm</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">4096</td>
+<td style="text-align: right">509313.472</td>
+<td style="text-align: right">4441408.500</td>
+<td style="text-align: right">8.72</td>
+</tr>
+</tbody></table>
+
+<p>The running time on Bowser with a Tesla V100 GPU</p>
+
+<table style="font-size: 12px;"><thead>
+<tr>
+<th>Dataset</th>
+<th style="text-align: right">F</th>
+<th style="text-align: right">C</th>
+<th style="text-align: right">B</th>
+<th style="text-align: right">Gunrock GPU</th>
+<th style="text-align: right">OpenMP</th>
+<th style="text-align: right">Speedup vs. CPU</th>
+<th style="text-align: right">Speedup vs. P100</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>flickr</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">39.894</td>
+<td style="text-align: right">1094.377</td>
+<td style="text-align: right">27.43</td>
+<td style="text-align: right">2.90</td>
+</tr>
+<tr>
+<td>flickr</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">8192</td>
+<td style="text-align: right">91.810</td>
+<td style="text-align: right">2177.953</td>
+<td style="text-align: right">23.72</td>
+<td style="text-align: right">2.76</td>
+</tr>
+<tr>
+<td>flickr</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">1024</td>
+<td style="text-align: right">448.888</td>
+<td style="text-align: right">8641.063</td>
+<td style="text-align: right">19.25</td>
+<td style="text-align: right">2.57</td>
+</tr>
+<tr>
+<td>flickr</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">65.131</td>
+<td style="text-align: right">1849.658</td>
+<td style="text-align: right">28.40</td>
+<td style="text-align: right">2.95</td>
+</tr>
+<tr>
+<td>flickr</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">4096</td>
+<td style="text-align: right">156.965</td>
+<td style="text-align: right">3981.435</td>
+<td style="text-align: right">25.37</td>
+<td style="text-align: right">2.84</td>
+</tr>
+<tr>
+<td>flickr</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">512</td>
+<td style="text-align: right">802.966</td>
+<td style="text-align: right">16471.338</td>
+<td style="text-align: right">20.51</td>
+<td style="text-align: right">2.70</td>
+</tr>
+<tr>
+<td>amazon</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">196.079</td>
+<td style="text-align: right">6142.780</td>
+<td style="text-align: right">31.33</td>
+<td style="text-align: right">2.95</td>
+</tr>
+<tr>
+<td>amazon</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">8192</td>
+<td style="text-align: right">423.145</td>
+<td style="text-align: right">12674.514</td>
+<td style="text-align: right">29.95</td>
+<td style="text-align: right">2.92</td>
+</tr>
+<tr>
+<td>amazon</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">2048</td>
+<td style="text-align: right">1963.691</td>
+<td style="text-align: right">49205.359</td>
+<td style="text-align: right">25.06</td>
+<td style="text-align: right">2.79</td>
+</tr>
+<tr>
+<td>amazon</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">324.067</td>
+<td style="text-align: right">9978.198</td>
+<td style="text-align: right">30.79</td>
+<td style="text-align: right">3.10</td>
+</tr>
+<tr>
+<td>amazon</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">8192</td>
+<td style="text-align: right">733.181</td>
+<td style="text-align: right">21726.697</td>
+<td style="text-align: right">29.63</td>
+<td style="text-align: right">2.99</td>
+</tr>
+<tr>
+<td>amazon</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">2048</td>
+<td style="text-align: right">3361.894</td>
+<td style="text-align: right">86967.164</td>
+<td style="text-align: right">25.87</td>
+<td style="text-align: right">3.01</td>
+</tr>
+<tr>
+<td>pokec</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">602.116</td>
+<td style="text-align: right">17111.664</td>
+<td style="text-align: right">28.42</td>
+<td style="text-align: right">2.84</td>
+</tr>
+<tr>
+<td>pokec</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">8192</td>
+<td style="text-align: right">1379.450</td>
+<td style="text-align: right">35887.129</td>
+<td style="text-align: right">26.02</td>
+<td style="text-align: right">2.71</td>
+</tr>
+<tr>
+<td>pokec</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">1024</td>
+<td style="text-align: right">6793.011</td>
+<td style="text-align: right">140751.234</td>
+<td style="text-align: right">20.72</td>
+<td style="text-align: right">2.54</td>
+</tr>
+<tr>
+<td>pokec</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">1000.310</td>
+<td style="text-align: right">28987.953</td>
+<td style="text-align: right">28.98</td>
+<td style="text-align: right">2.96</td>
+</tr>
+<tr>
+<td>pokec</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">4096</td>
+<td style="text-align: right">2366.202</td>
+<td style="text-align: right">63863.352</td>
+<td style="text-align: right">26.99</td>
+<td style="text-align: right">2.82</td>
+</tr>
+<tr>
+<td>pokec</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">512</td>
+<td style="text-align: right">11859.789</td>
+<td style="text-align: right">265325.281</td>
+<td style="text-align: right">22.37</td>
+<td style="text-align: right">2.64</td>
+</tr>
+<tr>
+<td>cit-Patents</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">1374.782</td>
+<td style="text-align: right">38803.195</td>
+<td style="text-align: right">28.22</td>
+<td style="text-align: right">2.95</td>
+</tr>
+<tr>
+<td>cit-Patents</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">8192</td>
+<td style="text-align: right">3006.717</td>
+<td style="text-align: right">78112.516</td>
+<td style="text-align: right">25.98</td>
+<td style="text-align: right">2.87</td>
+</tr>
+<tr>
+<td>cit-Patents</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">2048</td>
+<td style="text-align: right">13910.529</td>
+<td style="text-align: right">291278.125</td>
+<td style="text-align: right">20.94</td>
+<td style="text-align: right">2.78</td>
+</tr>
+<tr>
+<td>cit-Patents</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">2276.261</td>
+<td style="text-align: right">65735.234</td>
+<td style="text-align: right">28.88</td>
+<td style="text-align: right">2.99</td>
+</tr>
+<tr>
+<td>cit-Patents</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">8192</td>
+<td style="text-align: right">5201.184</td>
+<td style="text-align: right">141957.922</td>
+<td style="text-align: right">27.29</td>
+<td style="text-align: right">2.96</td>
+</tr>
+<tr>
+<td>cit-Patents</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">2048</td>
+<td style="text-align: right">23922.527</td>
+<td style="text-align: right">560321.438</td>
+<td style="text-align: right">23.42</td>
+<td style="text-align: right">2.94</td>
+</tr>
+<tr>
+<td>twitter</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">2575.303</td>
+<td style="text-align: right">72372.484</td>
+<td style="text-align: right">28.10</td>
+<td style="text-align: right">2.91</td>
+</tr>
+<tr>
+<td>twitter</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">8192</td>
+<td style="text-align: right">5658.345</td>
+<td style="text-align: right">148938.422</td>
+<td style="text-align: right">26.32</td>
+<td style="text-align: right">2.84</td>
+</tr>
+<tr>
+<td>twitter</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">2048</td>
+<td style="text-align: right">26468.915</td>
+<td style="text-align: right">569925.500</td>
+<td style="text-align: right">21.53</td>
+<td style="text-align: right">2.77</td>
+</tr>
+<tr>
+<td>twitter</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">4270.454</td>
+<td style="text-align: right">125431.766</td>
+<td style="text-align: right">29.37</td>
+<td style="text-align: right">2.98</td>
+</tr>
+<tr>
+<td>twitter</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">8192</td>
+<td style="text-align: right">9744.686</td>
+<td style="text-align: right">267841.563</td>
+<td style="text-align: right">27.49</td>
+<td style="text-align: right">2.93</td>
+</tr>
+<tr>
+<td>twitter</td>
+<td style="text-align: right">128</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">2048</td>
+<td style="text-align: right">45604.444</td>
+<td style="text-align: right">1098039.375</td>
+<td style="text-align: right">24.08</td>
+<td style="text-align: right">2.93</td>
+</tr>
+<tr>
+<td>europe_osm</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">10</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">18440.253</td>
+<td style="text-align: right">497153.969</td>
+<td style="text-align: right">26.96</td>
+<td style="text-align: right">2.90</td>
+</tr>
+<tr>
+<td>europe_osm</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">25</td>
+<td style="text-align: right">16384</td>
+<td style="text-align: right">39883.421</td>
+<td style="text-align: right">1008675.500</td>
+<td style="text-align: right">25.29</td>
+<td style="text-align: right">2.85</td>
+</tr>
+<tr>
+<td>europe_osm</td>
+<td style="text-align: right">64</td>
+<td style="text-align: right">100</td>
+<td style="text-align: right">4096</td>
+<td style="text-align: right">184128.123</td>
+<td style="text-align: right">3825227.500</td>
+<td style="text-align: right">20.77</td>
+<td style="text-align: right">2.77</td>
+</tr>
+</tbody></table>
+<h3 id='implementation-limitations'>Implementation limitations</h3>
+<ul>
+<li><p><strong>Memory usage</strong> Gunrock's GPU implementation uses <code>B x (C x (Wf2.x + F + 1) +
+2Wf2.x + 2R.x) x 4</code> bytes in additional to the features that takes up <code>VF x 4</code>
+bytes and the graph itself. Because the batch size B can be adjusted, the main
+memory consumption is from the feature array. For a P100 with 16 GB memory, if
+the feature length is 64, the maximum number of vertices it can handle before
+hitting OOM is about 60 million. The largest dataset tested so far is the
+<code>europe_osm</code> dataset with 50.9M vertices and 108M edges.</p></li>
+<li><p><strong>Data types</strong> The vertex Ids and edge Ids are both presented as 32-bit unsigned
+integers. Input features, weights, output embeddings and intermedia results are
+represented as 32-bit floating-point numbers. A not so recent trend in machine
+learning research is to use less precision in neural networks. Half precision /
+16-bit floating points are quite common, and supported by recent GPUs. Using
+half precision cuts the computation time to about half, as compared to single
+precision, and also cuts the memory usage to store the features in half. It would
+be interesting to see what would happen if the data type is changed to half
+precision.</p></li>
+<li><p><strong>Graph types</strong> The training process requires the graph to be undirected
+(enforced by <code>--undirected</code> in Gunrock's command line parameters). The behavior of
+sampling a zero-length neighbor list is undefined, and currently it will return
+the source vertex itself.</p></li>
+</ul>
+<h3 id='comparison-against-existing-implementations'>Comparison against existing implementations</h3>
+<p>Because computation on each vertex is independent from other vertices, GraphSAGE is an
+embarrassingly parallel problem when parallelized across vertices. Running a simple
+test with the <code>pokec</code> dataset, feature length as 64, num_children_per_source and
+num_leafs_per_child both at 10, the serial run (iwith omp-threads forced to 1)
+on the DGX-1 takes 366390.250 ms, as compared to 25242.941 ms using 32 threads;
+using 32 threads is about 14.5X faster than a single thread, which shows GraphSAGE
+scales pretty well on the CPU.</p>
+
+<p>Comparing the running time of a 32-thread OpenMP and Gunrock's GPU implementation,
+the P100 is about 7.5X to 15X faster. Increasing the feature length from 64 to
+128 roughly doubles the computation workload, and the speedup does not change
+very much for datasets with more than about 1M vertices. However, increasing the
+number of children per source and the number of leafs per child decreases the
+speedup. The OMP's running time increases slower than the number of neighbors
+selected, while the GPU's running time increases faster than the number of neighbors
+selected. This may be attributed to the cache effect: the parallelism on CPU is
+limited, so data reuse rate is high, even when the number of neighbors increases;
+however, the number of source or children processed on the GPU at the same time
+is much larger, with a much bigger working set, and this decreases the cache hit
+rate, so results in longer running time.</p>
+
+<p>Also interesting is comparing the runtime on V100 and P100: V100 is
+about 3X faster than P100 when running GraphSAGE. This large performance difference
+is caused by the different limiting factors when running GraphSAGE on these two GPUs;
+details are in the the Performance limitations section. Compared to OpenMP, the V100
+is about 20X to 30X faster.</p>
+<h3 id='performance-limitations'>Performance limitations</h3>
+<p>We profiled GraphSAGE with the <code>pokec</code> dataset on a Titan Xp GPU (profiling on P100
+caused internal error in the profiler itself; Titan Xp has roughly the same SM
+design as P100, but has only 30 SMs vs. 56 on the P100; P100 also has 16 GB
+HMB2 memory, and Titan Xp only has 12 GB GDDR5X; runtime on Titan Xp and
+P100 is similar). kernel2 takes up about 60% of
+the computation of an batch, 10.64 ms out of 17.76 ms for <code>pokec</code> with 64 feature
+length, 10 neighbors, and batch size at 16384. Kernel1 takes 1.56 ms, or 8.8%,
+and Kernel3 takes 5.52 ms, or 31.1%.</p>
+
+<p>Further detail on the profile of Kernel2 on the Titan Xp shows the
+utilization of the memory system:</p>
+
+<table style="font-size: 12px;"><thead>
+<tr>
+<th>Type</th>
+<th style="text-align: right">Transactions</th>
+<th style="text-align: right">Bandwidth</th>
+<th>Utilization</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Shared Loads</td>
+<td style="text-align: right">2129920</td>
+<td style="text-align: right">31.997 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Shared Stores</td>
+<td style="text-align: right">1638400</td>
+<td style="text-align: right">24.613 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Shared Total</td>
+<td style="text-align: right">3768320</td>
+<td style="text-align: right">56.611 GB/s</td>
+<td>Idle to low</td>
+</tr>
+<tr>
+<td>Local Loads</td>
+<td style="text-align: right">0</td>
+<td style="text-align: right">0 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Local Stores</td>
+<td style="text-align: right">0</td>
+<td style="text-align: right">0 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Global Loads</td>
+<td style="text-align: right">2685009922</td>
+<td style="text-align: right">1575.871 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Global Stores</td>
+<td style="text-align: right">0</td>
+<td style="text-align: right">0 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Texture Reads</td>
+<td style="text-align: right">671252480</td>
+<td style="text-align: right">2521.025 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Unified Total</strong></td>
+<td style="text-align: right"><strong>3356262402</strong></td>
+<td style="text-align: right"><strong>4096.897 GB/s</strong></td>
+<td><strong>High</strong></td>
+</tr>
+<tr>
+<td>L2 Reads</td>
+<td style="text-align: right">264170192</td>
+<td style="text-align: right">992.145 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>L2 Writes</td>
+<td style="text-align: right">10485773</td>
+<td style="text-align: right">39.381 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>L2 Total</td>
+<td style="text-align: right">274655965</td>
+<td style="text-align: right">1031.526 GB/s</td>
+<td>Low to medium</td>
+</tr>
+<tr>
+<td>Device Reads</td>
+<td style="text-align: right">2181833</td>
+<td style="text-align: right">8.194 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Device Writes</td>
+<td style="text-align: right">543669</td>
+<td style="text-align: right">2.042 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Device Total</td>
+<td style="text-align: right">2725502</td>
+<td style="text-align: right">10.236 GB/s</td>
+<td>Idle to low</td>
+</tr>
+</tbody></table>
+
+<p><img src="attachments/sage/pokec_TitanXp.png" title="Memory statics" alt="Sage_Pokec_TianXp" /></p>
+
+<p>It's clear that the unified cache is almost fully utilized, at 4 TBps out of
+the 5 TBps theoretical upper bound, and is the bottleneck.
+This is because the W arrays and the intermediate arrays are highly reusable.</p>
+
+<p>Running the same experiment on the V100 shows a different picture within the memory
+system:</p>
+
+<table style="font-size: 12px;"><thead>
+<tr>
+<th>Type</th>
+<th style="text-align: right">Transactions</th>
+<th style="text-align: right">Bandwidth</th>
+<th>Utilization</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Shared Loads</td>
+<td style="text-align: right">2138599</td>
+<td style="text-align: right">74.166 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Shared Stores</td>
+<td style="text-align: right">1640842</td>
+<td style="text-align: right">56.904 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Shared Total</td>
+<td style="text-align: right">3779441</td>
+<td style="text-align: right">131.070 GB/s</td>
+<td>Idle to low</td>
+</tr>
+<tr>
+<td>Local Loads</td>
+<td style="text-align: right">0</td>
+<td style="text-align: right">0 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Local Stores</td>
+<td style="text-align: right">0</td>
+<td style="text-align: right">0 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Global Loads</td>
+<td style="text-align: right">419594240</td>
+<td style="text-align: right">3637.862 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Global Stores</td>
+<td style="text-align: right">0</td>
+<td style="text-align: right">0 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Texture Reads</td>
+<td style="text-align: right">177448960</td>
+<td style="text-align: right">6153.897 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Unified Total</td>
+<td style="text-align: right">597043200</td>
+<td style="text-align: right">9791.759 GB/s</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>L2 Reads</td>
+<td style="text-align: right">8209326</td>
+<td style="text-align: right">71.174 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>L2 Writes</td>
+<td style="text-align: right">5243176</td>
+<td style="text-align: right">45.458 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>L2 Total</td>
+<td style="text-align: right">274655965</td>
+<td style="text-align: right">116.633 GB/s</td>
+<td>Idle to low</td>
+</tr>
+<tr>
+<td>Device Reads</td>
+<td style="text-align: right">2402833</td>
+<td style="text-align: right">20.832 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Device Writes</td>
+<td style="text-align: right">571925</td>
+<td style="text-align: right">4.959 GB/s</td>
+<td></td>
+</tr>
+<tr>
+<td>Device Total</td>
+<td style="text-align: right">2974758</td>
+<td style="text-align: right">25.791 GB/s</td>
+<td>Idle to low</td>
+</tr>
+</tbody></table>
+
+<p><img src="attachments/sage/pokec_V100.png" title="Memory statics" alt="Sage_Pokec_V100" /></p>
+
+<p>On the V100, kernel2 only takes 3.982 ms (about 60% of 6.67 ms per batch), and the
+unified-cache throughput increases to 9.8 TBps, more than double than on the
+Titan Xp. In fact, the theoretical upper bound of V100's L1 throughput is 28
+TBps, resulted from doubling each SM's load throughput from 128 bytes per
+cycle to 256 bytes per cycle, and increasing the SM count to 80. This is the
+reason why the V100 can outperform P100 and Titan Xp by about 3X. The performance
+bottleneck is no longer the memory system, and switches to integer
+computations, which comes mainly from array index calculation. This particular
+kernel also takes up 32 registers per thread, which is the limit for full GPU
+occupancy. Storing intermediate index calculation results would help if the
+register usage is not so high.</p>
+<h2 id='next-steps'>Next Steps</h2><h3 id='alternate-approaches'>Alternate approaches</h3>
+<p><strong>Things we tried that didn't really work</strong></p>
+
+<p>An simple implementation that uses a thread to process the per-source or per-child
+computation is coded, but it runs about 10X slower than the current
+implementation that uses a block to process such units. One reason is the use
+of block-level parallel primitives, such as block reduce. Another reason is that
+by using a whole block, instead of a thread, to process the same computation,
+the working set is greatly reduced together with the parallelism, and the whole
+working set can fit into the cache system. When using higher parallelism, the
+working set is larger, and forced to be evicted into the global memory, and
+creates a bottleneck. Actually during the experiment, for the thread-level
+parallelism implementation, reducing the number of blocks of the kernel improves
+its running time, the opposite to normally what would be expected from running
+other kernels.</p>
+<h3 id='gunrock-implications'>Gunrock implications</h3>
+<p>One thing that Gunrock does not provide, or intentionally hides, is block-level parallelism. However, it comes in handy when implementing the custom
+kernels for GraphSAGE: each block can process a one-dimension vector, with each
+thread holding one element, then use a block-level reduce to get the sum of those
+elements; this way is highly efficient, and actually reduces the parallelism and with it the size of the working set of data.</p>
+<h3 id='notes-on-multi-gpu-parallelization'>Notes on multi-GPU parallelization</h3>
+<p>The main memory usage is due to feature data, so it is critical to not
+duplicate features. The side effect is the computation needs to be divided
+into child-centric and source-centric parts, and exchange data in between. It
+should be scalable, and easy to implement.</p>
+<h3 id='notes-on-dynamic-graphs'>Notes on dynamic graphs</h3>
+<p>GraphSAGE does not have a dynamic graph component, but it should able to work on a
+dynamic graph. Some of the data may be reusable if the graph has not been
+significantly changed, but the resulting memory requirement to store the intermediate
+data may make data reuse impossible.</p>
+<h3 id='notes-on-larger-datasets'>Notes on larger datasets</h3>
+<p>If the dataset is so large that the graph and the per-vertex feature data are
+larger than the combined GPU memory, it's possible to accumulate the features
+of leafs and children on CPU, transfer the data on to GPU, and perform the
+computation. Because of the cost of the transfer, runtime will increase significantly as compared to the cases when
+the full data can fit in the GPU memory, but whether that will cause an increase above
+the OpenMP implementation is still unknown.</p>
+<h3 id='notes-on-other-pieces-of-this-workload'>Notes on other pieces of this workload</h3>
+<p>The main part of GraphSAGE workflow is actually the training process, which will be
+outside of Gunrock, provided by TensorFlow, PyTorch or other machine learning
+libraries. How to connect the training with the Gunrock GPU implementation is
+the main task for this workload going forward.</p>
+
+      </div>
+
+        <!-- <div class="dark-box"></div> -->
+    </div>
+  </body>
+</html>
