@@ -306,7 +306,7 @@
 <p>The reference implementation uses the Jonker-Volgenant algorithm to solve the linear assignment subproblem.  However, the JV algorithm (and the similar Hungarian algorithm) do not admit straightforward parallel implementations.  Thus, we replace the JV algorithm with <a href="http://web.mit.edu/dimitrib/www/Auction_Encycl.pdf">Bertsekas' auction algorithm</a>, which is much more natural to parallelize.</p>
 
 <p>Because SGM consists of linear algebra plus an LSAP solver, we implement it outside of the Gunrock framework, using <a href="https://arxiv.org/abs/1804.03327">a GPU GraphBLAS implementation</a> from John Owens' lab, as well as the <a href="https://nvlabs.github.io/cub/">CUDA CUB</a> library.</p>
-<h2 id='how-to-run-this-application-on-darpa-39-s-dgx-1'>How To Run This Application on DARPA's DGX-1</h2><h3 id='prereqs-input'>Prereqs/input</h3><pre class="highlight shell"><code>git clone --recursive https://github.com/owensgroup/csgm.git
+<h2 id='how-to-run-this-application-on-darpa-39-s-dgx-1'>How To Run This Application on DARPA's DGX-1</h2><h3 id='prereqs-input'>Prereqs/input</h3><pre class="highlight mid-column-code shell"><code>git clone --recursive https://github.com/owensgroup/csgm.git
 <span class="nb">cd </span>csgm
 
 <span class="c"># build</span>
@@ -318,10 +318,10 @@ python data/make-random.py --num-seeds 100
 wc -l data/<span class="o">{</span>A,B<span class="o">}</span>.mtx
 </code></pre><h3 id='running-the-application'>Running the application</h3>
 <p>Command:</p>
-<pre class="highlight shell"><code>./csgm --A data/A.mtx --B data/B.mtx --num-seeds 100 --sgm-debug 1
+<pre class="highlight mid-column-code shell"><code>./csgm --A data/A.mtx --B data/B.mtx --num-seeds 100 --sgm-debug 1
 </code></pre>
 <p>Output:</p>
-<pre class="highlight plaintext"><code>===== iter=0 ================================
+<pre class="highlight mid-column-code plaintext"><code>===== iter=0 ================================
 APB_num_entries=659238
 counter=17
 run_num=0 | h_numAssign=4096 | milliseconds=21.3737
