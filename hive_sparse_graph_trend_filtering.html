@@ -1,0 +1,629 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" type="image/ico" href="images/favicon.ico">
+    <title>Sparse Fused Lasso (HIVE)</title>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
+
+    <style media="screen">
+      /* Add space between vega-embed links */
+      /* http://vega.github.io/vega-tutorials/airports/ */
+      .vega-embed .vega-actions a {
+        margin-left: 1em;
+        visibility: hidden;
+      }
+      .vega-embed:hover .vega-actions a {
+        visibility: visible;
+      }
+    </style>
+  </head>
+
+  <body class="hive_sparse_graph_trend_filtering" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo.png" class="logo" alt="Logo" />
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc" class="toc-list-h1">
+          <li>
+            <a href="#sparse-fused-lasso" class="toc-h1 toc-link" data-title="Sparse Fused Lasso">SPARSE FUSED LASSO</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#summary-of-results" class="toc-h2 toc-link" data-title="Summary of Results">Summary of Results</a>
+                  </li>
+                  <li>
+                    <a href="#summary-of-gunrock-implementation" class="toc-h2 toc-link" data-title="Summary of Gunrock Implementation">Summary of Gunrock Implementation</a>
+                  </li>
+                  <li>
+                    <a href="#how-to-run-this-application-on-darpa-39-s-dgx-1" class="toc-h2 toc-link" data-title="How To Run This Application on DARPA's DGX-1">How To Run This Application on DARPA's DGX-1</a>
+                  </li>
+                  <li>
+                    <a href="#performance-and-analysis" class="toc-h2 toc-link" data-title="Performance and Analysis">Performance and Analysis</a>
+                  </li>
+                  <li>
+                    <a href="#next-steps" class="toc-h2 toc-link" data-title="Next Steps">Next Steps</a>
+                  </li>
+              </ul>
+          </li>
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://github.com/gunrock/gunrock'>Gunrock&colon; GPU Graph Analytics</a></li>
+            <li>Gunrock &copy; 2018 The Regents of the University of California.</li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+
+        <!-- <div class="dark-box"></div> -->
+
+      <div class="content">
+        <h1 id='sparse-fused-lasso'>Sparse Fused Lasso</h1>
+<p>Given a graph where each vertex on the graph has a weight, <em>sparse fused lasso (SFL)</em>, also named <em>sparse graph trend filter (GTF)</em>, tries to learn a new weight for each vertex that is (1) sparse (most vertices have weight 0), (2) close to the original weight in the l2 norm, and (3) close to its neighbors' weight(s) in the l1 norm. This algorithm is usually used in main trend filtering (denoising). For example, an image (grid graph) with noisy pixels can be filtered with this algorithm to get a new image without the noisy pixels, which are "smoothed out" by its neighbors.
+<a href="https://arxiv.org/abs/1410.7690">https://arxiv.org/abs/1410.7690</a></p>
+<h2 id='summary-of-results'>Summary of Results</h2>
+<p>The SFL problem is mainly divided into two parts, computing residual graphs from maxflow and renormalizing the weights of the vertices. Maxflow is parallelizable with the push-relabel algorithm, so we adopt this algorithm in Gunrock's implementation. Moreover, each vertex has its own work to compute which communities it belongs to, and normalize the weights with other vertices in the same community. This renormalization requires global synchronization. SFL iterates by calling maxflow and renormalization several times before it converges. We notice that the overall runtime is mostly spent in maxflow, and thus improving the maxflow implementation will bring substantial speedup in the SFL.</p>
+
+<p>Because of the current state of our maxflow implementation, we notice a 30x slowdown of Gunrock's GPU SFL with respect to the benchmark implementation. This slowdown is mainly caused by the parallel push-relabel implementation taking too many iterations to converge, and making SFL kernel launching overhead-bound. We are looking into algorithmic optimizations to reduce the number of iterations maxflow takes, and also engineering optimizations to reduce the effects of kernel overheads in computation time.</p>
+<h2 id='summary-of-gunrock-implementation'>Summary of Gunrock Implementation</h2>
+<p>The loss function is <code>0.5 * sum((y' - y)^2) + lambda1 * sum(abs(y_i' - y_j')) + lambda2 * sum(abs(yi'))</code>, where <code>y</code> is the input weight (observation) for each vertex and <code>y'</code> (fitted weight) is the new weight for each vertex. Lambda1 and Lambda2 are required parameters to process the graph in SFL.</p>
+
+<p>The input graph is specified in two files. The first file contains the original vertices' weights and the second file contains the directed graph connectivity without weights (edge pairs only). These two files and a edge_regularization_strength (<code>lambda1</code>) of the directed graph edge weights are the input to preprocessing. Two extra vertices, source and sink, are added to the original graph as well. They serve as two "labels" of different segments on the graph. This results in a graph where edges that connect to the source or sink have edge-weights as in the <code>vertices' weights</code> file, and the other edges are assigned an edge weight of <code>lambda1</code>.</p>
+
+<p>The Gunrock implementation of this application has two parts. The first part is the maxflow algorithm. We choose a push-relabel maxflow formulation, which is well-suited for parallelization on a GPU with Gunrock. Computing a valid maxflow also implies a solution to the mincut problem, which is a segmentation of a graph into two pieces where the division is across a set of edges with the minimum possible weights. The output of this maxflow algorithm is (1) a residual graph where each edge weight is computed as <code>capacity - edge_flow</code>, and (2) a Boolean array that marks which vertices are reachable from the source after the mincut.</p>
+
+<p>The second part is a renormalization of the residual graph and clustering based on reachability of the vertex. The renormalization is a process where (1) averages of the new weights of vertices that are grouped together as communities are computed, and (2) the new weights then subtract their own community averages. After the renormalization is done, this renormalized residual graph is passed into the maxflow again. Several iterations of maxflow then renormalization are needed before the new weights of different communities converge because vertices can be reassigned to different communities. In each of the SFL iterations, two non-overlapped subgraphs will be generated by maxflow/mincut, and thus the big communities in the last SFL iteration will have split into small communities. The vertices in a specific community will have the same new weights assigned to them.</p>
+
+<p>The outputs will be the normalized values assigned to each vertex.</p>
+
+<p>Lastly, these values will be passed into a soft-threshold function with <code>lambda2</code> to achieve the sparse representation by dropping the small absolute values. More specifically, the new weight will be subtracted by <code>lambda2</code> if the new weight is positive and larger than <code>lambda2</code>, or added by <code>lambda2</code> if the new weight is negative and smaller than <code>-lambda2</code>. If the new weight is in between <code>-lambda2</code> to <code>lambda2</code>, then the new weights will be 0.</p>
+
+<p>Pseudocode for the core SFL algorithm is as follows:</p>
+<pre class="highlight mid-column-code plaintext"><code>Load the graph and normalize edge weights
+
+Repeat iteration till convergence:
+
+    // First part: Maxflow
+    // Push phase
+    For each local vertex v:
+        If (excess[v] <= 0) continue
+        If (v == source || v == sink) continue
+        For each edge e<v, u> of v:
+            If (capacity[e] <= flow[e]) continue
+            If (height[v] <= height[u]) continue
+            move := min(capacity[e] - flow[e], excess[v])
+            excess[v] -= move
+            flow[e] += move
+            excess[u] += move
+            flow[reverse[e]] -= move
+
+    // Relabel phase
+    For each local vertex v:
+        If (excess[v] <= 0) continue
+        min_height := infinity
+        For each e<v, u> of v:
+            If (capacity[e] <= flow[e]) continue;
+            If (min_height > height[u]) min_height := height[u]
+        If (height[v] <= min_height)
+           height[v] := min_height + 1
+
+    // Min-cut
+    Run a BFS to mark the accessibilities of vertices from the source vertex
+    in the residue graph
+
+    // Second part: renormalization
+    // Reset available community
+    For each community comm:
+        community_weights[comm] := 0
+        community_sizes  [comm] := 0
+        next_communities [comm] := 0
+
+    // Accumulate the weights and count the number of vertices belong to the communities
+    For each vertex v:
+        If v is accessible from the source
+            comm := next_communities[curr_communities[v]];
+            If (comm == 0) update comm
+            community_sizes[comm]++
+            community_weights[comm] += weight[source -> v]
+        Else
+            community_weights[comm] -= weight[v -> sink]
+            community_sizes [comm] ++
+
+    // Normalize community
+    For each community comm:
+        community_weights[comm] /= community_sizes[comm]
+        community_accus [comm] += community_weights[comm]
+
+    // Update the residual graph
+    For each vertex v:
+        comm = curr_communities[v]
+        If (v is accessible from the source):
+            weight[source->v] -= community_weights[comm]
+            If (weight[source->v] < 0):
+                Swap(-weight[source->v], weight[v->sink])
+        Else
+            weight[v->sink] += community_weights[comm]
+            If (weight[v->sink] < 0):
+                Swap(weight[source->v], -weight[v->sink])
+
+    // End of Repeats
+
+// Part 3 Sparsify community_accus by lambda2
+For i in len(each community_accus):
+    If (community_accus < 0):
+        community_accus[i] := min(community_accus[i] + lambda2, 0)
+    Else:
+        community_accus[i] := max(community_accus[i] - lambda2, 0)
+
+Return community_accus
+</code></pre><h2 id='how-to-run-this-application-on-darpa-39-s-dgx-1'>How To Run This Application on DARPA's DGX-1</h2><h3 id='prereqs-input'>Prereqs/input</h3>
+<p>CUDA should have been installed; <code>$PATH</code> and <code>$LD_LIBRARY_PATH</code> should have been
+set correctly to use CUDA. The current Gunrock configuration assumes boost
+(1.58.0 or 1.59.0) and Metis are installed; if not, changes need to be made in
+the Makefiles. DARPA's DGX-1 has both installed when the tests are performed.</p>
+<pre class="highlight mid-column-code shell tab-shell"><code>git clone --recursive https://github.com/gunrock/gunrock/
+<span class="nb">cd </span>gunrock
+git checkout dev-refactor
+git submodule init
+git submodule update
+mkdir build
+<span class="nb">cd </span>build
+cmake ..
+<span class="nb">cd</span> ../tests/gtf
+make
+</code></pre>
+<p>At this point, there should be an executable <code>gtf_main_<CUDA version>_x86_64</code>
+in <code>tests/gtf/bin</code>.</p>
+
+<p>The testing is done with <a href="https://github.com/wetliu/gunrock/tree/master">https://github.com/wetliu/gunrock/tree/master</a> using <code>dev-refactor</code> branch at commit <code>8f51a6369127204a87893b74a7b920ad3d3fdd58</code>
+(Oct. 31, 2018), using CUDA 9.1 with NVIDIA driver 390.30.</p>
+<h3 id='hive-data-preparation'>HIVE Data Preparation</h3>
+<p>Prepare the data; skip this step if you are just running the sample dataset.</p>
+
+<p>Refer to <code>parse_args()</code> in <code>taxi_tsv_file_preprocessing.py</code> for dataset preprocessing options.</p>
+
+<p>If you don't have the <code>e</code> or <code>n</code> files:
+```shell
+cd gunrock/tests/gtf/_data</p>
+
+<p>export TOKEN= # get this Authentication TOKEN from https://api-token.hiveprogram.com/#!/user
+mkdir -p _data
+wget --header "Authorization:$TOKEN" \
+  https://hiveprogram.com/data/_v0/sparse_fused_lasso/taxi/taxi-small.tar.gz
+tar -xzvf taxi-small.tar.gz &amp;&amp; rm -r taxi-small.tar.gz
+mv taxi-small _data/</p>
+
+<p>wget --header "Authorization:$TOKEN" \
+  https://hiveprogram.com/data/_v0/sparse_fused_lasso/taxi/taxi-1M.tar.gz
+tar -xzvf taxi-1M.tar.gz &amp;&amp; rm -r taxi-1M.tar.gz
+mv taxi-1M _data/</p>
+
+<p>python taxi_tsv_file_preprocessing.py
+```</p>
+
+<p>Two files, <code>e</code> and <code>n</code>, are generated.</p>
+
+<p>Set the <code>lambda1</code> (see equation above) in generate_graph.py. If you have the <code>e</code> and <code>n</code> files, generated by the above commands or copied from <code>/raid/data/hive/gtf/{small, medium, large}</code>, you can do the following (<code>/raid/data/hive/gtf/small/</code> as an example):</p>
+<pre class="highlight mid-column-code shell tab-shell"><code><span class="nb">cd </span>gunrock/tests/gtf/_data
+cp /raid/data/hive/gtf/small/n .
+cp /raid/data/hive/gtf/small/e .
+python generate_graph.py
+</code></pre>
+<p>A file called <code>std_added.mtx</code> is generated for Gunrock input.</p>
+<h3 id='running-the-application'>Running the application</h3><pre class="highlight mid-column-code plaintext"><code>--lambda2 is the sparsity regularization strength
+</code></pre>
+<p>Sample command line with argument.
+<code>shell
+./bin/test_gtf_10.0_x86_64 market ./_data/std_added.mtx --lambda2 3
+</code></p>
+<h3 id='output'>Output</h3>
+<p>The code will output two files in the current directory. One is called <code>output_pr.txt</code> (for CPU reference) and the other is called <code>output_pr_GPU.txt</code> (for GPU SFL with push-relabel backend).
+Each vertex's new weight will be stored in each line of the two files. These outputs could be further processed into the resulting heatmap.
+The printout after running <code>gtf_main_<CUDA version>_x86_64</code> includes the timing of the application.</p>
+
+<p>Sample <code>txt</code> output:</p>
+<pre class="highlight mid-column-code plaintext"><code>0
+0
+0
+0
+0
+0
+-11.375
+-0.307292
+0
+</code></pre>
+<p>Sample output on console:</p>
+<pre class="highlight mid-column-code plaintext"><code>______CPU reference algorithm______                                                                                                                                  [9/1944]
+offset is 58522 num edges 76366
+!!!!!!!!!! avg is -0.876037
+Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+Iteration 11
+-----------------------------------
+Elapsed: 5500.730991 ms
+in side that weird function1
+offset in GPU preprocess is 58522 num edges 76366
+avg in GPU preprocess is -0.876037
+Using advance mode LB
+Using filter mode CULL
+Using advance mode LB
+Using filter mode CULL
+offset is 58522 num edges 76366
+h_community_accus is -0.876037
+______GPU SFL algorithm____
+enact calling successfully!!!!!!!!!!!
+-----------------------------------
+Run 0, elapsed: 3341.358185 ms, #iterations = 12
+transfering to host!!!: 8924
+[gtf] finished.
+ avg. elapsed: 3341.358185 ms
+ iterations: 0
+ min. elapsed: 3341.358185 ms
+ max. elapsed: 3341.358185 ms
+ load time: 138.952 ms
+ preprocess time: 342.184000 ms
+ postprocess time: 0.258923 ms
+ total time: 3845.412016 ms
+
+</code></pre><h2 id='performance-and-analysis'>Performance and Analysis</h2>
+<p>We measure the runtime and loss function <code>0.5 * sum((y' - y)^2) + lambda1 * sum(abs(y_i' - y_j')) + lambda2 * sum(abs(yi'))</code>, where <code>y</code> is the input weight (observation) for each vertex and <code>y'</code> (fitted weight) is the new weight for each vertex.</p>
+<h3 id='implementation-limitations'>Implementation limitations</h3>
+<ul>
+<li><p><strong>Memory usage</strong> Each edge in the graph needs at least 20 bytes of GPU device memory: 64 bits for the capacity value, 64 bits for the flow value, 16 bits for the index of the reverse edge. Each node in the graph needs at least 16 bytes of GPU device memory: 64 bits for the excess value, 16 bits for the height value and 16 bits for the index of the lowest neighbor.</p></li>
+<li><p><strong>Data type</strong> For edges we have the following arrays: capacity, flow, reverse. For nodes we have the following arrays: height, excess, lowest_neighbor. Capacity, flow and excess arrays and all computation around them are double-precision floating point values (64-bit <code>double</code> in C/C++). We use an epsilon value of 1e-6 to compare floating-point numbers to zero. Reverse, height, and lowest_neighbor arrays and all computation around them are 32-bit integer values.</p></li>
+</ul>
+<h3 id='comparison-against-existing-implementations'>Comparison against existing implementations</h3>
+<p>Graphtv is an official implementation of the sparse fused lasso algorithm with a parametric maxflow backend. It is a CPU serial implementation <a href="https://www.cs.ucsb.edu/%7Eyuxiangw/codes/gtf_code.zip">https://www.cs.ucsb.edu/~yuxiangw/codes/gtf_code.zip</a>. The Gunrock GPU runtime is measured between the application enactor and it is an output of the application.</p>
+
+<table style="font-size: 12px;"><thead>
+<tr>
+<th>DataSet</th>
+<th>time starts</th>
+<th>time ends</th>
+<th>#E</th>
+<th>#V</th>
+<th>Graphtv runtime</th>
+<th>Gunrock GPU runtime</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>NY Taxi-small</td>
+<td>2011-06-26 12:00:00</td>
+<td>2011-06-26 14:00:00</td>
+<td>20349</td>
+<td>8922</td>
+<td>0.11s</td>
+<td>3.23s*</td>
+</tr>
+<tr>
+<td>NY Taxi-small</td>
+<td>2011-06-26 00:00:00</td>
+<td>2011-06-27 00:00:00</td>
+<td>293259</td>
+<td>107064</td>
+<td>8.71s</td>
+<td></td>
+</tr>
+<tr>
+<td>NY Taxi-1M</td>
+<td>2011-06-19 00:00:00</td>
+<td>2011-06-27 00:00:00</td>
+<td>588211</td>
+<td>213360</td>
+<td>103.62s</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<table style="font-size: 12px;"><thead>
+<tr>
+<th>DataSet</th>
+<th>time starts</th>
+<th>time ends</th>
+<th>#E</th>
+<th>#V</th>
+<th>Graphtv loss</th>
+<th>Gunrock GPU loss</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>NY Taxi-small</td>
+<td>2011-06-26 12:00:00</td>
+<td>2011-06-26 14:00:00</td>
+<td>20349</td>
+<td>8922</td>
+<td>132789.32</td>
+<td>132789.32*</td>
+</tr>
+<tr>
+<td>NY Taxi-small</td>
+<td>2011-06-26 00:00:00</td>
+<td>2011-06-27 00:00:00</td>
+<td>293259</td>
+<td>107064</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>NY Taxi-1M</td>
+<td>2011-06-19 00:00:00</td>
+<td>2011-06-27 00:00:00</td>
+<td>588211</td>
+<td>213360</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+
+<p><code>*</code>: The GPU implementation of maxflow still has a bug that leads to different results per run. We only report the best result we can achieve with the current version of maxflow. Since this current version of maxflow is able to achieve the same loss as Graphtv, we presume that the results, both the runtime and loss, should be similar or even better with a bug-free maxflow.</p>
+<h3 id='performance-limitations'>Performance limitations</h3>
+<p>We observe a slowdown when we compare Graphtv and Gunrock's current SFL
+implementation on the <code>NY Taxi-small</code> dataset with time from <code>2011-06-26 12:00:00</code>
+to <code>2011-06-26 14:00:00</code> for the following reasons:</p>
+
+<ul>
+<li><p>Graphtv uses a serial argumenting path based max flow algorithm, and Gunrock
+uses a parallel implementation of the push relabel algorithm. On this particular
+dataset, push relabel uses more than 20K iterations, and SFL runs about a hundred
+seconds on CPU.</p></li>
+<li><p>The large number of iterations is very harmful to the computation speed of our
+GPU implementation, because of the kernel launching overhead. In fact, profiling
+shows the computation kernels only takes about 20% of MF's computation time, and
+the rest (80%) is overhead. Since maxflow takes up about 95% of SFL's
+computation time, this makes SFL kernel launching overhead-bound. We are looking
+at optimizations to cut down the number of iterations, such as the one described
+by Bo Hong in "A Lock-free Multi-threaded Algorithm for the Maximum Flow Problem"
+<a href="http://people.cs.ksu.edu/%7Ewls77/weston/projects/cis598/hong.pdf">http://people.cs.ksu.edu/~wls77/weston/projects/cis598/hong.pdf</a>.</p></li>
+<li><p>This dataset with ~9k vertices and ~20k edges is too small to fill the GPU. It makes the kernel launching overhead issue much
+worse than it would with larger graphs.</p></li>
+<li><p>There are some engineering limitations in our current implementation:</p></li>
+</ul>
+
+<p>1. The relabeling heuristics in maxflow are performed on the CPU; although they only
+    run once per 100 iterations, the data movement takes up time.</p>
+
+<p>2. The current min-cut finding and renormalization are serial on GPU (i.e.
+    only use a single thread to perform the computation).</p>
+
+<p>We will improve on these issues when the number of iterations is reduced,
+    which has a much larger impact on computation time.</p>
+<h2 id='next-steps'>Next Steps</h2><h3 id='alternate-approaches'>Alternate approaches</h3>
+<p>For CPU, the parametric maxflow algorithm works well, but it is not parallelizable to GPU. The push-relabel algorithm is the best candidate for parallel implementation, but more optimizations are needed to get good running times on a GPU.</p>
+<h3 id='gunrock-implications'>Gunrock implications</h3>
+<p>SFL is the first application in Gunrock that calls another application (maxflow). Some common data pre-processing on the CPU requires better designs of the APIs to facilitate this usage. For example, <code>gtf_enactor</code> needs to call <code>mf_problem.reset()</code>, but because the current maxflow code uses CPU to preprocess the graph, SFL has to transfer the data back and forth between CPU and GPU. Using GPU to preprocess the graph for maxflow would be preferable.</p>
+<h3 id='notes-on-multi-gpu-parallelization'>Notes on multi-GPU parallelization</h3>
+<p>To parallelize the push-relabel algorithm across multiple GPUs, all arrays related to the graph have to be stored on each GPU. Moreover, the GPUs have to update their adjacent neighbors' data. Because the push-relabel algorithm needs to store at least three arrays of size O(|E|) and three arrays of size O(|V|), communicating so much data efficiently between GPUs is challenging.</p>
+
+<p>The SFL renormalization should be able to be easily parallelized across different GPUs, because it is array operations only. However, extra data transfer is necessary if the graph is not copied across multiple GPUs.</p>
+<h3 id='notes-on-dynamic-graphs'>Notes on dynamic graphs</h3>
+<p>Push relabel is not directly related to dynamic graphs. But it should be able to run on a dynamic graph, provided the source and the sink are given at the beginning of the algorithm and the way to access all the nodes and the edges is the same. Capacities of edges from the previous graph can be used as a good starting point, if the edges and the node ids are consistent and the graph is not dramatically changed.</p>
+
+<p>However, SFL would be a significant challenge with dynamic graphs (the topology of the graph would change). The residual graph includes a swapping edge value (see pseudocode above) and we need to know characteristics of the new graph in order to allocate enough memory space for the new edges and vertices.</p>
+<h3 id='notes-on-larger-datasets'>Notes on larger datasets</h3>
+<p>SFL renormalization can be done without having its temporary arrays on the same GPU, but extra communication costs are needed, if these arrays are in different GPU memories. Gunrock needs no specific new support to support SFL renormalization on larger datasets.</p>
+<h3 id='notes-on-other-pieces-of-this-workload'>Notes on other pieces of this workload</h3>
+<p>Currently there is no GPU library that addresses SFL renormalization.</p>
+<h3 id='research-opportunities'>Research opportunities</h3>
+<p>Prof. Sharpnack indicates that this implementation could be generalized to multi-graph fused lasso. The idea is to set multiple edge values for the edges connecting to source/sink, while keeping the graph topology and edge values (<code>lambda1</code>) for the edges in the original graph (excluding source and sink) the same.</p>
+
+      </div>
+
+        <!-- <div class="dark-box"></div> -->
+    </div>
+  </body>
+</html>

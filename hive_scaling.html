@@ -237,9 +237,6 @@
             <a href="#scaling-analysis-for-hive-applications" class="toc-h1 toc-link" data-title="Scaling analysis for HIVE applications">SCALING ANALYSIS FOR HIVE APPLICATIONS</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#summary-of-results" class="toc-h2 toc-link" data-title="Summary of Results">Summary of Results</a>
-                  </li>
-                  <li>
                     <a href="#hardware-platforms" class="toc-h2 toc-link" data-title="Hardware platforms">Hardware platforms</a>
                   </li>
                   <li>
@@ -252,7 +249,7 @@
                     <a href="#scaling-of-the-hive-applications" class="toc-h2 toc-link" data-title="Scaling of the HIVE applications">Scaling of the HIVE applications</a>
                   </li>
                   <li>
-                    <a href="#summary-of-results-2" class="toc-h2 toc-link" data-title="Summary of Results">Summary of Results</a>
+                    <a href="#summary-of-results" class="toc-h2 toc-link" data-title="Summary of Results">Summary of Results</a>
                   </li>
               </ul>
           </li>
@@ -267,7 +264,7 @@
         <!-- <div class="dark-box"></div> -->
 
       <div class="content">
-        <h1 id='scaling-analysis-for-hive-applications'>Scaling analysis for HIVE applications</h1><h2 id='summary-of-results'>Summary of Results</h2>
+        <h1 id='scaling-analysis-for-hive-applications'>Scaling analysis for HIVE applications</h1>
 <p>The purpose of this study is to understand how the HIVE v0
 applications would scale out on multiple GPUs, with a focus on the
 DGX-1 platform. Before diving into per-application analysis, we give a
@@ -1808,7 +1805,7 @@ specific layout of the data, which may be not distribution-friendly. A
 different method of analyzing the computation and the communication
 costs---the computation vs. communication ratio---is needed for these
 applications.</p>
-<h2 id='summary-of-results-2'>Summary of Results</h2>
+<h2 id='summary-of-results'>Summary of Results</h2>
 <table style="font-size: 12px;"><thead>
 <tr>
 <th>Application</th>
@@ -1957,7 +1954,7 @@ need to send out some data for each vertex or edge visit. As a result, the
 computation vs communication ratio is less than 1 (or 1 operation : 4 bytes).
 They are very hard to scale across multiple GPUs. Random walk is an typical
 example.</p>
-
+<h6 id='end-of-report'>End of report</h6>
       </div>
 
         <!-- <div class="dark-box"></div> -->
