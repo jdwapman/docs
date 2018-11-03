@@ -341,6 +341,44 @@
 </tr>
 </tbody></table>
 
+<p>Pretty wide table, with math</p>
+
+<table><thead>
+<tr>
+<th>Parts</th>
+<th>Comp. cost</th>
+<th>Comm. cost</th>
+<th>Comp. to comm. ratio</th>
+<th>Scalability</th>
+<th>Memory usage</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Modularity optimization</td>
+<td>$10(E + V) /p$</td>
+<td>$20V$ bytes</td>
+<td>$E/p : 2V$</td>
+<td>Okay</td>
+<td>$88E/p + 12V$ bytes</td>
+</tr>
+<tr>
+<td>Graph contraction</td>
+<td>$5E / p + E'$</td>
+<td>$8E'$ bytes</td>
+<td>$5E/p + E' : 8E'$</td>
+<td>Hard</td>
+<td>$16E'$ bytes</td>
+</tr>
+<tr>
+<td>Louvain</td>
+<td>$10(E + V) / p$</td>
+<td>$20V$ bytes</td>
+<td>E/p : 2V</td>
+<td>Okay</td>
+<td>$88E/p + 12V + 16E'$ bytes</td>
+</tr>
+</tbody></table>
+
 <p>JDO hacked version of above</p>
 
 <table><thead>
@@ -482,6 +520,76 @@
 <td>Vdd + V/p</td>
 <td>8V bytes</td>
 <td>dd : 8</td>
+<td>Perfect</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<p>Even wider table, with math!</p>
+
+<table><thead>
+<tr>
+<th>Parts</th>
+<th>Comp. cost</th>
+<th>Comm. cost</th>
+<th>Comp. to comm. ratio</th>
+<th>Scalability</th>
+<th>Memory usage</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Wedge generation</td>
+<td>$dE/p$</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Wedge communication</td>
+<td>0</td>
+<td>$aE/p \times 12$ bytes</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Wedge checking</td>
+<td>$aE/p x \log(d)$</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>AllReduce</td>
+<td>$2V$</td>
+<td>$2V \times 4$ bytes</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Triangle Counting</td>
+<td>$(d + a x \log(d))E/p + 2V$</td>
+<td>$aE/p x 12 + 8V$ bytes</td>
+<td>$~(d + a \cdot \log(d))$ : $12a$</td>
+<td>Okay</td>
+<td></td>
+</tr>
+<tr>
+<td>Scan Statistics (wedge checks)</td>
+<td>$(d + a x \log(d))E/p + 2V + V/p$</td>
+<td>$12aE/p + 8V$ bytes</td>
+<td>$~(d + a \cdot \log(d)) : 12a$</td>
+<td>Okay</td>
+<td></td>
+</tr>
+<tr>
+<td>Scan Statistics (intersection)</td>
+<td>$Vdd + V/p$</td>
+<td>$8V$ bytes</td>
+<td>$dd : 8$</td>
 <td>Perfect</td>
 <td></td>
 </tr>
@@ -658,6 +766,46 @@
 <td></td>
 </tr>
 </tbody></table>
+
+<p>Table with line breaks, laid out as a grid table</p>
+
+<p>+---------------------------------+-------------------------------------------------+----------------+---------------------------+
+| Application                     | Computation to communication ratio              | Scalability    | Implementation difficulty |
++=================================+=================================================+================+===========================+
+| Louvain                         | $E/p : 2V$                                      | Okay           | Hard                      |
++---------------------------------+-------------------------------------------------+----------------+---------------------------+
+| Graph SAGE                      | $\sim CF : \min(C, 2p) \cdot 4$                 | Good           | Easy                      |
++---------------------------------+-------------------------------------------------+----------------+---------------------------+
+| Random walk                     | Duplicated graph: infinity\                     | Perfect\       | Trivial\                  |
+|                                 | Distributed graph: 1 : 24                       | Very poor      | Easy                      |
++---------------------------------+-------------------------------------------------+----------------+---------------------------+
+| Graph search: Uniform           | 1 : 24                                          | Very poor      | Easy                      |
++---------------------------------+-------------------------------------------------+----------------+---------------------------+
+| Graph search: Greedy            | Straightforward: d : 24\                        | Poor\          | Easy\                     |
+|                                 | Pre-visit: 1:24                                 | Very poor      | Easy                      |
++---------------------------------+-------------------------------------------------+----------------+---------------------------+
+| Graph search: Stochastic greedy | Straightforward: d : 24\                        | Poor\          | Easy\                     |
+|                                 | Pre-visit: $\log(d) : 24$                       | Very poor      | Easy                      |
++---------------------------------+-------------------------------------------------+----------------+---------------------------+
+| Geolocation                     | Explicit movement: $25E/p : 4V$\                | Okay\          | Easy\                     |
+|                                 | UVM or peer access: 25 : 1                      | Good           | Easy                      |
++---------------------------------+-------------------------------------------------+----------------+---------------------------+
+| Vertex nomination               | $E : 8V \cdot \min(d, p)$                       | Okay           | Easy                      |
++---------------------------------+-------------------------------------------------+----------------+---------------------------+
+| Scan statistics                 | Duplicated graph: infinity\                     | Perfect\       | Trivial\                  |
+|                                 | Distributed graph: $\sim(d+a \cdot \log(d)):12$ | Okay           | Easy                      |
++---------------------------------+-------------------------------------------------+----------------+---------------------------+
+| Sparse fused lasso              | $\sim a:8$                                      | Less than okay | Hard                      |
++---------------------------------+-------------------------------------------------+----------------+---------------------------+
+| Graph projection                | Duplicated graph : infinity\                    | Perfect\       | Easy\                     |
+|                                 | Distributed graph : $dE/p + E' : 6E'$           | Okay           | Easy                      |
++---------------------------------+-------------------------------------------------+----------------+---------------------------+
+| Local graph clustering          | $(6 + d)/p : 4$                                 | Good           | Easy                      |
++---------------------------------+-------------------------------------------------+----------------+---------------------------+
+| Seeded graph matching           |                                                 |                |                           |
++---------------------------------+-------------------------------------------------+----------------+---------------------------+
+| Application classification      |                                                 |                |                           |
++---------------------------------+-------------------------------------------------+----------------+---------------------------+</p>
 
 <p>JDO hacked version of above</p>
 
@@ -897,6 +1045,228 @@
 </tr>
 </tbody></table>
 
+<p>Really wide table, with math</p>
+
+<table><thead>
+<tr>
+<th>Parts</th>
+<th>Comp. cost</th>
+<th>Comm. cost</th>
+<th>Comp. to comm. ratio</th>
+<th>Scalability</th>
+<th>Memory usage</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><em>Feature duplication</em></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Children selection</td>
+<td>$BC$</td>
+<td>$8BC$ bytes</td>
+<td>1 : 8</td>
+<td>Poor</td>
+<td></td>
+</tr>
+<tr>
+<td>Child-centric comp.</td>
+<td>$BCF \cdot (2 + L + \textit{Wf1}.y + Wa1.y)$</td>
+<td>$4B \cdot (F + Wf1.y + Wa1.y) \cdot \min(C, 2p)$ bytes</td>
+<td>$~ CF : \min(C, 2p) \cdot 4$</td>
+<td>Good</td>
+<td></td>
+</tr>
+<tr>
+<td>Source-centric comp.</td>
+<td>$B \cdot (CF + (Wf1.y + Wa1.y) \cdot (C + F + Wf2.y + Wa2.y)$</td>
+<td>0 bytes</td>
+<td>N.A.</td>
+<td>N.A.</td>
+<td></td>
+</tr>
+<tr>
+<td>Graph SAGE</td>
+<td>$B \cdot (C + 3CF + 3LCF + (Wf1.y + Wa1.y) \cdot (CF + C + F + Wf2.y + Wa2.y))$</td>
+<td>$8BC + 4B \cdot (F + Wf1.y + Wa1.y) \cdot \min(C, 2p)$ bytes</td>
+<td>at least $~ CF : \min(C, 2p) \cdot 4$</td>
+<td>Good</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><em>Direct feature access</em></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Child-centric comp.</td>
+<td>$BCF \cdot (2 + L + Wf1.y + Wa1.y)$</td>
+<td>$4B \cdot ((F + Wf1.y + Wa1.y) \cdot \min(C, 2p) + CLF)$ bytes</td>
+<td>$~ (2 + L + Wf1.y + Wa1.y) : 4L$</td>
+<td>poor</td>
+<td></td>
+</tr>
+<tr>
+<td>Graph SAGE</td>
+<td>$B \cdot (C + 3CF + 3LCF + (Wf1.y + Wa1.y) \cdot (CF + C + F + Wf2.y + Wa2.y))$</td>
+<td>$8BC + 4B \cdot (F + Wf1.y + Wa1.y) \cdot \min(C, 2p) + 4BCFL$ bytes</td>
+<td>$~ (2 + L + Wf1.y + Wa1.y) : 4L$</td>
+<td>poor</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><em>Feature in UVM</em></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Child-centric comp.</td>
+<td>$BCF \cdot (2 + L + Wf1.y + Wa1.y)$</td>
+<td>$4B \cdot (F + Wf1.y + Wa1.y) \cdot min(C, 2p)$ bytes over GPU-GPU + $4BCLF$ bytes over GPU-CPU</td>
+<td>$~ (2 + L + Wf1.y + Wa1.y) : 4L$ over GPU-CPU</td>
+<td>very poor</td>
+<td></td>
+</tr>
+<tr>
+<td>Graph SAGE</td>
+<td>$B \cdot (C + 3CF + 3LCF + (Wf1.y + Wa1.y) \cdot (CF + C + F + Wf2.y + Wa2.y))$</td>
+<td>$8BC + 4B \cdot (F + Wf1.y + Wa1.y) \cdot \min(C, 2p)$ bytes over GPU-GPU + $4BCFL$ bytes over GPU-CPU</td>
+<td>$~ (2 + L + Wf1.y + Wa1.y) : 4L$ over GPU-CPU</td>
+<td>very poor</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<p>Really wide table, with math, nicely laid out</p>
+
+<table><thead>
+<tr>
+<th>Parts</th>
+<th>Computation cost</th>
+<th>Communication cost (Bytes)</th>
+<th>Comp. to comm. ratio</th>
+<th>Scalability</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><em>Feature duplication</em></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Children selection</td>
+<td>$BC$</td>
+<td>$8BC$</td>
+<td>1 : 8</td>
+<td>Poor</td>
+</tr>
+<tr>
+<td>Child-centric comp.</td>
+<td>$BCF \cdot (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y)$</td>
+<td>$4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$</td>
+<td>$~ CF : \min(C, 2p) \cdot 4$</td>
+<td>Good</td>
+</tr>
+<tr>
+<td>Source-centric comp.</td>
+<td>$B \cdot (CF + (\textrm{Wf1}.y + \textrm{Wa1}.y) \cdot (C + F + \textrm{Wf2}.y + \textrm{Wa2}.y)$</td>
+<td>0</td>
+<td>N.A.</td>
+<td>N.A.</td>
+</tr>
+<tr>
+<td>Graph SAGE</td>
+<td>$B \cdot (C + 3CF + 3LCF + (\textrm{Wf1}.y + \textrm{Wa1}.y) \cdot (CF + C + F + \textrm{Wf2}.y + \textrm{Wa2}.y))$</td>
+<td>$8BC + 4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$</td>
+<td>at least $~ CF : \min(C, 2p) \cdot 4$</td>
+<td>Good</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><em>Direct feature access</em></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Child-centric comp.</td>
+<td>$BCF \cdot (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y)$</td>
+<td>$4B \cdot ((F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p) + CLF)$</td>
+<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$</td>
+<td>poor</td>
+</tr>
+<tr>
+<td>Graph SAGE</td>
+<td>$B \cdot (C + 3CF + 3LCF + (\textrm{Wf1}.y + \textrm{Wa1}.y) \cdot (CF + C + F + \textrm{Wf2}.y + \textrm{Wa2}.y))$</td>
+<td>$8BC + 4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p) + 4BCFL$</td>
+<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$</td>
+<td>poor</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><em>Feature in UVM</em></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Child-centric comp.</td>
+<td>$BCF \cdot (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y)$</td>
+<td>$4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$ bytes over GPU-GPU + $4BCLF$ bytes over GPU-CPU</td>
+<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$ over GPU-CPU</td>
+<td>very poor</td>
+</tr>
+<tr>
+<td>Graph SAGE</td>
+<td>$B \cdot (C + 3CF + 3LCF + (\textrm{Wf1}.y + \textrm{Wa1}.y) \cdot (CF + C + F + \textrm{Wf2}.y + \textrm{Wa2}.y))$</td>
+<td>$8BC + 4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$ bytes over GPU-GPU + $4BCFL$ bytes over GPU-CPU</td>
+<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$ over GPU-CPU</td>
+<td>very poor</td>
+</tr>
+</tbody></table>
+
 <p>JDO hacked version of above</p>
 
 <table><thead>
@@ -1100,6 +1470,18 @@
 <td>very poor</td>
 </tr>
 </tbody></table>
+
+<p>Let's try a grid table with backslashes.</p>
+
+<p>+---------------+---------------+--------------------+
+| Fruit         | Price         | Advantages         |
++===============+===============+====================+
+| Bananas       | first line\   | first line\        |
+|               | next line     | next line          |
++---------------+---------------+--------------------+
+| Bananas       | first line\   | first line\        |
+|               | next line     | next line          |
++---------------+---------------+--------------------+</p>
 
       </div>
 
