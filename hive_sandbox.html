@@ -6,7 +6,7 @@
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" type="image/ico" href="images/favicon.ico">
-    <title>Sandbox for playing with pandoc/slate</title>
+    <title>Documentation</title>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <style>
@@ -200,13 +200,13 @@
     </style>
     <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" media="print" />
-      <script src="javascripts/all.js"></script>
+      <script src="javascripts/all_nosearch.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
 
-    <script type="text/x-mathjax-config">
+    <script type="text/x-mathjax-config;executed=true">
       MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
     </script>
     <script type="text/javascript" async
@@ -235,85 +235,89 @@
     </a>
     <div class="toc-wrapper">
       <img src="images/logo.png" class="logo" alt="Logo" />
-        <div class="search">
-          <input type="text" class="search" id="input-search" placeholder="Search">
-        </div>
-        <ul class="search-results"></ul>
       <div id="toc" class="toc-list-h1">
           <li>
             <a href="#sandbox-for-playing-with-pandoc-slate" class="toc-h1 toc-link" data-title="Sandbox for playing with pandoc/slate">SANDBOX FOR PLAYING WITH PANDOC/SLATE</a>
           </li>
       </div>
-        <ul class="toc-footer">
-            <li><a href='https://github.com/gunrock/gunrock'>Gunrock&colon; GPU Graph Analytics</a></li>
-            <li>Gunrock &copy; 2018 The Regents of the University of California.</li>
-        </ul>
     </div>
     <div class="page-wrapper">
 
-        <!-- <div class="dark-box"></div> -->
+        <div class="dark-box"></div>
 
       <div class="content">
         <h1 id='sandbox-for-playing-with-pandoc-slate'>Sandbox for playing with pandoc/slate</h1>
 <p>Normal table</p>
 
-<table style="font-size: 12px;"><thead>
-<tr>
+<table style="font-size: 12px;">
+<thead>
+<tr class="header">
 <th>Operation</th>
-<th style="text-align: right">Self</th>
-<th style="text-align: right">Peer</th>
-<th style="text-align: right">Host</th>
-<th style="text-align: right">All</th>
+<th align="right">Self</th>
+<th align="right">Peer</th>
+<th align="right">Host</th>
+<th align="right">All</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td>Regular read</td>
-<td style="text-align: right">448.59</td>
-<td style="text-align: right">14.01</td>
-<td style="text-align: right">444.74</td>
-<td style="text-align: right">12.17</td>
+<td align="right">448.59</td>
+<td align="right">14.01</td>
+<td align="right">444.74</td>
+<td align="right">12.17</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Regular write</td>
-<td style="text-align: right">442.98</td>
-<td style="text-align: right">16.21</td>
-<td style="text-align: right">16.18</td>
-<td style="text-align: right">12.17</td>
+<td align="right">442.98</td>
+<td align="right">16.21</td>
+<td align="right">16.18</td>
+<td align="right">12.17</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Regular update</td>
-<td style="text-align: right">248.80</td>
-<td style="text-align: right">11.71</td>
-<td style="text-align: right">0.0028</td>
-<td style="text-align: right">6.00</td>
+<td align="right">248.80</td>
+<td align="right">11.71</td>
+<td align="right">0.0028</td>
+<td align="right">6.00</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Random read</td>
-<td style="text-align: right">6.78</td>
-<td style="text-align: right">1.43</td>
-<td style="text-align: right">2.39</td>
-<td style="text-align: right">4.04</td>
+<td align="right">6.78</td>
+<td align="right">1.43</td>
+<td align="right">2.39</td>
+<td align="right">4.04</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Random write</td>
-<td style="text-align: right">6.63</td>
-<td style="text-align: right">1.14</td>
-<td style="text-align: right">3.47E-5</td>
-<td style="text-align: right">3.82</td>
+<td align="right">6.63</td>
+<td align="right">1.14</td>
+<td align="right">3.47E-5</td>
+<td align="right">3.82</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Random update</td>
-<td style="text-align: right">3.44</td>
-<td style="text-align: right">0.83</td>
-<td style="text-align: right">1.92E-5</td>
-<td style="text-align: right">2.08</td>
+<td align="right">3.44</td>
+<td align="right">0.83</td>
+<td align="right">1.92E-5</td>
+<td align="right">2.08</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
 <p>Pretty wide table</p>
 
-<table style="font-size: 12px;"><thead>
-<tr>
+<table style="font-size: 12px;">
+<colgroup>
+<col width="23%" />
+<col width="17%" />
+<col width="11%" />
+<col width="16%" />
+<col width="6%" />
+<col width="24%" />
+</colgroup>
+<thead>
+<tr class="header">
 <th>Parts</th>
 <th>Comp. cost</th>
 <th>Comm. cost</th>
@@ -321,8 +325,9 @@
 <th>Scalability</th>
 <th>Memory usage</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td>Modularity optimization</td>
 <td>10(E + V) /p</td>
 <td>20V bytes</td>
@@ -330,7 +335,7 @@
 <td>Okay</td>
 <td>88E/p + 12V bytes</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Graph contraction</td>
 <td>5E / p + E'</td>
 <td>8E' bytes</td>
@@ -338,7 +343,7 @@
 <td>Hard</td>
 <td>16E' bytes</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Louvain</td>
 <td>10(E + V) / p</td>
 <td>20V bytes</td>
@@ -346,12 +351,22 @@
 <td>Okay</td>
 <td>88E/p + 12V + 16E' bytes</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
 <p>Pretty wide table, with math</p>
 
-<table style="font-size: 12px;"><thead>
-<tr>
+<table style="font-size: 12px;">
+<colgroup>
+<col width="23%" />
+<col width="17%" />
+<col width="11%" />
+<col width="16%" />
+<col width="6%" />
+<col width="24%" />
+</colgroup>
+<thead>
+<tr class="header">
 <th>Parts</th>
 <th>Comp. cost</th>
 <th>Comm. cost</th>
@@ -359,37 +374,40 @@
 <th>Scalability</th>
 <th>Memory usage</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td>Modularity optimization</td>
-<td>$10(E + V) /p$</td>
-<td>$20V$ bytes</td>
-<td>$E/p : 2V$</td>
+<td><span class="math inline">10(<em>E</em> + <em>V</em>)/<em>p</em></span></td>
+<td><span class="math inline">20<em>V</em></span> bytes</td>
+<td><span class="math inline"><em>E</em>/<em>p</em> : 2<em>V</em></span></td>
 <td>Okay</td>
-<td>$88E/p + 12V$ bytes</td>
+<td><span class="math inline">88<em>E</em>/<em>p</em> + 12<em>V</em></span> bytes</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Graph contraction</td>
-<td>$5E / p + E'$</td>
-<td>$8E'$ bytes</td>
-<td>$5E/p + E' : 8E'$</td>
+<td><span class="math inline">5<em>E</em>/<em>p</em> + <em>E</em>′</span></td>
+<td><span class="math inline">8<em>E</em>′</span> bytes</td>
+<td><span class="math inline">5<em>E</em>/<em>p</em> + <em>E</em>′:8<em>E</em>′</span></td>
 <td>Hard</td>
-<td>$16E'$ bytes</td>
+<td><span class="math inline">16<em>E</em>′</span> bytes</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Louvain</td>
-<td>$10(E + V) / p$</td>
-<td>$20V$ bytes</td>
+<td><span class="math inline">10(<em>E</em> + <em>V</em>)/<em>p</em></span></td>
+<td><span class="math inline">20<em>V</em></span> bytes</td>
 <td>E/p : 2V</td>
 <td>Okay</td>
-<td>$88E/p + 12V + 16E'$ bytes</td>
+<td><span class="math inline">88<em>E</em>/<em>p</em> + 12<em>V</em> + 16<em>E</em>′</span> bytes</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
 <p>JDO hacked version of above</p>
 
-<table style="font-size: 12px;"><thead>
-<tr>
+<table style="font-size: 12px;">
+<thead>
+<tr class="header">
 <th>Parts</th>
 <th>Comp cost</th>
 <th>Comm cost</th>
@@ -397,8 +415,9 @@
 <th>Scalability</th>
 <th>Memory usage (B)</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td>Modularity optim.</td>
 <td>10(E + V) /p</td>
 <td>20V bytes</td>
@@ -406,7 +425,7 @@
 <td>Okay</td>
 <td>88E/p + 12V</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Graph contraction</td>
 <td>5E / p + E'</td>
 <td>8E' bytes</td>
@@ -414,7 +433,7 @@
 <td>Hard</td>
 <td>16E'</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Louvain</td>
 <td>10(E + V) / p</td>
 <td>20V bytes</td>
@@ -422,12 +441,14 @@
 <td>Okay</td>
 <td>88E/p + 12V + 16E'</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
 <p>and with math!</p>
 
-<table style="font-size: 12px;"><thead>
-<tr>
+<table style="font-size: 12px;">
+<thead>
+<tr class="header">
 <th>Parts</th>
 <th>Comp cost</th>
 <th>Comm cost</th>
@@ -435,37 +456,48 @@
 <th>Scalability</th>
 <th>Memory usage (B)</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td>Modularity optim.</td>
-<td>$10(E + V) /p$</td>
-<td>$20V$ bytes</td>
-<td>$E/p : 2V$</td>
+<td><span class="math inline">10(<em>E</em> + <em>V</em>)/<em>p</em></span></td>
+<td><span class="math inline">20<em>V</em></span> bytes</td>
+<td><span class="math inline"><em>E</em>/<em>p</em> : 2<em>V</em></span></td>
 <td>Okay</td>
-<td>$88E/p + 12V$</td>
+<td><span class="math inline">88<em>E</em>/<em>p</em> + 12<em>V</em></span></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Graph contraction</td>
-<td>$5E / p + E'$</td>
-<td>$8E'$ bytes</td>
-<td>$5E/p + E' : 8E'$</td>
+<td><span class="math inline">5<em>E</em>/<em>p</em> + <em>E</em>′</span></td>
+<td><span class="math inline">8<em>E</em>′</span> bytes</td>
+<td><span class="math inline">5<em>E</em>/<em>p</em> + <em>E</em>′:8<em>E</em>′</span></td>
 <td>Hard</td>
-<td>$16E'$</td>
+<td><span class="math inline">16<em>E</em>′</span></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Louvain</td>
-<td>$10(E + V) / p$</td>
-<td>$20V$ bytes</td>
-<td>$E/p : 2V$</td>
+<td><span class="math inline">10(<em>E</em> + <em>V</em>)/<em>p</em></span></td>
+<td><span class="math inline">20<em>V</em></span> bytes</td>
+<td><span class="math inline"><em>E</em>/<em>p</em> : 2<em>V</em></span></td>
 <td>Okay</td>
-<td>$88E/p + 12V + 16E'$</td>
+<td><span class="math inline">88<em>E</em>/<em>p</em> + 12<em>V</em> + 16<em>E</em>′</span></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
 <p>Even wider table</p>
 
-<table style="font-size: 12px;"><thead>
-<tr>
+<table style="font-size: 12px;">
+<colgroup>
+<col width="22%" />
+<col width="12%" />
+<col width="15%" />
+<col width="21%" />
+<col width="13%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
 <th>Parts</th>
 <th>Comp. cost</th>
 <th>Comm. cost</th>
@@ -473,8 +505,9 @@
 <th>Scalability</th>
 <th>Memory usage</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td>Wedge generation</td>
 <td>dE/p</td>
 <td></td>
@@ -482,7 +515,7 @@
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Wedge communication</td>
 <td>0</td>
 <td>aE/p x 12 bytes</td>
@@ -490,7 +523,7 @@
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Wedge checking</td>
 <td>aE/p x log(d)</td>
 <td></td>
@@ -498,7 +531,7 @@
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>AllReduce</td>
 <td>2V</td>
 <td>2V x 4 bytes</td>
@@ -506,7 +539,7 @@
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Triangle Counting</td>
 <td>(d + a x log(d))E/p + 2V</td>
 <td>aE/p x 12 + 8V bytes</td>
@@ -514,7 +547,7 @@
 <td>Okay</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Scan Statistics (wedge checks)</td>
 <td>(d + a x log(d))E/p + 2V + V/p</td>
 <td>12aE/p + 8V bytes</td>
@@ -522,7 +555,7 @@
 <td>Okay</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Scan Statistics (intersection)</td>
 <td>Vdd + V/p</td>
 <td>8V bytes</td>
@@ -530,12 +563,22 @@
 <td>Perfect</td>
 <td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
 <p>Even wider table, with math!</p>
 
-<table style="font-size: 12px;"><thead>
-<tr>
+<table style="font-size: 12px;">
+<colgroup>
+<col width="22%" />
+<col width="12%" />
+<col width="15%" />
+<col width="21%" />
+<col width="13%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
 <th>Parts</th>
 <th>Comp. cost</th>
 <th>Comm. cost</th>
@@ -543,401 +586,523 @@
 <th>Scalability</th>
 <th>Memory usage</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td>Wedge generation</td>
-<td>$dE/p$</td>
+<td><span class="math inline"><em>d</em><em>E</em>/<em>p</em></span></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Wedge communication</td>
 <td>0</td>
-<td>$aE/p \times 12$ bytes</td>
+<td><span class="math inline"><em>a</em><em>E</em>/<em>p</em> × 12</span> bytes</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Wedge checking</td>
-<td>$aE/p x \log(d)$</td>
+<td><span class="math inline"><em>a</em><em>E</em>/<em>p</em><em>x</em>log(<em>d</em>)</span></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>AllReduce</td>
-<td>$2V$</td>
-<td>$2V \times 4$ bytes</td>
+<td><span class="math inline">2<em>V</em></span></td>
+<td><span class="math inline">2<em>V</em> × 4</span> bytes</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Triangle Counting</td>
-<td>$(d + a x \log(d))E/p + 2V$</td>
-<td>$aE/p x 12 + 8V$ bytes</td>
-<td>$~(d + a \cdot \log(d))$ : $12a$</td>
+<td><span class="math inline">(<em>d</em> + <em>a</em><em>x</em>log(<em>d</em>))<em>E</em>/<em>p</em> + 2<em>V</em></span></td>
+<td><span class="math inline"><em>a</em><em>E</em>/<em>p</em><em>x</em>12 + 8<em>V</em></span> bytes</td>
+<td><span class="math inline"> (<em>d</em> + <em>a</em> ⋅ log(<em>d</em>))</span> : <span class="math inline">12<em>a</em></span></td>
 <td>Okay</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Scan Statistics (wedge checks)</td>
-<td>$(d + a x \log(d))E/p + 2V + V/p$</td>
-<td>$12aE/p + 8V$ bytes</td>
-<td>$~(d + a \cdot \log(d)) : 12a$</td>
+<td><span class="math inline">(<em>d</em> + <em>a</em><em>x</em>log(<em>d</em>))<em>E</em>/<em>p</em> + 2<em>V</em> + <em>V</em>/<em>p</em></span></td>
+<td><span class="math inline">12<em>a</em><em>E</em>/<em>p</em> + 8<em>V</em></span> bytes</td>
+<td><span class="math inline"> (<em>d</em> + <em>a</em> ⋅ log(<em>d</em>)) : 12<em>a</em></span></td>
 <td>Okay</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Scan Statistics (intersection)</td>
-<td>$Vdd + V/p$</td>
-<td>$8V$ bytes</td>
-<td>$dd : 8$</td>
+<td><span class="math inline"><em>V</em><em>d</em><em>d</em> + <em>V</em>/<em>p</em></span></td>
+<td><span class="math inline">8<em>V</em></span> bytes</td>
+<td><span class="math inline"><em>d</em><em>d</em> : 8</span></td>
 <td>Perfect</td>
 <td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
 <p>JDO hacked version of above</p>
 
-<table style="font-size: 12px;"><thead>
-<tr>
+<table style="width:100%;">
+<colgroup>
+<col width="26%" />
+<col width="14%" />
+<col width="17%" />
+<col width="25%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
 <th>Parts</th>
 <th>Comp. cost</th>
 <th>Comm. cost (B)</th>
 <th>Comp/comm ratio</th>
 <th>Scalability</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td>Wedge generation</td>
 <td>dE/p</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Wedge communication</td>
 <td>0</td>
 <td>aE/p x 12</td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Wedge checking</td>
 <td>aE/p x log(d)</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>AllReduce</td>
 <td>2V</td>
 <td>2V x 4</td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Triangle Counting</td>
 <td>(d + a x log(d))E/p + 2V</td>
 <td>aE/p x 12 + 8V</td>
 <td>~(d + a x log(d)) : 12a</td>
 <td>Okay</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Scan Statistics</td>
 <td>(d + a x log(d))E/p</td>
 <td>12aE/p + 8V</td>
 <td>~(d + a x log(d)) : 12a</td>
 <td>Okay</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>(with wedge checks)</td>
 <td>+ 2V + V/p</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Scan Statistics</td>
 <td>Vdd + V/p</td>
 <td>8V</td>
 <td>dd : 8</td>
 <td>Perfect</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>(with intersection)</td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
 <p>Table with line breaks</p>
 
-<table style="font-size: 12px;"><thead>
-<tr>
+<table style="width:62%;">
+<colgroup>
+<col width="19%" />
+<col width="23%" />
+<col width="9%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
 <th>Application</th>
 <th>Computation to communication ratio</th>
 <th>Scalability</th>
 <th>Implementation difficulty</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td>Louvain</td>
 <td>E/p : 2V</td>
 <td>Okay</td>
 <td>Hard</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Graph SAGE</td>
 <td>~ CF : min(C, 2p)x4</td>
 <td>Good</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Random walk</td>
 <td>Duplicated graph: infinity<br> Distributed graph: 1 : 24</td>
 <td>Perfect <br> Very poor</td>
 <td>Trivial <br> Easy</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Graph search: Uniform</td>
 <td>1 : 24</td>
 <td>very poor</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph search: Greedy</td>
 <td>Straight forward: d : 24 <br> Pre-visit: 1:24</td>
 <td>Poor <br> very poor</td>
 <td>Easy <br> Easy</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Graph search: Stochastic greedy</td>
 <td>Straight forward: d : 24 <br> Pre-visit: log(d) : 24</td>
 <td>Poor <br> very poor</td>
 <td>Easy <br> Easy</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Geo location</td>
 <td>Explicit movement: 25E/p : 4V<br> UVM or peer access: 25 : 1</td>
 <td>Okay <br> Good</td>
 <td>Easy <br> Easy</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Vertex nomination</td>
 <td>E : 8V x min(d, p)</td>
 <td>Okay</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Scan statistics</td>
 <td>Duplicated graph: infinity<br> Distributed graph: ~ (d + a * log(d)) : 12</td>
 <td>Perfect <br> Okay</td>
 <td>Trivial <br> Easy</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Sparse fused lasso</td>
 <td>~ a:8</td>
 <td>Less than okay</td>
 <td>Hard</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph projection</td>
 <td>Duplicated graph : infinity <br> Distributed graph : dE/p + E' : 6E'</td>
 <td>Perfect <br> Okay</td>
 <td>Easy <br> Easy</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Local graph clustering</td>
 <td>(6 + d)/p : 4</td>
 <td>Good</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Seeded graph matching</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Application classification</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
 <p>Table with line breaks, laid out as a grid table</p>
 
-<p>+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Application                     | Computation to communication ratio              | Scalability    | Implementation difficulty |
-+=================================+=================================================+================+===========================+
-| Louvain                         | $E/p : 2V$                                      | Okay           | Hard                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Graph SAGE                      | $\sim CF : \min(C, 2p) \cdot 4$                 | Good           | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Random walk                     | Duplicated graph: infinity\                     | Perfect\       | Trivial\                  |
-|                                 | Distributed graph: 1 : 24                       | Very poor      | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Graph search: Uniform           | 1 : 24                                          | Very poor      | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Graph search: Greedy            | Straightforward: d : 24\                        | Poor\          | Easy\                     |
-|                                 | Pre-visit: 1:24                                 | Very poor      | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Graph search: Stochastic greedy | Straightforward: d : 24\                        | Poor\          | Easy\                     |
-|                                 | Pre-visit: $\log(d) : 24$                       | Very poor      | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Geolocation                     | Explicit movement: $25E/p : 4V$\                | Okay\          | Easy\                     |
-|                                 | UVM or peer access: 25 : 1                      | Good           | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Vertex nomination               | $E : 8V \cdot \min(d, p)$                       | Okay           | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Scan statistics                 | Duplicated graph: infinity\                     | Perfect\       | Trivial\                  |
-|                                 | Distributed graph: $\sim(d+a \cdot \log(d)):12$ | Okay           | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Sparse fused lasso              | $\sim a:8$                                      | Less than okay | Hard                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Graph projection                | Duplicated graph : infinity\                    | Perfect\       | Easy\                     |
-|                                 | Distributed graph : $dE/p + E' : 6E'$           | Okay           | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Local graph clustering          | $(6 + d)/p : 4$                                 | Good           | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Seeded graph matching           |                                                 |                |                           |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Application classification      |                                                 |                |                           |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+</p>
+<table style="font-size: 12px;">
+<colgroup>
+<col width="26%" />
+<col width="38%" />
+<col width="13%" />
+<col width="21%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Application</th>
+<th>Computation to communication ratio</th>
+<th>Scalability</th>
+<th>Implementation difficulty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>Louvain</p></td>
+<td><p><span class="math inline"><em>E</em>/<em>p</em> : 2<em>V</em></span></p></td>
+<td><p>Okay</p></td>
+<td><p>Hard</p></td>
+</tr>
+<tr class="even">
+<td><p>Graph SAGE</p></td>
+<td><p><span class="math inline">∼<em>C</em><em>F</em> : min(<em>C</em>, 2<em>p</em>)⋅4</span></p></td>
+<td><p>Good</p></td>
+<td><p>Easy</p></td>
+</tr>
+<tr class="odd">
+<td><p>Random walk</p></td>
+<td><p>Duplicated graph: infinity<br />
+Distributed graph: 1 : 24</p></td>
+<td><p>Perfect<br />
+Very poor</p></td>
+<td><p>Trivial<br />
+Easy</p></td>
+</tr>
+<tr class="even">
+<td><p>Graph search: Uniform</p></td>
+<td><p>1 : 24</p></td>
+<td><p>Very poor</p></td>
+<td><p>Easy</p></td>
+</tr>
+<tr class="odd">
+<td><p>Graph search: Greedy</p></td>
+<td><p>Straightforward: d : 24<br />
+Pre-visit: 1:24</p></td>
+<td><p>Poor<br />
+Very poor</p></td>
+<td><p>Easy<br />
+Easy</p></td>
+</tr>
+<tr class="even">
+<td><p>Graph search: Stochastic greedy</p></td>
+<td><p>Straightforward: d : 24<br />
+Pre-visit: <span class="math inline">log(<em>d</em>):24</span></p></td>
+<td><p>Poor<br />
+Very poor</p></td>
+<td><p>Easy<br />
+Easy</p></td>
+</tr>
+<tr class="odd">
+<td><p>Geolocation</p></td>
+<td><p>Explicit movement: <span class="math inline">25<em>E</em>/<em>p</em> : 4<em>V</em></span><br />
+UVM or peer access: 25 : 1</p></td>
+<td><p>Okay<br />
+Good</p></td>
+<td><p>Easy<br />
+Easy</p></td>
+</tr>
+<tr class="even">
+<td><p>Vertex nomination</p></td>
+<td><p><span class="math inline"><em>E</em> : 8<em>V</em> ⋅ min(<em>d</em>, <em>p</em>)</span></p></td>
+<td><p>Okay</p></td>
+<td><p>Easy</p></td>
+</tr>
+<tr class="odd">
+<td><p>Scan statistics</p></td>
+<td><p>Duplicated graph: infinity<br />
+Distributed graph: <span class="math inline">∼(<em>d</em> + <em>a</em> ⋅ log(<em>d</em>)) : 12</span></p></td>
+<td><p>Perfect<br />
+Okay</p></td>
+<td><p>Trivial<br />
+Easy</p></td>
+</tr>
+<tr class="even">
+<td><p>Sparse fused lasso</p></td>
+<td><p><span class="math inline">∼<em>a</em> : 8</span></p></td>
+<td><p>Less than okay</p></td>
+<td><p>Hard</p></td>
+</tr>
+<tr class="odd">
+<td><p>Graph projection</p></td>
+<td><p>Duplicated graph : infinity<br />
+Distributed graph : <span class="math inline"><em>d</em><em>E</em>/<em>p</em> + <em>E</em>′:6<em>E</em>′</span></p></td>
+<td><p>Perfect<br />
+Okay</p></td>
+<td><p>Easy<br />
+Easy</p></td>
+</tr>
+<tr class="even">
+<td><p>Local graph clustering</p></td>
+<td><p><span class="math inline">(6 + <em>d</em>)/<em>p</em> : 4</span></p></td>
+<td><p>Good</p></td>
+<td><p>Easy</p></td>
+</tr>
+<tr class="odd">
+<td><p>Seeded graph matching</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><p>Application classification</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 
 <p>JDO hacked version of above</p>
 
-<table style="font-size: 12px;"><thead>
-<tr>
+<table style="width:62%;">
+<colgroup>
+<col width="19%" />
+<col width="23%" />
+<col width="9%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
 <th>Application</th>
 <th>Computation to communication ratio</th>
 <th>Scalability</th>
 <th>Implementation diff.</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td>Louvain</td>
 <td>E/p : 2V</td>
 <td>Okay</td>
 <td>Hard</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Graph SAGE</td>
 <td>~ CF : min(C, 2p)x4</td>
 <td>Good</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Random walk</td>
 <td>Duplicated graph: infinity</td>
 <td>Perfect</td>
 <td>Trivial</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Random walk</td>
 <td>Distrib. graph: 1 : 24</td>
 <td>Very poor</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph search: Uniform</td>
 <td>1 : 24</td>
 <td>Very poor</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Graph search: Greedy</td>
 <td>Straightforward: d : 24</td>
 <td>Poor</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph search: Greedy</td>
 <td>Pre-visit: 1:24</td>
 <td>Very poor</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="even">
 <td>G.S.: Stochastic greedy</td>
 <td>Straightforward: d : 24</td>
 <td>Poor</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>G.S.: Stochastic greedy</td>
 <td>Pre-visit: log(d) : 24</td>
 <td>Very poor</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Geolocation</td>
 <td>Explicit movement: 25E/p : 4V</td>
 <td>Okay</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Geolocation</td>
 <td>UVM or peer access: 25 : 1</td>
 <td>Good</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Vertex nomination</td>
 <td>E : 8V x min(d, p)</td>
 <td>Okay</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Scan statistics</td>
 <td>Duplicated graph: infinity</td>
 <td>Perfect</td>
 <td>Trivial</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Scan statistics</td>
 <td>Distrib. graph: ~ (d + a * log(d)) : 12</td>
 <td>Okay</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Sparse fused lasso</td>
 <td>~ a:8</td>
 <td>Less than okay</td>
 <td>Hard</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Graph projection</td>
 <td>Duplicated graph : infinity</td>
 <td>Perfect</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph projection</td>
 <td>Distrib. graph : dE/p + E' : 6E'</td>
 <td>Okay</td>
 <td>Easy</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Local graph clustering</td>
 <td>(6 + d)/p : 4</td>
 <td>Good</td>
 <td>Easy</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
 <p>Really wide table</p>
 
-<table style="font-size: 12px;"><thead>
-<tr>
+<table style="font-size: 12px;">
+<colgroup>
+<col width="22%" />
+<col width="12%" />
+<col width="15%" />
+<col width="21%" />
+<col width="13%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
 <th>Parts</th>
 <th>Comp. cost</th>
 <th>Comm. cost</th>
@@ -945,8 +1110,9 @@
 <th>Scalability</th>
 <th>Memory usage</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td><em>Feature duplication</em></td>
 <td></td>
 <td></td>
@@ -954,7 +1120,7 @@
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Children selection</td>
 <td>BC</td>
 <td>8BC bytes</td>
@@ -962,7 +1128,7 @@
 <td>Poor</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Child-centric comp.</td>
 <td>BCF x (2 + L + Wf1.y + Wa1.y)</td>
 <td>4B x (F + Wf1.y + Wa1.y) x min(C, 2p) bytes</td>
@@ -970,7 +1136,7 @@
 <td>Good</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Source-centric comp.</td>
 <td>B x (CF + (Wf1.y + Wa1.y) x (C + F + Wf2.y + Wa2.y)</td>
 <td>0 bytes</td>
@@ -978,7 +1144,7 @@
 <td>N.A.</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
 <td>B x (C + 3CF + 3LCF + (Wf1.y + Wa1.y) x (CF + C + F + Wf2.y + Wa2.y))</td>
 <td>8BC + 4B x (F + Wf1.y + Wa1.y) x min(C, 2p) bytes</td>
@@ -986,7 +1152,7 @@
 <td>Good</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td></td>
 <td></td>
@@ -994,7 +1160,7 @@
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><em>Direct feature access</em></td>
 <td></td>
 <td></td>
@@ -1002,7 +1168,7 @@
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Child-centric comp.</td>
 <td>BCF x (2 + L + Wf1.y + Wa1.y)</td>
 <td>4B x ((F + Wf1.y + Wa1.y) x min(C, 2p) + CLF) bytes</td>
@@ -1010,7 +1176,7 @@
 <td>poor</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
 <td>B x (C + 3CF + 3LCF + (Wf1.y + Wa1.y) x (CF + C + F + Wf2.y + Wa2.y))</td>
 <td>8BC + 4B x (F + Wf1.y + Wa1.y) x min(C, 2p) + 4BCFL bytes</td>
@@ -1018,7 +1184,7 @@
 <td>poor</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td></td>
 <td></td>
@@ -1026,7 +1192,7 @@
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><em>Feature in UVM</em></td>
 <td></td>
 <td></td>
@@ -1034,7 +1200,7 @@
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Child-centric comp.</td>
 <td>BCF x (2 + L + Wf1.y + Wa1.y)</td>
 <td>4B x (F + Wf1.y + Wa1.y) x min(C, 2p) bytes over GPU-GPU + 4BCLF bytes over GPU-CPU</td>
@@ -1042,7 +1208,7 @@
 <td>very poor</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
 <td>B x (C + 3CF + 3LCF + (Wf1.y + Wa1.y) x (CF + C + F + Wf2.y + Wa2.y))</td>
 <td>8BC + 4B x (F + Wf1.y + Wa1.y) x min(C, 2p) bytes over GPU-GPU + 4BCFL bytes over GPU-CPU</td>
@@ -1050,12 +1216,22 @@
 <td>very poor</td>
 <td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
 <p>Really wide table, with math</p>
 
-<table style="font-size: 12px;"><thead>
-<tr>
+<table style="font-size: 12px;">
+<colgroup>
+<col width="22%" />
+<col width="12%" />
+<col width="15%" />
+<col width="21%" />
+<col width="13%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
 <th>Parts</th>
 <th>Comp. cost</th>
 <th>Comm. cost</th>
@@ -1063,8 +1239,9 @@
 <th>Scalability</th>
 <th>Memory usage</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td><em>Feature duplication</em></td>
 <td></td>
 <td></td>
@@ -1072,39 +1249,39 @@
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Children selection</td>
-<td>$BC$</td>
-<td>$8BC$ bytes</td>
+<td><span class="math inline"><em>B</em><em>C</em></span></td>
+<td><span class="math inline">8<em>B</em><em>C</em></span> bytes</td>
 <td>1 : 8</td>
 <td>Poor</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Child-centric comp.</td>
-<td>$BCF \cdot (2 + L + \textit{Wf1}.y + Wa1.y)$</td>
-<td>$4B \cdot (F + Wf1.y + Wa1.y) \cdot \min(C, 2p)$ bytes</td>
-<td>$~ CF : \min(C, 2p) \cdot 4$</td>
+<td><span class="math inline"><em>B</em><em>C</em><em>F</em> ⋅ (2 + <em>L</em> + <em>Wf1</em>.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)</span></td>
+<td><span class="math inline">4<em>B</em> ⋅ (<em>F</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)</span> bytes</td>
+<td><span class="math inline"> <em>C</em><em>F</em> : min(<em>C</em>, 2<em>p</em>)⋅4</span></td>
 <td>Good</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Source-centric comp.</td>
-<td>$B \cdot (CF + (Wf1.y + Wa1.y) \cdot (C + F + Wf2.y + Wa2.y)$</td>
+<td><span class="math inline"><em>B</em> ⋅ (<em>C</em><em>F</em> + (<em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅(<em>C</em> + <em>F</em> + <em>W</em><em>f</em>2.<em>y</em> + <em>W</em><em>a</em>2.<em>y</em>)</span></td>
 <td>0 bytes</td>
 <td>N.A.</td>
 <td>N.A.</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
-<td>$B \cdot (C + 3CF + 3LCF + (Wf1.y + Wa1.y) \cdot (CF + C + F + Wf2.y + Wa2.y))$</td>
-<td>$8BC + 4B \cdot (F + Wf1.y + Wa1.y) \cdot \min(C, 2p)$ bytes</td>
-<td>at least $~ CF : \min(C, 2p) \cdot 4$</td>
+<td><span class="math inline"><em>B</em> ⋅ (<em>C</em> + 3<em>C</em><em>F</em> + 3<em>L</em><em>C</em><em>F</em> + (<em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅(<em>C</em><em>F</em> + <em>C</em> + <em>F</em> + <em>W</em><em>f</em>2.<em>y</em> + <em>W</em><em>a</em>2.<em>y</em>))</span></td>
+<td><span class="math inline">8<em>B</em><em>C</em> + 4<em>B</em> ⋅ (<em>F</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)</span> bytes</td>
+<td>at least <span class="math inline"> <em>C</em><em>F</em> : min(<em>C</em>, 2<em>p</em>)⋅4</span></td>
 <td>Good</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td></td>
 <td></td>
@@ -1112,7 +1289,7 @@
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><em>Direct feature access</em></td>
 <td></td>
 <td></td>
@@ -1120,23 +1297,23 @@
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Child-centric comp.</td>
-<td>$BCF \cdot (2 + L + Wf1.y + Wa1.y)$</td>
-<td>$4B \cdot ((F + Wf1.y + Wa1.y) \cdot \min(C, 2p) + CLF)$ bytes</td>
-<td>$~ (2 + L + Wf1.y + Wa1.y) : 4L$</td>
+<td><span class="math inline"><em>B</em><em>C</em><em>F</em> ⋅ (2 + <em>L</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)</span></td>
+<td><span class="math inline">4<em>B</em> ⋅ ((<em>F</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)+<em>C</em><em>L</em><em>F</em>)</span> bytes</td>
+<td><span class="math inline"> (2 + <em>L</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>):4<em>L</em></span></td>
 <td>poor</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
-<td>$B \cdot (C + 3CF + 3LCF + (Wf1.y + Wa1.y) \cdot (CF + C + F + Wf2.y + Wa2.y))$</td>
-<td>$8BC + 4B \cdot (F + Wf1.y + Wa1.y) \cdot \min(C, 2p) + 4BCFL$ bytes</td>
-<td>$~ (2 + L + Wf1.y + Wa1.y) : 4L$</td>
+<td><span class="math inline"><em>B</em> ⋅ (<em>C</em> + 3<em>C</em><em>F</em> + 3<em>L</em><em>C</em><em>F</em> + (<em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅(<em>C</em><em>F</em> + <em>C</em> + <em>F</em> + <em>W</em><em>f</em>2.<em>y</em> + <em>W</em><em>a</em>2.<em>y</em>))</span></td>
+<td><span class="math inline">8<em>B</em><em>C</em> + 4<em>B</em> ⋅ (<em>F</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)+4<em>B</em><em>C</em><em>F</em><em>L</em></span> bytes</td>
+<td><span class="math inline"> (2 + <em>L</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>):4<em>L</em></span></td>
 <td>poor</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td></td>
 <td></td>
@@ -1144,7 +1321,7 @@
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><em>Feature in UVM</em></td>
 <td></td>
 <td></td>
@@ -1152,347 +1329,397 @@
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Child-centric comp.</td>
-<td>$BCF \cdot (2 + L + Wf1.y + Wa1.y)$</td>
-<td>$4B \cdot (F + Wf1.y + Wa1.y) \cdot min(C, 2p)$ bytes over GPU-GPU + $4BCLF$ bytes over GPU-CPU</td>
-<td>$~ (2 + L + Wf1.y + Wa1.y) : 4L$ over GPU-CPU</td>
+<td><span class="math inline"><em>B</em><em>C</em><em>F</em> ⋅ (2 + <em>L</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)</span></td>
+<td><span class="math inline">4<em>B</em> ⋅ (<em>F</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅<em>m</em><em>i</em><em>n</em>(<em>C</em>, 2<em>p</em>)</span> bytes over GPU-GPU + <span class="math inline">4<em>B</em><em>C</em><em>L</em><em>F</em></span> bytes over GPU-CPU</td>
+<td><span class="math inline"> (2 + <em>L</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>):4<em>L</em></span> over GPU-CPU</td>
 <td>very poor</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
-<td>$B \cdot (C + 3CF + 3LCF + (Wf1.y + Wa1.y) \cdot (CF + C + F + Wf2.y + Wa2.y))$</td>
-<td>$8BC + 4B \cdot (F + Wf1.y + Wa1.y) \cdot \min(C, 2p)$ bytes over GPU-GPU + $4BCFL$ bytes over GPU-CPU</td>
-<td>$~ (2 + L + Wf1.y + Wa1.y) : 4L$ over GPU-CPU</td>
+<td><span class="math inline"><em>B</em> ⋅ (<em>C</em> + 3<em>C</em><em>F</em> + 3<em>L</em><em>C</em><em>F</em> + (<em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅(<em>C</em><em>F</em> + <em>C</em> + <em>F</em> + <em>W</em><em>f</em>2.<em>y</em> + <em>W</em><em>a</em>2.<em>y</em>))</span></td>
+<td><span class="math inline">8<em>B</em><em>C</em> + 4<em>B</em> ⋅ (<em>F</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)</span> bytes over GPU-GPU + <span class="math inline">4<em>B</em><em>C</em><em>F</em><em>L</em></span> bytes over GPU-CPU</td>
+<td><span class="math inline"> (2 + <em>L</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>):4<em>L</em></span> over GPU-CPU</td>
 <td>very poor</td>
 <td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
 <p>Really wide table, with math, nicely laid out</p>
 
-<table style="font-size: 12px;"><thead>
-<tr>
+<table style="width:100%;">
+<colgroup>
+<col width="19%" />
+<col width="19%" />
+<col width="23%" />
+<col width="23%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
 <th>Parts</th>
 <th>Computation cost</th>
 <th>Communication cost (Bytes)</th>
 <th>Comp. to comm. ratio</th>
 <th>Scalability</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td><em>Feature duplication</em></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Children selection</td>
-<td>$BC$</td>
-<td>$8BC$</td>
+<td><span class="math inline"><em>B</em><em>C</em></span></td>
+<td><span class="math inline">8<em>B</em><em>C</em></span></td>
 <td>1 : 8</td>
 <td>Poor</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Child-centric comp.</td>
-<td>$BCF \cdot (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y)$</td>
-<td>$4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$</td>
-<td>$~ CF : \min(C, 2p) \cdot 4$</td>
+<td><span class="math inline"><em>B</em><em>C</em><em>F</em> ⋅ (2 + <em>L</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)</span></td>
+<td><span class="math inline">4<em>B</em> ⋅ (<em>F</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)</span></td>
+<td><span class="math inline"> <em>C</em><em>F</em> : min(<em>C</em>, 2<em>p</em>)⋅4</span></td>
 <td>Good</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Source-centric comp.</td>
-<td>$B \cdot (CF + (\textrm{Wf1}.y + \textrm{Wa1}.y) \cdot (C + F + \textrm{Wf2}.y + \textrm{Wa2}.y)$</td>
+<td><span class="math inline"><em>B</em> ⋅ (<em>C</em><em>F</em> + (Wf1.<em>y</em> + Wa1.<em>y</em>)⋅(<em>C</em> + <em>F</em> + Wf2.<em>y</em> + Wa2.<em>y</em>)</span></td>
 <td>0</td>
 <td>N.A.</td>
 <td>N.A.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
-<td>$B \cdot (C + 3CF + 3LCF + (\textrm{Wf1}.y + \textrm{Wa1}.y) \cdot (CF + C + F + \textrm{Wf2}.y + \textrm{Wa2}.y))$</td>
-<td>$8BC + 4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$</td>
-<td>at least $~ CF : \min(C, 2p) \cdot 4$</td>
+<td><span class="math inline"><em>B</em> ⋅ (<em>C</em> + 3<em>C</em><em>F</em> + 3<em>L</em><em>C</em><em>F</em> + (Wf1.<em>y</em> + Wa1.<em>y</em>)⋅(<em>C</em><em>F</em> + <em>C</em> + <em>F</em> + Wf2.<em>y</em> + Wa2.<em>y</em>))</span></td>
+<td><span class="math inline">8<em>B</em><em>C</em> + 4<em>B</em> ⋅ (<em>F</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)</span></td>
+<td>at least <span class="math inline"> <em>C</em><em>F</em> : min(<em>C</em>, 2<em>p</em>)⋅4</span></td>
 <td>Good</td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><em>Direct feature access</em></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Child-centric comp.</td>
-<td>$BCF \cdot (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y)$</td>
-<td>$4B \cdot ((F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p) + CLF)$</td>
-<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$</td>
+<td><span class="math inline"><em>B</em><em>C</em><em>F</em> ⋅ (2 + <em>L</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)</span></td>
+<td><span class="math inline">4<em>B</em> ⋅ ((<em>F</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)+<em>C</em><em>L</em><em>F</em>)</span></td>
+<td><span class="math inline"> (2 + <em>L</em> + Wf1.<em>y</em> + Wa1.<em>y</em>):4<em>L</em></span></td>
 <td>poor</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
-<td>$B \cdot (C + 3CF + 3LCF + (\textrm{Wf1}.y + \textrm{Wa1}.y) \cdot (CF + C + F + \textrm{Wf2}.y + \textrm{Wa2}.y))$</td>
-<td>$8BC + 4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p) + 4BCFL$</td>
-<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$</td>
+<td><span class="math inline"><em>B</em> ⋅ (<em>C</em> + 3<em>C</em><em>F</em> + 3<em>L</em><em>C</em><em>F</em> + (Wf1.<em>y</em> + Wa1.<em>y</em>)⋅(<em>C</em><em>F</em> + <em>C</em> + <em>F</em> + Wf2.<em>y</em> + Wa2.<em>y</em>))</span></td>
+<td><span class="math inline">8<em>B</em><em>C</em> + 4<em>B</em> ⋅ (<em>F</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)+4<em>B</em><em>C</em><em>F</em><em>L</em></span></td>
+<td><span class="math inline"> (2 + <em>L</em> + Wf1.<em>y</em> + Wa1.<em>y</em>):4<em>L</em></span></td>
 <td>poor</td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><em>Feature in UVM</em></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Child-centric comp.</td>
-<td>$BCF \cdot (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y)$</td>
-<td>$4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$ bytes over GPU-GPU + $4BCLF$ bytes over GPU-CPU</td>
-<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$ over GPU-CPU</td>
+<td><span class="math inline"><em>B</em><em>C</em><em>F</em> ⋅ (2 + <em>L</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)</span></td>
+<td><span class="math inline">4<em>B</em> ⋅ (<em>F</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)</span> bytes over GPU-GPU + <span class="math inline">4<em>B</em><em>C</em><em>L</em><em>F</em></span> bytes over GPU-CPU</td>
+<td><span class="math inline"> (2 + <em>L</em> + Wf1.<em>y</em> + Wa1.<em>y</em>):4<em>L</em></span> over GPU-CPU</td>
 <td>very poor</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
-<td>$B \cdot (C + 3CF + 3LCF + (\textrm{Wf1}.y + \textrm{Wa1}.y) \cdot (CF + C + F + \textrm{Wf2}.y + \textrm{Wa2}.y))$</td>
-<td>$8BC + 4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$ bytes over GPU-GPU + $4BCFL$ bytes over GPU-CPU</td>
-<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$ over GPU-CPU</td>
+<td><span class="math inline"><em>B</em> ⋅ (<em>C</em> + 3<em>C</em><em>F</em> + 3<em>L</em><em>C</em><em>F</em> + (Wf1.<em>y</em> + Wa1.<em>y</em>)⋅(<em>C</em><em>F</em> + <em>C</em> + <em>F</em> + Wf2.<em>y</em> + Wa2.<em>y</em>))</span></td>
+<td><span class="math inline">8<em>B</em><em>C</em> + 4<em>B</em> ⋅ (<em>F</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)</span> bytes over GPU-GPU + <span class="math inline">4<em>B</em><em>C</em><em>F</em><em>L</em></span> bytes over GPU-CPU</td>
+<td><span class="math inline"> (2 + <em>L</em> + Wf1.<em>y</em> + Wa1.<em>y</em>):4<em>L</em></span> over GPU-CPU</td>
 <td>very poor</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
 <p>JDO hacked version of above</p>
 
-<table style="font-size: 12px;"><thead>
-<tr>
+<table style="width:51%;">
+<colgroup>
+<col width="33%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
 <th>Parts</th>
 <th>Comp. cost</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td><em>Feature duplication</em></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Children selection</td>
 <td>BC</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Child-centric comp.</td>
 <td>BCF x (2 + L + Wf1.y + Wa1.y)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Source-centric comp.</td>
 <td>B x (CF + (Wf1.y + Wa1.y) x (C + F + Wf2.y + Wa2.y)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
 <td>B x (C + 3CF + 3LCF + (Wf1.y + Wa1.y) x (CF + C + F + Wf2.y + Wa2.y))</td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><em>Direct feature access</em></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Child-centric comp.</td>
 <td>BCF x (2 + L + Wf1.y + Wa1.y)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
 <td>B x (C + 3CF + 3LCF + (Wf1.y + Wa1.y) x (CF + C + F + Wf2.y + Wa2.y))</td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><em>Feature in UVM</em></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Child-centric comp.</td>
 <td>BCF x (2 + L + Wf1.y + Wa1.y)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
 <td>B x (C + 3CF + 3LCF + (Wf1.y + Wa1.y) x (CF + C + F + Wf2.y + Wa2.y))</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
-<table style="font-size: 12px;"><thead>
-<tr>
+<table style="width:56%;">
+<colgroup>
+<col width="33%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
 <th>Parts</th>
 <th>Comm. cost</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td><em>Feature duplication</em></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Children selection</td>
 <td>8BC bytes</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Child-centric comp.</td>
 <td>4B x (F + Wf1.y + Wa1.y) x min(C, 2p) bytes</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Source-centric comp.</td>
 <td>0 bytes</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
 <td>8BC + 4B x (F + Wf1.y + Wa1.y) x min(C, 2p) bytes</td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><em>Direct feature access</em></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Child-centric comp.</td>
 <td>4B x ((F + Wf1.y + Wa1.y) x min(C, 2p) + CLF) bytes</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
 <td>8BC + 4B x (F + Wf1.y + Wa1.y) x min(C, 2p) + 4BCFL bytes</td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><em>Feature in UVM</em></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Child-centric comp.</td>
 <td>4B x (F + Wf1.y + Wa1.y) x min(C, 2p) bytes over GPU-GPU</td>
 </tr>
-<tr>
+<tr class="odd">
 <td></td>
 <td>+ 4BCLF bytes over GPU-CPU</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Graph SAGE</td>
 <td>8BC + 4B x (F + Wf1.y + Wa1.y) x min(C, 2p) bytes over GPU-GPU</td>
 </tr>
-<tr>
+<tr class="odd">
 <td></td>
 <td>+ 4BCFL bytes over GPU-CPU</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
-<table style="font-size: 12px;"><thead>
-<tr>
+<table style="font-size: 12px;">
+<thead>
+<tr class="header">
 <th>Parts</th>
 <th>Comp/comm ratio</th>
 <th>Scalability</th>
 </tr>
-</thead><tbody>
-<tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td><em>Feature duplication</em></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Children selection</td>
 <td>1 : 8</td>
 <td>Poor</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Child-centric comp.</td>
 <td>~ CF : min(C, 2p) x 4</td>
 <td>Good</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Source-centric comp.</td>
 <td>N.A.</td>
 <td>N.A.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
 <td>at least ~ CF : min(C, 2p) x 4</td>
 <td>Good</td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><em>Direct feature access</em></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Child-centric comp.</td>
 <td>~ (2 + L + Wf1.y + Wa1.y) : 4L</td>
 <td>poor</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
 <td>~ (2 + L + Wf1.y + Wa1.y) : 4L</td>
 <td>poor</td>
 </tr>
-<tr>
+<tr class="even">
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><em>Feature in UVM</em></td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Child-centric comp.</td>
 <td>~ (2 + L + Wf1.y + Wa1.y) : 4L over GPU-CPU</td>
 <td>very poor</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Graph SAGE</td>
 <td>~ (2 + L + Wf1.y + Wa1.y) : 4L over GPU-CPU</td>
 <td>very poor</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
 <p>Let's try a grid table with backslashes.</p>
 
-<p>+---------------+---------------+--------------------+
-| Fruit         | Price         | Advantages         |
-+===============+===============+====================+
-| Bananas       | first line\   | first line\        |
-|               | next line     | next line          |
-+---------------+---------------+--------------------+
-| Bananas       | first line\   | first line\        |
-|               | next line     | next line          |
-+---------------+---------------+--------------------+</p>
+<table style="width:74%;">
+<colgroup>
+<col width="22%" />
+<col width="22%" />
+<col width="29%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Fruit</th>
+<th>Price</th>
+<th>Advantages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>Bananas</p></td>
+<td><p>first line<br />
+next line</p></td>
+<td><p>first line<br />
+next line</p></td>
+</tr>
+<tr class="even">
+<td><p>Bananas</p></td>
+<td><p>first line<br />
+next line</p></td>
+<td><p>first line<br />
+next line</p></td>
+</tr>
+</tbody>
+</table>
 
       </div>
 
-        <!-- <div class="dark-box"></div> -->
+      <div class="dark-box">
+      </div>
     </div>
   </body>
 </html>
