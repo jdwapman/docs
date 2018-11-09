@@ -934,9 +934,9 @@ sum up <code>child_feature</code> and <code>child_temp</code> for each source wi
 </tr>
 <tr>
 <td>Child-centric comp.</td>
-<td>$BCF \cdot (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y)$</td>
-<td>$4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$</td>
-<td>$~ CF : \min(C, 2p) \cdot 4$</td>
+<td>$BCF <br> \cdot (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y)$</td>
+<td>$4B <br> \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) <br> \cdot \min(C, 2p)$</td>
+<td>$\sim CF : \min(C, 2p) <br> \cdot 4$</td>
 <td>Good</td>
 </tr>
 <tr>
@@ -950,7 +950,7 @@ sum up <code>child_feature</code> and <code>child_temp</code> for each source wi
 <td>Graph SAGE</td>
 <td>$B \cdot (C + 3CF + 3LCF + (\textrm{Wf1}.y + \textrm{Wa1}.y) \cdot (CF + C + F + \textrm{Wf2}.y + \textrm{Wa2}.y))$</td>
 <td>$8BC + 4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$</td>
-<td>at least $~ CF : \min(C, 2p) \cdot 4$</td>
+<td>at least $\sim CF : \min(C, 2p) \cdot 4$</td>
 <td>Good</td>
 </tr>
 <tr>
@@ -971,14 +971,14 @@ sum up <code>child_feature</code> and <code>child_temp</code> for each source wi
 <td>Child-centric comp.</td>
 <td>$BCF \cdot (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y)$</td>
 <td>$4B \cdot ((F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p) + CLF)$</td>
-<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$</td>
+<td>$\sim (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$</td>
 <td>poor</td>
 </tr>
 <tr>
 <td>Graph SAGE</td>
 <td>$B \cdot (C + 3CF + 3LCF + (\textrm{Wf1}.y + \textrm{Wa1}.y) \cdot (CF + C + F + \textrm{Wf2}.y + \textrm{Wa2}.y))$</td>
 <td>$8BC + 4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p) + 4BCFL$</td>
-<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$</td>
+<td>$\sim (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$</td>
 <td>poor</td>
 </tr>
 <tr>
@@ -999,14 +999,14 @@ sum up <code>child_feature</code> and <code>child_temp</code> for each source wi
 <td>Child-centric comp.</td>
 <td>$BCF \cdot (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y)$</td>
 <td>$4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$ bytes over GPU-GPU + $4BCLF$ bytes over GPU-CPU</td>
-<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{ a1}.y) : 4L$ over GPU-CPU</td>
+<td>$\sim (2 + L + \textrm{Wf1}.y + \textrm{ a1}.y) : 4L$ over GPU-CPU</td>
 <td>very poor</td>
 </tr>
 <tr>
 <td>Graph SAGE</td>
 <td>$B \cdot (C + 3CF + 3LCF + (\textrm{Wf1}.y + \textrm{Wa1}.y) \cdot (CF + C + F + \textrm{Wf2}.y + \textrm{Wa2}.y))$</td>
 <td>$8BC + 4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$ bytes over GPU-GPU + $4BCFL$ bytes over GPU-CPU</td>
-<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$ over GPU-CPU</td>
+<td>$\sim (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$ over GPU-CPU</td>
 <td>very poor</td>
 </tr>
 </tbody></table>
@@ -1330,14 +1330,14 @@ of vertices, the cost analysis is:</p>
 <td>Triangle Counting</td>
 <td>$(d * a * log(d))E/p + 2V$</td>
 <td>$aE/p * 12 + 8V$</td>
-<td>$~(d + a * log(d)) : 12a$</td>
+<td>$\sim (d + a * log(d)) : 12a$</td>
 <td>Okay</td>
 </tr>
 <tr>
 <td>Scan Statistics</td>
 <td>$(d * a * log(d))E/p$</td>
 <td>$12aE/p + 8V$</td>
-<td>$~(d + a * log(d)) : 12a$</td>
+<td>$\sim (d + a * log(d)) : 12a$</td>
 <td>Okay</td>
 </tr>
 <tr>
@@ -1434,7 +1434,7 @@ are known.</p>
 <td>MF (Push-Relabel)</td>
 <td>$(aV + a + 1)VE/p$</td>
 <td>$V^2((V+1)d/p + 1) * 8$</td>
-<td>$~ a:8$</td>
+<td>$\sim a:8$</td>
 <td>Less than okay</td>
 </tr>
 </tbody></table>
@@ -1466,7 +1466,7 @@ Updates source-vertex and vertex-destination capacities;
 <td>MF (Push-Relabel)</td>
 <td>$(aV + a + 1)VE/p$</td>
 <td>$V^2((V+1)d/p + 1) * 8$</td>
-<td>$~ a:8$</td>
+<td>$\sim a:8$</td>
 <td>Less than okay</td>
 </tr>
 <tr>
@@ -1494,7 +1494,7 @@ Updates source-vertex and vertex-destination capacities;
 <td>GTF</td>
 <td>$(aV + a + 1)VE/p$</td>
 <td>$V^2((V+1)d/p + 1) * 8$</td>
-<td>$~ a:8$</td>
+<td>$\sim a:8$</td>
 <td>Less than okay</td>
 </tr>
 <tr>
@@ -1670,7 +1670,7 @@ For each local vertex u with gradient updated:
 </thead><tbody>
 <tr>
 <td>Per-vertex updates</td>
-<td>$~10 V/p$</td>
+<td>$\sim 10 V/p$</td>
 <td>$0$ bytes</td>
 <td></td>
 <td></td>
@@ -1768,7 +1768,7 @@ applications.</p>
 </tr>
 <tr>
 <td>Scan statistics</td>
-<td>Duplicated graph: infinity <br> Distributed graph: $\sim(d+a \cdot \log(d)):12$</td>
+<td>Duplicated graph: infinity <br> Distributed graph: $\sim (d+a \cdot \log(d)):12$</td>
 <td>Perfect <br> Okay</td>
 <td>Trivial <br> Easy</td>
 </tr>
