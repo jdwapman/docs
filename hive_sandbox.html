@@ -6,7 +6,7 @@
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" type="image/ico" href="images/favicon.ico">
-    <title>Sandbox for playing with pandoc/slate</title>
+    <title>Documentation</title>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <style>
@@ -200,7 +200,7 @@
     </style>
     <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" media="print" />
-      <script src="javascripts/all.js"></script>
+      <script src="javascripts/all_nosearch.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
@@ -236,26 +236,19 @@
     </a>
     <div class="toc-wrapper">
       <img src="images/logo.png" class="logo" alt="Logo" />
-        <div class="search">
-          <input type="text" class="search" id="input-search" placeholder="Search">
-        </div>
-        <ul class="search-results"></ul>
       <div id="toc" class="toc-list-h1">
           <li>
-            <a href="#sandbox-for-playing-with-pandoc-slate" class="toc-h1 toc-link" data-title="Sandbox for playing with pandoc/slate">SANDBOX FOR PLAYING WITH PANDOC/SLATE</a>
+            <a href="#sandbox-for-playing-with-pandocslate" class="toc-h1 toc-link" data-title="Sandbox for playing with pandoc/slate">SANDBOX FOR PLAYING WITH PANDOC/SLATE</a>
           </li>
       </div>
-        <ul class="toc-footer">
-            <li><a href='https://github.com/gunrock/gunrock'>Gunrock&colon; GPU Graph Analytics</a></li>
-            <li>Gunrock &copy; 2018 The Regents of the University of California.</li>
-        </ul>
     </div>
     <div class="page-wrapper">
 
-        <!-- <div class="dark-box"></div> -->
+        <div class="dark-box"></div>
 
       <div class="content">
-        <h1 id='sandbox-for-playing-with-pandoc-slate'>Sandbox for playing with pandoc/slate</h1>
+        <h1 id="sandbox-for-playing-with-pandocslate">Sandbox for playing with pandoc/slate</h1>
+
 <p>Normal table</p>
 
 <table style="font-size: 12px;font-size: 12px;">
@@ -1754,38 +1747,133 @@ next line</p></td>
 </tbody>
 </table>
 
-<p>+------------------------+------------+----------+----------+ | Header
-row, column 1 | Header 2 | Header 3 | Header 4 | | (header rows
-optional) | | | |
-+========================+============+==========+==========+ | body row
-1, column 1 | column 2 | column 3 | column 4 |
-+------------------------+------------+----------+----------+ | body row
-2 | Cells may span columns. |
-+------------------------+------------+---------------------+ | body row
-3 | Cells may | - Table cells | +------------------------+ span rows. |
-- contain | | body row 4 | | - body elements. |
-+------------------------+------------+---------------------+ Some care
-must be taken with grid tables to avoid undesired interactions with cell
-text in rare cases. For example, the following table contains a cell in
-row 2 spanning from column 2 to column 4:</p>
+<p>this won't work:</p>
 
-<p>+--------------+----------+-----------+-----------+ | row 1, col 1 |
-column 2 | column 3 | column 4 |
-+--------------+----------+-----------+-----------+ | row 2 | |
-+--------------+----------+-----------+-----------+ | row 3 | | | |
-+--------------+----------+-----------+-----------+ If a vertical bar is
-used in the text of that cell, it could have unintended effects if
-accidentally aligned with column boundaries:</p>
+<pre><code>+------------------------+------------+----------+----------+
+| Header row, column 1   | Header 2   | Header 3 | Header 4 |
+| (header rows optional) |            |          |          |
++========================+============+==========+==========+
+| body row 1, column 1   | column 2   | column 3 | column 4 |
++------------------------+------------+----------+----------+
+| body row 2             | Cells may span columns.          |
++------------------------+------------+---------------------+
+| body row 3             | Cells may  | - Table cells       |
++------------------------+ span rows. | - contain           |
+| body row 4             |            | - body elements.    |
++------------------------+------------+---------------------+</code></pre>
 
-<p>+--------------+----------+-----------+-----------+ | row 1, col 1 |
-column 2 | column 3 | column 4 |
-+--------------+----------+-----------+-----------+ | row 2 | Use the
-command <code>ls | more</code>. |
-+--------------+----------+-----------+-----------+ | row 3 | | | |
-+--------------+----------+-----------+-----------+ Several solutions
-are possible. All that is needed is to break the continuity of the cell
-outline rectangle. One possibility is to shift the text by adding an
-extra space before:</p>
+<p>this may:</p>
+
+<table style="font-size: 12px;width:83%;">
+<colgroup>
+<col width="34%" />
+<col width="18%" />
+<col width="15%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Header row, column 1 (header rows optional)</th>
+<th>Header 2</th>
+<th>Header 3</th>
+<th>Header 4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>body row 1, column 1</p></td>
+<td><p>column 2</p></td>
+<td><p>column 3</p></td>
+<td><p>column 4</p></td>
+</tr>
+<tr class="even">
+<td><p>body row 2</p></td>
+<td><p>Cells may s</p></td>
+<td><p>an columns</p></td>
+<td><p>.</p></td>
+</tr>
+<tr class="odd">
+<td><p>body row 3</p></td>
+<td><p>Cells may</p></td>
+<td><ul>
+<li>Table ce</li>
+</ul></td>
+<td><p>lls</p></td>
+</tr>
+<tr class="even">
+<td><p>body row 4</p></td>
+<td></td>
+<td><ul>
+<li>body ele</li>
+</ul></td>
+<td><p>ments.</p></td>
+</tr>
+</tbody>
+</table>
+
+<p>Some care must be taken with grid tables to avoid undesired interactions with cell text in rare cases. For example, the following table contains a cell in row 2 spanning from column 2 to column 4:</p>
+
+<table style="font-size: 12px;width:69%;">
+<colgroup>
+<col width="20%" />
+<col width="15%" />
+<col width="16%" />
+<col width="16%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><p>row 1, col 1</p></td>
+<td><p>column 2</p></td>
+<td><p>column 3</p></td>
+<td><p>column 4</p></td>
+</tr>
+<tr class="even">
+<td><p>row 2</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><p>row 3</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<p>If a vertical bar is used in the text of that cell, it could have unintended effects if accidentally aligned with column boundaries:</p>
+
+<table style="font-size: 12px;width:69%;">
+<colgroup>
+<col width="20%" />
+<col width="15%" />
+<col width="16%" />
+<col width="16%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><p>row 1, col 1</p></td>
+<td><p>column 2</p></td>
+<td><p>column 3</p></td>
+<td><p>column 4</p></td>
+</tr>
+<tr class="even">
+<td><p>row 2</p></td>
+<td><p>Use the co</p></td>
+<td><p>mmand ``ls</p></td>
+<td><p>more``.</p></td>
+</tr>
+<tr class="odd">
+<td><p>row 3</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<p>Several solutions are possible. All that is needed is to break the continuity of the cell outline rectangle. One possibility is to shift the text by adding an extra space before:</p>
 
 <table style="font-size: 12px;width:69%;">
 <colgroup>
@@ -1818,7 +1906,8 @@ extra space before:</p>
 
       </div>
 
-        <!-- <div class="dark-box"></div> -->
+      <div class="dark-box">
+      </div>
     </div>
   </body>
 </html>
