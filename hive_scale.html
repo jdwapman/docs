@@ -603,7 +603,7 @@
 
 <p>The main and most time-consuming part of the Louvain algorithm is the modularity optimization iterations. The aggregated edge weights between vertices and their respective adjacent communities, as well as the outgoing edge weights of each community, are needed for the modularity optimization. The vertex-community weights can be computed locally, if the community assignments of all neighbors of local vertices are available; to achieve this, a vertex needs to broadcast its new community when the assignment changes. The per-community outgoing edge weights can be computed by <code>AllReduce</code> across all GPUs. The modularity optimization with inter-GPU communication can be done as:</p>
 
-<pre><code>Do
+<pre style="highlight mid-column-code"><code>Do
     Local modularity optimization;
     Broadcast updated community assignments of local vertices;
     local_weights_community2any := sums(local edges from an community);
@@ -614,7 +614,7 @@ While iterations stop condition not met</code></pre>
 
 <p>The graph contraction can be done as below on multiple GPUs:</p>
 
-<pre><code>temp_graph := Contract the local sub-graph based on community assignments;
+<pre style="highlight mid-column-code"><code>temp_graph := Contract the local sub-graph based on community assignments;
 Send edges <v, u, w> in temp_graph to host_GPU(v);
 Merge received edges and form the new local sub-graph;</code></pre>
 
@@ -671,7 +671,7 @@ Merge received edges and form the new local sub-graph;</code></pre>
 
 <p>SAGE can be separated into three parts, depending on whether the computation and data access is source-centric or child-centric.</p>
 
-<pre><code>// Part1: Select the children
+<pre style="highlight mid-column-code"><code>// Part1: Select the children
 For each source in local batch:
     Select num_children_per_source children form source's neighbors;
     Send <source, child> pairs to host_GPU(child);
@@ -701,7 +701,7 @@ For each source in local batch:
 
 <p>Assume the size of local batch is B, the number of children per source is C, the number of leaves per child is L, and the feature length per vertex is F. Dimensions of 2D matrices are noted as (x, y). The computation and communication costs for each part are:</p>
 
-<pre><code>Part 1, computation  : B x C.
+<pre style="highlight mid-column-code"><code>Part 1, computation  : B x C.
 Part 1, communication: B x C x 8 bytes.
 Part 2, computation  : B x C x F + B x C x (F + L x F + F x (Wf1.y + Wa1.y)).
 Part 2, communication: B x C x (F + Wf1.y + Wa1.y) x 4 bytes.
@@ -838,7 +838,7 @@ min(C, 2p) 4$</td>
 
 <p>A more interesting multi-GPU implementation would be when the graph is distributed across the GPUs. In this case, each step of a walk not only needs to send the <code><walk#, step#, v></code> information to <code>host_GPU(v)</code>, but also to the GPU that stores the result for such walk.</p>
 
-<pre><code>For each walk starting from local vertex v:
+<pre style="highlight mid-column-code"><code>For each walk starting from local vertex v:
     Store v for <walk#, step 0>;
     Select a neighbor u of v;
     Store u for <walk#, step 1>;
@@ -946,7 +946,7 @@ Repeat until all steps of walks finished:
 
 <p>In each iteration, Geolocation updates a vertex's location based on its neighbors. For multiple GPUs, neighboring vertices's location information needs to be available, either by direct access, UVM, or explicit data movement. The following shows how explicit data movement can be implemented.</p>
 
-<pre><code>Do
+<pre style="highlight mid-column-code"><code>Do
     Local geo location updates on local vertices;
     Broadcast local vertices' updates;
 While no more update</code></pre>
@@ -985,7 +985,7 @@ While no more update</code></pre>
 
 <p>Vertex nomination is very similar to a single source shortest path (SSSP) problem, except it starts from a group of vertices, instead of a single source. One possible multi-GPU implementation is:</p>
 
-<pre><code>Set the starting vertex / vertices;
+<pre style="highlight mid-column-code"><code>Set the starting vertex / vertices;
 While has new distance updates
     For each local vertex v with distance update:
         For each edge <v, u, w> of vertex v:
@@ -1034,7 +1034,7 @@ While has new distance updates
 
 <p>A more distributed-friendly TC algorithm is wedge-checking-based (<a href="https://e-reports-ext.llnl.gov/pdf/890544.pdf" class="uri">https://e-reports-ext.llnl.gov/pdf/890544.pdf</a>). The main idea is this: for each triangle A-B-C, where <code>degree(A) >= degree(B) >= degree(C)</code>, both A and B are in C's neighborhood, and A is in B's neighborhood; when testing for possible triangle D-E-F, with <code>degree(D) >= degree(E) >= degree(F)</code>, the wedge (two edges that share the same end point) that needs to be checked is D-E, and the checking can be simply done by verifying whether D is in E's neighborhood. As this algorithm is designed for distributed systems, it should be well-suited for multi-GPU system. The ordering requirements are imposed to reduce the number of wedge checks and to balance the workload. The multi-GPU pseudo code is:</p>
 
-<pre><code>For each local edge < v, u >:
+<pre style="highlight mid-column-code"><code>For each local edge < v, u >:
     If (degree(v) > degree(u)) continue;
     For each neighbor w of v:
         If (degree(v) > degree(w)) continue;
@@ -1148,7 +1148,7 @@ For each vertex v in the graph:
 
 <p>The sparse fused lasso iteration is mainly a max-flow (MF), plus some per-vertex calculation to update the capacities in the graph. The reference and most non-parallel implementations of MF are augmenting-path-based; but finding the argumenting path and subsequent residual updates are both serial. The push-relabel algorithm is more parallelizable, and used by Gunrock's MF implementation. Each time the push operation updates the flow on an edge, it also needs to update the flow on the reverse edge; but the reverse edge may be hosted by another GPU, and that creates a large amount of inter-GPU traffic. The pseudocode for one iteration of MF with inter-GPU communication is:</p>
 
-<pre><code>// Push phase
+<pre style="highlight mid-column-code"><code>// Push phase
 For each local vertex v:
     If (excess[v] <= 0) continue;
     If (v == source || v == sink) continue;
@@ -1225,7 +1225,7 @@ Broadcast height[v] for all local vertex;</code></pre>
 
 <p>The GTF-specific parts are more complicated than MF in terms of communication: the implementation must keep some data, such as weights and sizes, for each community of vertices, and multiple GPUs could be updating such data simultaneously. It's almost impossible to do explicit data movement for this part, and the best option is to use direct access or UVM; each vertex may update its community once, so the communication cost is still manageable. One iteration of GTF is:</p>
 
-<pre><code>MF;
+<pre style="highlight mid-column-code"><code>MF;
 BFS to find the min-cut;
 Vertex-Community updates;
 Updates source-vertex and vertex-destination capacities;</code></pre>
@@ -1301,7 +1301,7 @@ Updates source-vertex and vertex-destination capacities;</code></pre>
 
 <p>Graph projection is very similar to triangle counting by wedge checking; but instead of counting the triangles, it actually records the wedges. The problem here is not computation or communication, but rather the memory requirement of the result: projecting all vertices may create a very dense graph, which may be much larger than the original graph. One possible solution is to process the results in batches:</p>
 
-<pre><code>vertex_start := 0;
+<pre style="highlight mid-column-code"><code>vertex_start := 0;
 While (vertex_start < num_vertices)
     markers := {0};
     current_range := [vertex_start, vertex_start + batch_size);
@@ -1387,7 +1387,7 @@ While (vertex_start < num_vertices)
 
 <p>The Gunrock implementation of Local Graph Clustering (LGC) uses PageRank-Nibble, a variant of the PageRank algorithm. PR-Nibble's communication pattern is the same as standard PR: accumulate changes for each vertex to its host GPU. As a result, PR-Nibble should be scalable, just as standard PR. PR-Nibble with communication can be done as:</p>
 
-<pre><code>// Per-vertex updates
+<pre style="highlight mid-column-code"><code>// Per-vertex updates
 For each active local vertex v:
     If (iteration == 0 &amp;&amp; v == src\_neighbor) continue;
     If (iteration > 0 &amp;&amp; v == src)
