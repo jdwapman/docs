@@ -912,201 +912,101 @@ sum up <code>child_feature</code> and <code>child_temp</code> for each source wi
 <table style="font-size: 12px;font-size: 12px;"><thead>
 <tr>
 <th>Parts</th>
-<th>Comp. cost</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><em>Feature duplication</em></td>
-<td></td>
-</tr>
-<tr>
-<td>Children selection</td>
-<td>BC</td>
-</tr>
-<tr>
-<td>Child-centric comp.</td>
-<td>BCF x (2 + L + Wf1.y + Wa1.y)</td>
-</tr>
-<tr>
-<td>Source-centric comp.</td>
-<td>B x (CF + (Wf1.y + Wa1.y) x (C + F + Wf2.y + Wa2.y)</td>
-</tr>
-<tr>
-<td>Graph SAGE</td>
-<td>B x (C + 3CF + 3LCF + (Wf1.y + Wa1.y) x (CF + C + F + Wf2.y + Wa2.y))</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><em>Direct feature access</em></td>
-<td></td>
-</tr>
-<tr>
-<td>Child-centric comp.</td>
-<td>BCF x (2 + L + Wf1.y + Wa1.y)</td>
-</tr>
-<tr>
-<td>Graph SAGE</td>
-<td>B x (C + 3CF + 3LCF + (Wf1.y + Wa1.y) x (CF + C + F + Wf2.y + Wa2.y))</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><em>Feature in UVM</em></td>
-<td></td>
-</tr>
-<tr>
-<td>Child-centric comp.</td>
-<td>BCF x (2 + L + Wf1.y + Wa1.y)</td>
-</tr>
-<tr>
-<td>Graph SAGE</td>
-<td>B x (C + 3CF + 3LCF + (Wf1.y + Wa1.y) x (CF + C + F + Wf2.y + Wa2.y))</td>
-</tr>
-</tbody></table>
-
-<table style="font-size: 12px;font-size: 12px;"><thead>
-<tr>
-<th>Parts</th>
-<th>Comm. cost</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><em>Feature duplication</em></td>
-<td></td>
-</tr>
-<tr>
-<td>Children selection</td>
-<td>8BC bytes</td>
-</tr>
-<tr>
-<td>Child-centric comp.</td>
-<td>4B x (F + Wf1.y + Wa1.y) x min(C, 2p) bytes</td>
-</tr>
-<tr>
-<td>Source-centric comp.</td>
-<td>0 bytes</td>
-</tr>
-<tr>
-<td>Graph SAGE</td>
-<td>8BC + 4B x (F + Wf1.y + Wa1.y) x min(C, 2p) bytes</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><em>Direct feature access</em></td>
-<td></td>
-</tr>
-<tr>
-<td>Child-centric comp.</td>
-<td>4B x ((F + Wf1.y + Wa1.y) x min(C, 2p) + CLF) bytes</td>
-</tr>
-<tr>
-<td>Graph SAGE</td>
-<td>8BC + 4B x (F + Wf1.y + Wa1.y) x min(C, 2p) + 4BCFL bytes</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><em>Feature in UVM</em></td>
-<td></td>
-</tr>
-<tr>
-<td>Child-centric comp.</td>
-<td>4B x (F + Wf1.y + Wa1.y) x min(C, 2p) bytes over GPU-GPU</td>
-</tr>
-<tr>
-<td></td>
-<td>+ 4BCLF bytes over GPU-CPU</td>
-</tr>
-<tr>
-<td>Graph SAGE</td>
-<td>8BC + 4B x (F + Wf1.y + Wa1.y) x min(C, 2p) bytes over GPU-GPU</td>
-</tr>
-<tr>
-<td></td>
-<td>+ 4BCFL bytes over GPU-CPU</td>
-</tr>
-</tbody></table>
-
-<table style="font-size: 12px;font-size: 12px;"><thead>
-<tr>
-<th>Parts</th>
-<th>Comp/comm ratio</th>
+<th>Computation cost</th>
+<th>Communication cost (Bytes)</th>
+<th>Comp. to comm. ratio</th>
 <th>Scalability</th>
 </tr>
 </thead><tbody>
 <tr>
-<td><em>Feature duplication</em></td>
+<td><strong>Feature duplication</strong></td>
+<td></td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Children selection</td>
+<td>$BC$</td>
+<td>$8BC$</td>
 <td>1 : 8</td>
 <td>Poor</td>
 </tr>
 <tr>
 <td>Child-centric comp.</td>
-<td>~ CF : min(C, 2p) x 4</td>
+<td>$BCF \cdot (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y)$</td>
+<td>$4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$</td>
+<td>$~ CF : \min(C, 2p) \cdot 4$</td>
 <td>Good</td>
 </tr>
 <tr>
 <td>Source-centric comp.</td>
+<td>$B \cdot (CF + (\textrm{Wf1}.y + \textrm{Wa1}.y) \cdot (C + F + \textrm{Wf2}.y + \textrm{Wa2}.y)$</td>
+<td>0</td>
 <td>N.A.</td>
 <td>N.A.</td>
 </tr>
 <tr>
 <td>Graph SAGE</td>
-<td>at least ~ CF : min(C, 2p) x 4</td>
+<td>$B \cdot (C + 3CF + 3LCF + (\textrm{Wf1}.y + \textrm{Wa1}.y) \cdot (CF + C + F + \textrm{Wf2}.y + \textrm{Wa2}.y))$</td>
+<td>$8BC + 4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$</td>
+<td>at least $~ CF : \min(C, 2p) \cdot 4$</td>
 <td>Good</td>
 </tr>
 <tr>
 <td></td>
 <td></td>
 <td></td>
+<td></td>
+<td></td>
 </tr>
 <tr>
-<td><em>Direct feature access</em></td>
+<td><strong>Direct feature access</strong></td>
+<td></td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Child-centric comp.</td>
-<td>~ (2 + L + Wf1.y + Wa1.y) : 4L</td>
+<td>$BCF \cdot (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y)$</td>
+<td>$4B \cdot ((F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p) + CLF)$</td>
+<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$</td>
 <td>poor</td>
 </tr>
 <tr>
 <td>Graph SAGE</td>
-<td>~ (2 + L + Wf1.y + Wa1.y) : 4L</td>
+<td>$B \cdot (C + 3CF + 3LCF + (\textrm{Wf1}.y + \textrm{Wa1}.y) \cdot (CF + C + F + \textrm{Wf2}.y + \textrm{Wa2}.y))$</td>
+<td>$8BC + 4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p) + 4BCFL$</td>
+<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$</td>
 <td>poor</td>
 </tr>
 <tr>
 <td></td>
 <td></td>
 <td></td>
+<td></td>
+<td></td>
 </tr>
 <tr>
-<td><em>Feature in UVM</em></td>
+<td><strong>Feature in UVM</strong></td>
+<td></td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Child-centric comp.</td>
-<td>~ (2 + L + Wf1.y + Wa1.y) : 4L over GPU-CPU</td>
+<td>$BCF \cdot (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y)$</td>
+<td>$4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$ bytes over GPU-GPU + $4BCLF$ bytes over GPU-CPU</td>
+<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{ a1}.y) : 4L$ over GPU-CPU</td>
 <td>very poor</td>
 </tr>
 <tr>
 <td>Graph SAGE</td>
-<td>~ (2 + L + Wf1.y + Wa1.y) : 4L over GPU-CPU</td>
+<td>$B \cdot (C + 3CF + 3LCF + (\textrm{Wf1}.y + \textrm{Wa1}.y) \cdot (CF + C + F + \textrm{Wf2}.y + \textrm{Wa2}.y))$</td>
+<td>$8BC + 4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$ bytes over GPU-GPU + $4BCFL$ bytes over GPU-CPU</td>
+<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$ over GPU-CPU</td>
 <td>very poor</td>
 </tr>
 </tbody></table>
@@ -1126,24 +1026,22 @@ scalability will be perfect, as there is no communication involved at all.</p>
 <p>A more interesting multi-GPU implementation would be when the graph is
 distributed across the GPUs. In this case, each step of a walk not only needs
 to send the <code><walk#, step#, v></code> information to <code>host_GPU(v)</code>, but also to the GPU that
-stores the result for such walk.
-```
-For each walk starting from local vertex v:
-    Store v for <walk#, step 0>;
+stores the result for such walk.</p>
+<pre class="highlight mid-column-code plaintext"><code>For each walk starting from local vertex v:
+    Store v for ;
     Select a neighbor u of v;
-    Store u for <walk#, step 1>;
-    Send <walk#, 1, u> to host_GPU(u) for visit;</p>
+    Store u for ;
+    Send  to host_GPU(u) for visit;
 
-<p>Repeat until all steps of walks finished:
-    For each received <walk#, step#, v> for visit:
+Repeat until all steps of walks finished:
+    For each received  for visit:
         Select a neighbor u of v;
-        Send <walk#, step# + 1, u> to host_GPU(u) for visit;
-        Send <walk#, step# + 1, u> to host_GPU_walk(walk#) for record;</p>
+        Send  to host_GPU(u) for visit;
+        Send  to host_GPU_walk(walk#) for record;
 
-<p>For each received <walk#, step#, v> for record:
-        Store v for <walk#, step#>;
-```</p>
-
+    For each received  for record:
+        Store v for ;
+</code></pre>
 <p>Using W as the number of walks, for each step, we have</p>
 
 <table style="font-size: 12px;font-size: 12px;"><thead>
@@ -1157,9 +1055,9 @@ For each walk starting from local vertex v:
 </thead><tbody>
 <tr>
 <td>Random walk</td>
-<td>W/p</td>
-<td>W/p x 24 bytes</td>
-<td>1 : 24</td>
+<td>$W/p$</td>
+<td>$W/p * 24$ bytes</td>
+<td>$1 : 24$</td>
 <td>very poor</td>
 </tr>
 </tbody></table>
@@ -1168,12 +1066,10 @@ For each walk starting from local vertex v:
 randomly selecting any neighbor, it selects the neighbor with the
 highest score (when using the <code>greedy</code> strategy), or with probabilities
 proportional to the neighbors' scores (when using the <code>stochastic_greedy</code>
-strategy).</p>
-
-<p>For the <code>greedy</code> strategy, a straightforward implementation, when
+strategy). For the <code>greedy</code> strategy, a straightforward implementation, when
 reaching a vertex, goes through the whole neighbor list of thatsuch
-vertex and finds the one with maximum score. A more optimized
-implementation could perform a pre-visit to find the neighbor with
+vertex and finds the one with maximum score. A more optimized implementation 
+could perform a pre-visit to find the neighbor with
 maximum scored neighbor, with a cost of E/p; during the random walk
 process, the maximum scored neighbor will be known without going
 through the neighbor list.</p>
@@ -1198,37 +1094,37 @@ sufficient to select a neighbor, with weighted probabilities.</p>
 </thead><tbody>
 <tr>
 <td>Uniform</td>
-<td>W/p</td>
-<td>W/p x 24 bytes</td>
-<td>1 : 24</td>
+<td>$W/p$</td>
+<td>$W/p * 24$ bytes</td>
+<td>$1 : 24$</td>
 <td>Very poor</td>
 </tr>
 <tr>
 <td>Greedy</td>
-<td>Straightforward: dW/p</td>
-<td>W/p x 24 bytes</td>
-<td>d : 24</td>
+<td>Straightforward: $dW/p$</td>
+<td>$W/p * 24$ bytes</td>
+<td>$d : 24$</td>
 <td>Poor</td>
 </tr>
 <tr>
 <td>Greedy</td>
-<td>Pre-visit: W/p</td>
-<td>W/p x 24 bytes</td>
-<td>1 : 24</td>
+<td>Pre-visit: $W/p$</td>
+<td>$W/p * 24$ bytes</td>
+<td>$1 : 24$</td>
 <td>Very poor</td>
 </tr>
 <tr>
 <td>Stochastic Greedy</td>
-<td>Straightforward: dW/p</td>
-<td>W/p x 24 bytes</td>
-<td>d : 24</td>
+<td>Straightforward: $dW/p$</td>
+<td>$W/p * 24$ bytes</td>
+<td>$d : 24$</td>
 <td>Poor</td>
 </tr>
 <tr>
 <td>Stochastic Greedy</td>
-<td>Pre-visit: log(d)W/p</td>
-<td>W/p x 24 bytes</td>
-<td>log(d) : 24</td>
+<td>Pre-visit: $log(d)W/p$</td>
+<td>$W/p * 24$ bytes</td>
+<td>$log(d) : 24$</td>
 <td>Very poor</td>
 </tr>
 </tbody></table>
@@ -1239,21 +1135,21 @@ degree of vertices in the graph. As a result, the computation-to-communication
 ratio will increase to d:24; for most graphs, this is still not high enough to
 have good scalability.</p>
 <h3 id='geolocation'>Geolocation</h3>
-<p>In each iteration, Geolocation updates a vertex's location based on
-its neighbors. For multiple GPUs, neighboring vertices's location
+<p>In each iteration, Geolocation updates a vertex's location based on 
+its neighbors. For multiple GPUs, neighboring vertices's location 
 information needs to be available, either by direct access, UVM, or
-explicit data movement. The following shows how explicit data movement
+explicit data movement. The following shows how explicit data movement 
 can be implemented.</p>
 <pre class="highlight mid-column-code plaintext"><code>Do
     Local geo location updates on local vertices;
     Broadcast local vertices' updates;
 While no more update
 </code></pre>
-<p>The computation cost is on the order of O(|E|/p), if in each iteration
-all vertices are looking for possible location updates from neighbors.
-Because the spatial median function has a lot of mathematical
-computation inside, particularly a haversine() for each edge, the
-constant factor hidden by O() is large; for simplicity, 100 is used as
+<p>The computation cost is on the order of O(|E|/p), if in each iteration 
+all vertices are looking for possible location updates from neighbors. 
+Because the spatial median function has a lot of mathematical 
+computation inside, particularly a haversine() for each edge, the 
+constant factor hidden by O() is large; for simplicity, 100 is used as 
 the constant factor here. Assuming that we broadcast every vertex's
 location gives the upper bound of communication, but in reality, the
 communication should be much less, because 1) not every vertex updates
@@ -1273,16 +1169,16 @@ is low.</p>
 </thead><tbody>
 <tr>
 <td>Explicit movement</td>
-<td>100E/p</td>
-<td>2V x 8 bytes</td>
-<td>25E/p : 4V</td>
+<td>$100E/p$</td>
+<td>$2V * 8$ bytes</td>
+<td>$25E/p : 4V$</td>
 <td>Okay</td>
 </tr>
 <tr>
 <td>UVM or peer access</td>
-<td>100E/p</td>
-<td>E/p x 8 bytes</td>
-<td>25 : 1</td>
+<td>$100E/p$</td>
+<td>$E/p * 8$ bytes</td>
+<td>$25 : 1$</td>
 <td>Good</td>
 </tr>
 </tbody></table>
@@ -1315,9 +1211,9 @@ average degree of vertices is <code>d</code>, the computation and the communicat
 </thead><tbody>
 <tr>
 <td>Vertex nomination</td>
-<td>aE/p</td>
-<td>aV/p x min(d, p) x 8 bytes</td>
-<td>E : 8V x min(d, p)</td>
+<td>$aE/p$</td>
+<td>$aV/p * min(d, p) * 8$ bytes</td>
+<td>$E : 8V * min(d, p)$</td>
 <td>Okay</td>
 </tr>
 </tbody></table>
@@ -1404,58 +1300,58 @@ of vertices, the cost analysis is:</p>
 </thead><tbody>
 <tr>
 <td>Wedge generation</td>
-<td>dE/p</td>
+<td>$dE/p$</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Wedge communication</td>
-<td>0</td>
-<td>aE/p x 12</td>
+<td>$0$</td>
+<td>$aE/p * 12$</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Wedge checking</td>
-<td>aE/p x log(d)</td>
+<td>$aE/p * log(d)$</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>AllReduce</td>
-<td>2V</td>
-<td>2V x 4</td>
+<td>$2V$</td>
+<td>$2V * 4$</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Triangle Counting</td>
-<td>(d + a x log(d))E/p + 2V</td>
-<td>aE/p x 12 + 8V</td>
-<td>~(d + a x log(d)) : 12a</td>
+<td>$(d * a * log(d))E/p + 2V$</td>
+<td>$aE/p * 12 + 8V$</td>
+<td>$~(d + a * log(d)) : 12a$</td>
 <td>Okay</td>
 </tr>
 <tr>
 <td>Scan Statistics</td>
-<td>(d + a x log(d))E/p</td>
-<td>12aE/p + 8V</td>
-<td>~(d + a x log(d)) : 12a</td>
+<td>$(d * a * log(d))E/p$</td>
+<td>$12aE/p + 8V$</td>
+<td>$~(d + a * log(d)) : 12a$</td>
 <td>Okay</td>
 </tr>
 <tr>
 <td>(with wedge checks)</td>
-<td>+ 2V + V/p</td>
+<td>$+ 2V + V/p$</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Scan Statistics</td>
-<td>Vdd + V/p</td>
-<td>8V</td>
-<td>dd : 8</td>
+<td>$Vdd + V/p$</td>
+<td>$8V$</td>
+<td>$dd : 8$</td>
 <td>Perfect</td>
 </tr>
 <tr>
@@ -1522,23 +1418,23 @@ are known.</p>
 </thead><tbody>
 <tr>
 <td>Push</td>
-<td>a(V + 1)VE/p</td>
-<td>(V+1)VE/p x 8</td>
-<td>a:8</td>
+<td>$a(V + 1)VE/p$</td>
+<td>$(V+1)VE/p * 8$</td>
+<td>$a:8$</td>
 <td>Less than okay</td>
 </tr>
 <tr>
 <td>Relabel</td>
-<td>VE/p</td>
-<td>V^2 x 8</td>
-<td>d/p : 8</td>
+<td>$VE/p$</td>
+<td>$V^2 * 8$</td>
+<td>$d/p : 8$</td>
 <td>Okay</td>
 </tr>
 <tr>
 <td>MF (Push-Relabel)</td>
-<td>(aV + a + 1)VE/p</td>
-<td>V^2((V+1)d/p + 1) x 8</td>
-<td>~ a:8</td>
+<td>$(aV + a + 1)VE/p$</td>
+<td>$V^2((V+1)d/p + 1) * 8$</td>
+<td>$~ a:8$</td>
 <td>Less than okay</td>
 </tr>
 </tbody></table>
@@ -1568,43 +1464,43 @@ Updates source-vertex and vertex-destination capacities;
 </thead><tbody>
 <tr>
 <td>MF (Push-Relabel)</td>
-<td>(aV + a + 1)VE/p</td>
-<td>V^2((V+1)d/p + 1) x 8</td>
-<td>~ a:8</td>
+<td>$(aV + a + 1)VE/p$</td>
+<td>$V^2((V+1)d/p + 1) * 8$</td>
+<td>$~ a:8$</td>
 <td>Less than okay</td>
 </tr>
 <tr>
 <td>BFS</td>
-<td>E/p</td>
-<td>2V x 4</td>
-<td>d/p : 8</td>
+<td>$E/p$</td>
+<td>$2V * 4$</td>
+<td>$d/p : 8$</td>
 <td>Okay</td>
 </tr>
 <tr>
 <td>V-C updates</td>
-<td>E/p</td>
-<td>V/p x 8</td>
-<td>d : 8</td>
+<td>$E/p$</td>
+<td>$V/p * 8$</td>
+<td>$d : 8$</td>
 <td>Okay</td>
 </tr>
 <tr>
 <td>Capacity updates</td>
-<td>V/p</td>
-<td>V/p x 4</td>
-<td>1 : 4</td>
+<td>$V/p$</td>
+<td>$V/p * 4$</td>
+<td>$1 : 4$</td>
 <td>Less than okay</td>
 </tr>
 <tr>
 <td>GTF</td>
-<td>(aV + a + 1)VE/p</td>
-<td>V^2((V+1)d/p + 1) x 8</td>
-<td>~ a:8</td>
+<td>$(aV + a + 1)VE/p$</td>
+<td>$V^2((V+1)d/p + 1) * 8$</td>
+<td>$~ a:8$</td>
 <td>Less than okay</td>
 </tr>
 <tr>
 <td></td>
-<td>+ 2E/p + V/p</td>
-<td>+ 2V x 4 + V/p x 4</td>
+<td>$+ 2E/p + V/p$</td>
+<td>$+ 2V x 4 + V/p * 4$</td>
 <td></td>
 <td></td>
 </tr>
@@ -1665,37 +1561,37 @@ While (vertex_start < num_vertices)
 </thead><tbody>
 <tr>
 <td>Marking</td>
-<td>dE/p</td>
-<td>0 byte</td>
+<td>$dE/p$</td>
+<td>$0$ byte</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Forming edge lists</td>
-<td>E'</td>
-<td>0 byte</td>
+<td>$E'$</td>
+<td>$0$ byte</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Counting</td>
-<td>dE/p</td>
-<td>0 byte</td>
+<td>$dE/p$</td>
+<td>$0$ byte</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Merging</td>
-<td>E'</td>
-<td>E' x 12 bytes</td>
+<td>$E'$</td>
+<td>$E' * 12$ bytes</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Graph Projection</td>
-<td>2dE/p + 2E'</td>
-<td>12E' bytes</td>
-<td>dE/p + E' : 6E'</td>
+<td>$2dE/p + 2E'$</td>
+<td>$12E'$ bytes</td>
+<td>$dE/p + E' : 6E'$</td>
 <td>Okay</td>
 </tr>
 </tbody></table>
@@ -1774,30 +1670,30 @@ For each local vertex u with gradient updated:
 </thead><tbody>
 <tr>
 <td>Per-vertex updates</td>
-<td>~10 V/p</td>
-<td>0 bytes</td>
+<td>$~10 V/p$</td>
+<td>$0$ bytes</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Ranking propagation</td>
-<td>2E/p</td>
-<td>V * 8 bytes</td>
-<td>d/p : 4</td>
+<td>$2E/p$</td>
+<td>$V * 8$ bytes</td>
+<td>$d/p : 4$</td>
 <td></td>
 </tr>
 <tr>
 <td>Gradient updates</td>
-<td>V/p</td>
-<td>0 bytes</td>
+<td>$V/p$</td>
+<td>$0$ bytes</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Local graph clustering</td>
-<td>(12V + 2E)/p</td>
-<td>8V bytes</td>
-<td>(6 + d)/p : 4</td>
+<td>$(12V + 2E)/p$</td>
+<td>$8V$ bytes</td>
+<td>$(6 + d)/p : 4$</td>
 <td>good</td>
 </tr>
 </tbody></table>
@@ -1819,116 +1715,128 @@ applications.</p>
 <th>Application</th>
 <th>Computation to communication ratio</th>
 <th>Scalability</th>
-<th>Implementation diff.</th>
+<th>Implementation difficulty</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>Louvain</td>
-<td>E/p : 2V</td>
+<td>$E/p : 2V$</td>
 <td>Okay</td>
 <td>Hard</td>
 </tr>
 <tr>
 <td>Graph SAGE</td>
-<td>~ CF : min(C, 2p)x4</td>
+<td>$\sim CF : \min(C, 2p) \cdot 4$</td>
 <td>Good</td>
 <td>Easy</td>
 </tr>
 <tr>
 <td>Random walk</td>
-<td>Duplicated graph: infinity</td>
-<td>Perfect</td>
-<td>Trivial</td>
+<td>Duplicated graph: infinity<br>Distributed graph: $1 : 24$</td>
+<td>Perfect<br>Very poor</td>
+<td>Trivial<br>Easy</td>
 </tr>
 <tr>
-<td>Random walk</td>
-<td>Distrib. graph: 1 : 24</td>
+<td></td>
+<td>Distributed graph: $1 : 24$</td>
 <td>Very poor</td>
 <td>Easy</td>
 </tr>
 <tr>
 <td>Graph search: Uniform</td>
-<td>1 : 24</td>
+<td>$1 : 24$</td>
 <td>Very poor</td>
 <td>Easy</td>
 </tr>
 <tr>
 <td>Graph search: Greedy</td>
-<td>Straightforward: d : 24</td>
-<td>Poor</td>
-<td>Easy</td>
+<td>Straightforward: $d : 24$<br>Pre-visit: $1:24$</td>
+<td>Poor<br>Very poor</td>
+<td>Easy<br>Easy</td>
 </tr>
 <tr>
-<td>Graph search: Greedy</td>
-<td>Pre-visit: 1:24</td>
+<td></td>
+<td>Pre-visit: $1:24$</td>
 <td>Very poor</td>
 <td>Easy</td>
 </tr>
 <tr>
-<td>G.S.: Stochastic greedy</td>
-<td>Straightforward: d : 24</td>
-<td>Poor</td>
-<td>Easy</td>
+<td>Graph search: Stochastic greedy</td>
+<td>Straightforward: $d : 24$<br>Pre-visit: $\log(d) : 24$</td>
+<td>Poor<br>Very Poor</td>
+<td>Easy<br>Easy</td>
 </tr>
 <tr>
-<td>G.S.: Stochastic greedy</td>
-<td>Pre-visit: log(d) : 24</td>
+<td></td>
+<td>Pre-visit: $\log(d) : 24$</td>
 <td>Very poor</td>
 <td>Easy</td>
 </tr>
 <tr>
 <td>Geolocation</td>
-<td>Explicit movement: 25E/p : 4V</td>
-<td>Okay</td>
-<td>Easy</td>
+<td>Explicit movement: $25E/p : 4V$<br>UVM or peer access: $25 : 1$</td>
+<td>Okay<br>Good</td>
+<td>Easy<br>Easy</td>
 </tr>
 <tr>
-<td>Geolocation</td>
-<td>UVM or peer access: 25 : 1</td>
+<td></td>
+<td>UVM or peer access: $25 : 1$</td>
 <td>Good</td>
 <td>Easy</td>
 </tr>
 <tr>
 <td>Vertex nomination</td>
-<td>E : 8V x min(d, p)</td>
+<td>$E : 8V \cdot \min(d, p)$</td>
 <td>Okay</td>
 <td>Easy</td>
 </tr>
 <tr>
 <td>Scan statistics</td>
-<td>Duplicated graph: infinity</td>
-<td>Perfect</td>
-<td>Trivial</td>
+<td>Duplicated graph: infinity<br>Distributed graph: $\sim(d+a \cdot \log(d)):12$</td>
+<td>Perfect<br>Okay</td>
+<td>Trivial<br>Easy</td>
 </tr>
 <tr>
-<td>Scan statistics</td>
-<td>Distrib. graph: ~ (d + a * log(d)) : 12</td>
+<td></td>
+<td>Distributed graph: $\sim(d+a \cdot \log(d)):12$</td>
 <td>Okay</td>
 <td>Easy</td>
 </tr>
 <tr>
 <td>Sparse fused lasso</td>
-<td>~ a:8</td>
+<td>$\sim a:8$</td>
 <td>Less than okay</td>
 <td>Hard</td>
 </tr>
 <tr>
 <td>Graph projection</td>
-<td>Duplicated graph : infinity</td>
-<td>Perfect</td>
-<td>Easy</td>
+<td>Duplicated graph : infinity<br>Distributed graph : $dE/p + E' : 6E'$</td>
+<td>Perfect<br>Okay</td>
+<td>Easy<br>Easy</td>
 </tr>
 <tr>
-<td>Graph projection</td>
-<td>Distrib. graph : dE/p + E' : 6E'</td>
+<td></td>
+<td>Distributed graph : $dE/p + E' : 6E'$</td>
 <td>Okay</td>
 <td>Easy</td>
 </tr>
 <tr>
 <td>Local graph clustering</td>
-<td>(6 + d)/p : 4</td>
+<td>$(6 + d)/p : 4$</td>
 <td>Good</td>
 <td>Easy</td>
+</tr>
+<tr>
+<td>Seeded graph matching</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Application classification</td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 </tbody></table>
 
