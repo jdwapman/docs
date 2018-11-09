@@ -1035,74 +1035,128 @@ distributed across the GPUs. In this case, each step of a walk not only needs
 to send the <code><walk#, step#, v></code> information to <code>host_GPU(v)</code>, but also to the GPU that
 stores the result for such walk.</p>
 <pre class="highlight mid-column-code plaintext"><code>For each walk starting from local vertex v:
- + Store v for <walk#, step 0>;
+    Store v for ;
     Select a neighbor u of v;
-    Store u for <walk#, step 1>;
- + Send <walk#, 1, u> to host_GPU(u) for visit;
+    Store u for ;
+    Send  to host_GPU(u) for visit;
 
 Repeat until all steps of walks finished:
-    For each received <walk#, step#, v> for visit:
+    For each received  for visit:
         Select a neighbor u of v;
-        Send <walk#, step# + 1, u> to host_GPU(u) for visit;
-        Send <walk#, step# + 1, u> to host_GPU_walk(walk#) for record;
+        Send  to host_GPU(u) for visit;
+        Send  to host_GPU_walk(walk#) for record;
 
-    For each received <walk#, step#, v> for record:
-        Store v for <walk#, step#+ ```
+    For each received  for record:
+        Store v for ;
+</code></pre>
+<p>Using W as the number of walks, for each step, we have</p>
 
-Using W as the number of walks, for each step, we ha+ 
-| Parts                 | Comp. cost   | Comm. cost      | Comp/comm ratio  | Scalability |
-|-----------------------|--------------|-----------------|------------------|-------------|
-| Random walk           | $W/p$        | $W/p * 24$ bytes| $1 : 24$         | very poor   |
+<table style="font-size: 12px;font-size: 12px;"><thead>
+<tr>
+<th>Parts</th>
+<th>Comp. cost</th>
+<th>Comm. cost</th>
+<th>Comp/comm ratio</th>
+<th>Scalability</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Random walk</td>
+<td>$W/p$</td>
+<td>$W/p * 24$ bytes</td>
+<td>$1 : 24$</td>
+<td>very poor</td>
+</tr>
+</tbody></table>
 
-Graph search is very similar to random walk, except that instead of
+<p>Graph search is very similar to random walk, except that instead of
 randomly selecting any neighbor, it selects the neighbor with the
-highest score (when using the `greedy` strategy), or with probabilities
-proportional to the neighbors' scores (when using the `stochastic_greedy`
-strategy)+ For the `greedy` strategy, a straightforward implementation, when
+highest score (when using the <code>greedy</code> strategy), or with probabilities
+proportional to the neighbors' scores (when using the <code>stochastic_greedy</code>
+strategy). For the <code>greedy</code> strategy, a straightforward implementation, when
 reaching a vertex, goes through the whole neighbor list of thatsuch
-vertex and finds the one with maximum score. A more optimiz+ implementation could perform a pre-visit to find the neighbor with
+vertex and finds the one with maximum score. A more optimized implementation 
+could perform a pre-visit to find the neighbor with
 maximum scored neighbor, with a cost of E/p; during the random walk
 process, the maximum scored neighbor will be known without going
-through the neighbor list.
+through the neighbor list.</p>
 
-For the `stochastic_greedy` strategy, the straightforward implementation would
+<p>For the <code>stochastic_greedy</code> strategy, the straightforward implementation would
 also go through all the neighbors, selecting one based on their scores and a
 random number. Preprocessing can also help: perform a scan on the scores of
 each vertex's neighbor list, with a cost of E/p; during the random walk, a binary search would be
-sufficient to select a neighbor, with weighted probabilities.
+sufficient to select a neighbor, with weighted probabilities.</p>
 
-The cost analysis, depending on the walk strategy and optimization,
-                          results in:
+<p>The cost analysis, depending on the walk strategy and optimization,
+                          results in:</p>
 
-| Strategy          | Comp. cost              | Comm. cost       | Comp/comm ratio | Scalability | 
-|-------------------|-------------------------|------------------|-----------------|-------------|
-| Uniform           | $W/p$                   | $W/p * 24$ bytes | $1 : 24$        | Very poor   |
-| Greedy            | Straightforward: $dW/p$ | $W/p * 24$ bytes | $d : 24$        | Poor        | 
-| Greedy            | Pre-visit: $W/p$        | $W/p * 24$ bytes | $1 : 24$        | Very poor   |
-| Stochastic Greedy | Straightforward: $dW/p$ | $W/p * 24$ bytes | $d : 24$        | Poor        |
-| Stochastic Greedy | Pre-visit: $log(d)W/p$  | $W/p * 24$ bytes | $log(d) : 24$   | Very poor   |
+<table style="font-size: 12px;font-size: 12px;"><thead>
+<tr>
+<th>Strategy</th>
+<th>Comp. cost</th>
+<th>Comm. cost</th>
+<th>Comp/comm ratio</th>
+<th>Scalability</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Uniform</td>
+<td>$W/p$</td>
+<td>$W/p * 24$ bytes</td>
+<td>$1 : 24$</td>
+<td>Very poor</td>
+</tr>
+<tr>
+<td>Greedy</td>
+<td>Straightforward: $dW/p$</td>
+<td>$W/p * 24$ bytes</td>
+<td>$d : 24$</td>
+<td>Poor</td>
+</tr>
+<tr>
+<td>Greedy</td>
+<td>Pre-visit: $W/p$</td>
+<td>$W/p * 24$ bytes</td>
+<td>$1 : 24$</td>
+<td>Very poor</td>
+</tr>
+<tr>
+<td>Stochastic Greedy</td>
+<td>Straightforward: $dW/p$</td>
+<td>$W/p * 24$ bytes</td>
+<td>$d : 24$</td>
+<td>Poor</td>
+</tr>
+<tr>
+<td>Stochastic Greedy</td>
+<td>Pre-visit: $log(d)W/p$</td>
+<td>$W/p * 24$ bytes</td>
+<td>$log(d) : 24$</td>
+<td>Very poor</td>
+</tr>
+</tbody></table>
 
-If the selection of a neighbor is weighted-random, instead of uniformly-random,
+<p>If the selection of a neighbor is weighted-random, instead of uniformly-random,
 it will increase the computation workload to Wd /p, where d is the average
 degree of vertices in the graph. As a result, the computation-to-communication
 ratio will increase to d:24; for most graphs, this is still not high enough to
-have good scalability.
-
-### Geolocatio+ In each iteration, Geolocation updates a vertex's location based on
-its neighbors. For multiple GPUs, neighboring vertices's location
-information needs to be available, either by direct access, UVM, + explicit data movement. The following shows how explicit data movement
-can be implemented.
-
-</code></pre>
-<p>Do
+have good scalability.</p>
+<h3 id='geolocation'>Geolocation</h3>
+<p>In each iteration, Geolocation updates a vertex's location based on 
+its neighbors. For multiple GPUs, neighboring vertices's location 
+information needs to be available, either by direct access, UVM, or
+explicit data movement. The following shows how explicit data movement 
+can be implemented.</p>
+<pre class="highlight mid-column-code plaintext"><code>Do
     Local geo location updates on local vertices;
     Broadcast local vertices' updates;
 While no more update
-```</p>
-
-<p>The computation cost is on the order of O(|E|/p), if in each iterati+ all vertices are looking for possible location updates from neighbors.
-Because the spatial median function has a lot of mathematical
-computation inside, particularly a haversine() for each edge, t+ constant factor hidden by O() is large; for simplicity, 100 is used as
+</code></pre>
+<p>The computation cost is on the order of O(|E|/p), if in each iteration 
+all vertices are looking for possible location updates from neighbors. 
+Because the spatial median function has a lot of mathematical 
+computation inside, particularly a haversine() for each edge, the 
+constant factor hidden by O() is large; for simplicity, 100 is used as 
 the constant factor here. Assuming that we broadcast every vertex's
 location gives the upper bound of communication, but in reality, the
 communication should be much less, because 1) not every vertex updates
