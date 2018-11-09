@@ -380,27 +380,27 @@
 <tbody>
 <tr class="odd">
 <td>Modularity optimization</td>
-<td><span class="math inline">10(<em>E</em> + <em>V</em>)/<em>p</em></span></td>
-<td><span class="math inline">20<em>V</em></span> bytes</td>
-<td><span class="math inline"><em>E</em>/<em>p</em> : 2<em>V</em></span></td>
+<td>$10(E + V) /p$</td>
+<td>$20V$ bytes</td>
+<td>$E/p : 2V$</td>
 <td>Okay</td>
-<td><span class="math inline">88<em>E</em>/<em>p</em> + 12<em>V</em></span> bytes</td>
+<td>$88E/p + 12V$ bytes</td>
 </tr>
 <tr class="even">
 <td>Graph contraction</td>
-<td><span class="math inline">5<em>E</em>/<em>p</em> + <em>E</em>′</span></td>
-<td><span class="math inline">8<em>E</em>′</span> bytes</td>
-<td><span class="math inline">5<em>E</em>/<em>p</em> + <em>E</em>′:8<em>E</em>′</span></td>
+<td>$5E / p + E'$</td>
+<td>$8E'$ bytes</td>
+<td>$5E/p + E' : 8E'$</td>
 <td>Hard</td>
-<td><span class="math inline">16<em>E</em>′</span> bytes</td>
+<td>$16E'$ bytes</td>
 </tr>
 <tr class="odd">
 <td>Louvain</td>
-<td><span class="math inline">10(<em>E</em> + <em>V</em>)/<em>p</em></span></td>
-<td><span class="math inline">20<em>V</em></span> bytes</td>
+<td>$10(E + V) / p$</td>
+<td>$20V$ bytes</td>
 <td>E/p : 2V</td>
 <td>Okay</td>
-<td><span class="math inline">88<em>E</em>/<em>p</em> + 12<em>V</em> + 16<em>E</em>′</span> bytes</td>
+<td>$88E/p + 12V + 16E'$ bytes</td>
 </tr>
 </tbody>
 </table>
@@ -462,27 +462,27 @@
 <tbody>
 <tr class="odd">
 <td>Modularity optim.</td>
-<td><span class="math inline">10(<em>E</em> + <em>V</em>)/<em>p</em></span></td>
-<td><span class="math inline">20<em>V</em></span> bytes</td>
-<td><span class="math inline"><em>E</em>/<em>p</em> : 2<em>V</em></span></td>
+<td>$10(E + V) /p$</td>
+<td>$20V$ bytes</td>
+<td>$E/p : 2V$</td>
 <td>Okay</td>
-<td><span class="math inline">88<em>E</em>/<em>p</em> + 12<em>V</em></span></td>
+<td>$88E/p + 12V$</td>
 </tr>
 <tr class="even">
 <td>Graph contraction</td>
-<td><span class="math inline">5<em>E</em>/<em>p</em> + <em>E</em>′</span></td>
-<td><span class="math inline">8<em>E</em>′</span> bytes</td>
-<td><span class="math inline">5<em>E</em>/<em>p</em> + <em>E</em>′:8<em>E</em>′</span></td>
+<td>$5E / p + E'$</td>
+<td>$8E'$ bytes</td>
+<td>$5E/p + E' : 8E'$</td>
 <td>Hard</td>
-<td><span class="math inline">16<em>E</em>′</span></td>
+<td>$16E'$</td>
 </tr>
 <tr class="odd">
 <td>Louvain</td>
-<td><span class="math inline">10(<em>E</em> + <em>V</em>)/<em>p</em></span></td>
-<td><span class="math inline">20<em>V</em></span> bytes</td>
-<td><span class="math inline"><em>E</em>/<em>p</em> : 2<em>V</em></span></td>
+<td>$10(E + V) / p$</td>
+<td>$20V$ bytes</td>
+<td>$E/p : 2V$</td>
 <td>Okay</td>
-<td><span class="math inline">88<em>E</em>/<em>p</em> + 12<em>V</em> + 16<em>E</em>′</span></td>
+<td>$88E/p + 12V + 16E'$</td>
 </tr>
 </tbody>
 </table>
@@ -592,7 +592,7 @@
 <tbody>
 <tr class="odd">
 <td>Wedge generation</td>
-<td><span class="math inline"><em>d</em><em>E</em>/<em>p</em></span></td>
+<td>$dE/p$</td>
 <td></td>
 <td></td>
 <td></td>
@@ -601,14 +601,14 @@
 <tr class="even">
 <td>Wedge communication</td>
 <td>0</td>
-<td><span class="math inline"><em>a</em><em>E</em>/<em>p</em> × 12</span> bytes</td>
+<td>$aE/p 12$ bytes</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="odd">
 <td>Wedge checking</td>
-<td><span class="math inline"><em>a</em><em>E</em>/<em>p</em><em>x</em>log(<em>d</em>)</span></td>
+<td>$aE/p x (d)$</td>
 <td></td>
 <td></td>
 <td></td>
@@ -616,33 +616,33 @@
 </tr>
 <tr class="even">
 <td>AllReduce</td>
-<td><span class="math inline">2<em>V</em></span></td>
-<td><span class="math inline">2<em>V</em> × 4</span> bytes</td>
+<td>$2V$</td>
+<td>$2V 4$ bytes</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="odd">
 <td>Triangle Counting</td>
-<td><span class="math inline">(<em>d</em> + <em>a</em><em>x</em>log(<em>d</em>))<em>E</em>/<em>p</em> + 2<em>V</em></span></td>
-<td><span class="math inline"><em>a</em><em>E</em>/<em>p</em><em>x</em>12 + 8<em>V</em></span> bytes</td>
-<td><span class="math inline"> (<em>d</em> + <em>a</em> ⋅ log(<em>d</em>))</span> : <span class="math inline">12<em>a</em></span></td>
+<td>$(d + a x (d))E/p + 2V$</td>
+<td>$aE/p x 12 + 8V$ bytes</td>
+<td>$~(d + a (d))$ : $12a$</td>
 <td>Okay</td>
 <td></td>
 </tr>
 <tr class="even">
 <td>Scan Statistics (wedge checks)</td>
-<td><span class="math inline">(<em>d</em> + <em>a</em><em>x</em>log(<em>d</em>))<em>E</em>/<em>p</em> + 2<em>V</em> + <em>V</em>/<em>p</em></span></td>
-<td><span class="math inline">12<em>a</em><em>E</em>/<em>p</em> + 8<em>V</em></span> bytes</td>
-<td><span class="math inline"> (<em>d</em> + <em>a</em> ⋅ log(<em>d</em>)) : 12<em>a</em></span></td>
+<td>$(d + a x (d))E/p + 2V + V/p$</td>
+<td>$12aE/p + 8V$ bytes</td>
+<td>$~(d + a (d)) : 12a$</td>
 <td>Okay</td>
 <td></td>
 </tr>
 <tr class="odd">
 <td>Scan Statistics (intersection)</td>
-<td><span class="math inline"><em>V</em><em>d</em><em>d</em> + <em>V</em>/<em>p</em></span></td>
-<td><span class="math inline">8<em>V</em></span> bytes</td>
-<td><span class="math inline"><em>d</em><em>d</em> : 8</span></td>
+<td>$Vdd + V/p$</td>
+<td>$8V$ bytes</td>
+<td>$dd : 8$</td>
 <td>Perfect</td>
 <td></td>
 </tr>
@@ -860,13 +860,13 @@
 <tbody>
 <tr class="odd">
 <td><p>Louvain</p></td>
-<td><p><span class="math inline"><em>E</em>/<em>p</em> : 2<em>V</em></span></p></td>
+<td><p>$E/p : 2V$</p></td>
 <td><p>Okay</p></td>
 <td><p>Hard</p></td>
 </tr>
 <tr class="even">
 <td><p>Graph SAGE</p></td>
-<td><p><span class="math inline">∼<em>C</em><em>F</em> : min(<em>C</em>, 2<em>p</em>)⋅4</span></p></td>
+<td><p>$CF : (C, 2p) 4$</p></td>
 <td><p>Good</p></td>
 <td><p>Easy</p></td>
 </tr>
@@ -897,7 +897,7 @@ Easy</p></td>
 <tr class="even">
 <td><p>Graph search: Stochastic greedy</p></td>
 <td><p>Straightforward: d : 24<br />
-Pre-visit: <span class="math inline">log(<em>d</em>):24</span></p></td>
+Pre-visit: $(d) : 24$</p></td>
 <td><p>Poor<br />
 Very poor</p></td>
 <td><p>Easy<br />
@@ -905,7 +905,7 @@ Easy</p></td>
 </tr>
 <tr class="odd">
 <td><p>Geolocation</p></td>
-<td><p>Explicit movement: <span class="math inline">25<em>E</em>/<em>p</em> : 4<em>V</em></span><br />
+<td><p>Explicit movement: $25E/p : 4V$<br />
 UVM or peer access: 25 : 1</p></td>
 <td><p>Okay<br />
 Good</p></td>
@@ -914,14 +914,14 @@ Easy</p></td>
 </tr>
 <tr class="even">
 <td><p>Vertex nomination</p></td>
-<td><p><span class="math inline"><em>E</em> : 8<em>V</em> ⋅ min(<em>d</em>, <em>p</em>)</span></p></td>
+<td><p>$E : 8V (d, p)$</p></td>
 <td><p>Okay</p></td>
 <td><p>Easy</p></td>
 </tr>
 <tr class="odd">
 <td><p>Scan statistics</p></td>
 <td><p>Duplicated graph: infinity<br />
-Distributed graph: <span class="math inline">∼(<em>d</em> + <em>a</em> ⋅ log(<em>d</em>)) : 12</span></p></td>
+Distributed graph: $(d+a (d)):12$</p></td>
 <td><p>Perfect<br />
 Okay</p></td>
 <td><p>Trivial<br />
@@ -929,14 +929,14 @@ Easy</p></td>
 </tr>
 <tr class="even">
 <td><p>Sparse fused lasso</p></td>
-<td><p><span class="math inline">∼<em>a</em> : 8</span></p></td>
+<td><p>$a:8$</p></td>
 <td><p>Less than okay</p></td>
 <td><p>Hard</p></td>
 </tr>
 <tr class="odd">
 <td><p>Graph projection</p></td>
 <td><p>Duplicated graph : infinity<br />
-Distributed graph : <span class="math inline"><em>d</em><em>E</em>/<em>p</em> + <em>E</em>′:6<em>E</em>′</span></p></td>
+Distributed graph : $dE/p + E' : 6E'$</p></td>
 <td><p>Perfect<br />
 Okay</p></td>
 <td><p>Easy<br />
@@ -944,7 +944,7 @@ Easy</p></td>
 </tr>
 <tr class="even">
 <td><p>Local graph clustering</p></td>
-<td><p><span class="math inline">(6 + <em>d</em>)/<em>p</em> : 4</span></p></td>
+<td><p>$(6 + d)/p : 4$</p></td>
 <td><p>Good</p></td>
 <td><p>Easy</p></td>
 </tr>
@@ -1253,23 +1253,23 @@ Easy</p></td>
 </tr>
 <tr class="even">
 <td>Children selection</td>
-<td><span class="math inline"><em>B</em><em>C</em></span></td>
-<td><span class="math inline">8<em>B</em><em>C</em></span> bytes</td>
+<td>$BC$</td>
+<td>$8BC$ bytes</td>
 <td>1 : 8</td>
 <td>Poor</td>
 <td></td>
 </tr>
 <tr class="odd">
 <td>Child-centric comp.</td>
-<td><span class="math inline"><em>B</em><em>C</em><em>F</em> ⋅ (2 + <em>L</em> + <em>Wf1</em>.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)</span></td>
-<td><span class="math inline">4<em>B</em> ⋅ (<em>F</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)</span> bytes</td>
-<td><span class="math inline"> <em>C</em><em>F</em> : min(<em>C</em>, 2<em>p</em>)⋅4</span></td>
+<td>$BCF (2 + L + .y + Wa1.y)$</td>
+<td>$4B (F + Wf1.y + Wa1.y) (C, 2p)$ bytes</td>
+<td>$~ CF : (C, 2p) 4$</td>
 <td>Good</td>
 <td></td>
 </tr>
 <tr class="even">
 <td>Source-centric comp.</td>
-<td><span class="math inline"><em>B</em> ⋅ (<em>C</em><em>F</em> + (<em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅(<em>C</em> + <em>F</em> + <em>W</em><em>f</em>2.<em>y</em> + <em>W</em><em>a</em>2.<em>y</em>)</span></td>
+<td>$B (CF + (Wf1.y + Wa1.y) (C + F + Wf2.y + Wa2.y)$</td>
 <td>0 bytes</td>
 <td>N.A.</td>
 <td>N.A.</td>
@@ -1277,9 +1277,9 @@ Easy</p></td>
 </tr>
 <tr class="odd">
 <td>Graph SAGE</td>
-<td><span class="math inline"><em>B</em> ⋅ (<em>C</em> + 3<em>C</em><em>F</em> + 3<em>L</em><em>C</em><em>F</em> + (<em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅(<em>C</em><em>F</em> + <em>C</em> + <em>F</em> + <em>W</em><em>f</em>2.<em>y</em> + <em>W</em><em>a</em>2.<em>y</em>))</span></td>
-<td><span class="math inline">8<em>B</em><em>C</em> + 4<em>B</em> ⋅ (<em>F</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)</span> bytes</td>
-<td>at least <span class="math inline"> <em>C</em><em>F</em> : min(<em>C</em>, 2<em>p</em>)⋅4</span></td>
+<td>$B (C + 3CF + 3LCF + (Wf1.y + Wa1.y) (CF + C + F + Wf2.y + Wa2.y))$</td>
+<td>$8BC + 4B (F + Wf1.y + Wa1.y) (C, 2p)$ bytes</td>
+<td>at least $~ CF : (C, 2p) 4$</td>
 <td>Good</td>
 <td></td>
 </tr>
@@ -1301,17 +1301,17 @@ Easy</p></td>
 </tr>
 <tr class="even">
 <td>Child-centric comp.</td>
-<td><span class="math inline"><em>B</em><em>C</em><em>F</em> ⋅ (2 + <em>L</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)</span></td>
-<td><span class="math inline">4<em>B</em> ⋅ ((<em>F</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)+<em>C</em><em>L</em><em>F</em>)</span> bytes</td>
-<td><span class="math inline"> (2 + <em>L</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>):4<em>L</em></span></td>
+<td>$BCF (2 + L + Wf1.y + Wa1.y)$</td>
+<td>$4B ((F + Wf1.y + Wa1.y) (C, 2p) + CLF)$ bytes</td>
+<td>$~ (2 + L + Wf1.y + Wa1.y) : 4L$</td>
 <td>poor</td>
 <td></td>
 </tr>
 <tr class="odd">
 <td>Graph SAGE</td>
-<td><span class="math inline"><em>B</em> ⋅ (<em>C</em> + 3<em>C</em><em>F</em> + 3<em>L</em><em>C</em><em>F</em> + (<em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅(<em>C</em><em>F</em> + <em>C</em> + <em>F</em> + <em>W</em><em>f</em>2.<em>y</em> + <em>W</em><em>a</em>2.<em>y</em>))</span></td>
-<td><span class="math inline">8<em>B</em><em>C</em> + 4<em>B</em> ⋅ (<em>F</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)+4<em>B</em><em>C</em><em>F</em><em>L</em></span> bytes</td>
-<td><span class="math inline"> (2 + <em>L</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>):4<em>L</em></span></td>
+<td>$B (C + 3CF + 3LCF + (Wf1.y + Wa1.y) (CF + C + F + Wf2.y + Wa2.y))$</td>
+<td>$8BC + 4B (F + Wf1.y + Wa1.y) (C, 2p) + 4BCFL$ bytes</td>
+<td>$~ (2 + L + Wf1.y + Wa1.y) : 4L$</td>
 <td>poor</td>
 <td></td>
 </tr>
@@ -1333,17 +1333,17 @@ Easy</p></td>
 </tr>
 <tr class="even">
 <td>Child-centric comp.</td>
-<td><span class="math inline"><em>B</em><em>C</em><em>F</em> ⋅ (2 + <em>L</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)</span></td>
-<td><span class="math inline">4<em>B</em> ⋅ (<em>F</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅<em>m</em><em>i</em><em>n</em>(<em>C</em>, 2<em>p</em>)</span> bytes over GPU-GPU + <span class="math inline">4<em>B</em><em>C</em><em>L</em><em>F</em></span> bytes over GPU-CPU</td>
-<td><span class="math inline"> (2 + <em>L</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>):4<em>L</em></span> over GPU-CPU</td>
+<td>$BCF (2 + L + Wf1.y + Wa1.y)$</td>
+<td>$4B (F + Wf1.y + Wa1.y) min(C, 2p)$ bytes over GPU-GPU + $4BCLF$ bytes over GPU-CPU</td>
+<td>$~ (2 + L + Wf1.y + Wa1.y) : 4L$ over GPU-CPU</td>
 <td>very poor</td>
 <td></td>
 </tr>
 <tr class="odd">
 <td>Graph SAGE</td>
-<td><span class="math inline"><em>B</em> ⋅ (<em>C</em> + 3<em>C</em><em>F</em> + 3<em>L</em><em>C</em><em>F</em> + (<em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅(<em>C</em><em>F</em> + <em>C</em> + <em>F</em> + <em>W</em><em>f</em>2.<em>y</em> + <em>W</em><em>a</em>2.<em>y</em>))</span></td>
-<td><span class="math inline">8<em>B</em><em>C</em> + 4<em>B</em> ⋅ (<em>F</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)</span> bytes over GPU-GPU + <span class="math inline">4<em>B</em><em>C</em><em>F</em><em>L</em></span> bytes over GPU-CPU</td>
-<td><span class="math inline"> (2 + <em>L</em> + <em>W</em><em>f</em>1.<em>y</em> + <em>W</em><em>a</em>1.<em>y</em>):4<em>L</em></span> over GPU-CPU</td>
+<td>$B (C + 3CF + 3LCF + (Wf1.y + Wa1.y) (CF + C + F + Wf2.y + Wa2.y))$</td>
+<td>$8BC + 4B (F + Wf1.y + Wa1.y) (C, 2p)$ bytes over GPU-GPU + $4BCFL$ bytes over GPU-CPU</td>
+<td>$~ (2 + L + Wf1.y + Wa1.y) : 4L$ over GPU-CPU</td>
 <td>very poor</td>
 <td></td>
 </tr>
@@ -1379,30 +1379,30 @@ Easy</p></td>
 </tr>
 <tr class="even">
 <td>Children selection</td>
-<td><span class="math inline"><em>B</em><em>C</em></span></td>
-<td><span class="math inline">8<em>B</em><em>C</em></span></td>
+<td>$BC$</td>
+<td>$8BC$</td>
 <td>1 : 8</td>
 <td>Poor</td>
 </tr>
 <tr class="odd">
 <td>Child-centric comp.</td>
-<td><span class="math inline"><em>B</em><em>C</em><em>F</em> ⋅ (2 + <em>L</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)</span></td>
-<td><span class="math inline">4<em>B</em> ⋅ (<em>F</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)</span></td>
-<td><span class="math inline"> <em>C</em><em>F</em> : min(<em>C</em>, 2<em>p</em>)⋅4</span></td>
+<td>$BCF (2 + L + .y + .y)$</td>
+<td>$4B (F + .y + .y) (C, 2p)$</td>
+<td>$~ CF : (C, 2p) 4$</td>
 <td>Good</td>
 </tr>
 <tr class="even">
 <td>Source-centric comp.</td>
-<td><span class="math inline"><em>B</em> ⋅ (<em>C</em><em>F</em> + (Wf1.<em>y</em> + Wa1.<em>y</em>)⋅(<em>C</em> + <em>F</em> + Wf2.<em>y</em> + Wa2.<em>y</em>)</span></td>
+<td>$B (CF + (.y + .y) (C + F + .y + .y)$</td>
 <td>0</td>
 <td>N.A.</td>
 <td>N.A.</td>
 </tr>
 <tr class="odd">
 <td>Graph SAGE</td>
-<td><span class="math inline"><em>B</em> ⋅ (<em>C</em> + 3<em>C</em><em>F</em> + 3<em>L</em><em>C</em><em>F</em> + (Wf1.<em>y</em> + Wa1.<em>y</em>)⋅(<em>C</em><em>F</em> + <em>C</em> + <em>F</em> + Wf2.<em>y</em> + Wa2.<em>y</em>))</span></td>
-<td><span class="math inline">8<em>B</em><em>C</em> + 4<em>B</em> ⋅ (<em>F</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)</span></td>
-<td>at least <span class="math inline"> <em>C</em><em>F</em> : min(<em>C</em>, 2<em>p</em>)⋅4</span></td>
+<td>$B (C + 3CF + 3LCF + (.y + .y) (CF + C + F + .y + .y))$</td>
+<td>$8BC + 4B (F + .y + .y) (C, 2p)$</td>
+<td>at least $~ CF : (C, 2p) 4$</td>
 <td>Good</td>
 </tr>
 <tr class="even">
@@ -1421,16 +1421,16 @@ Easy</p></td>
 </tr>
 <tr class="even">
 <td>Child-centric comp.</td>
-<td><span class="math inline"><em>B</em><em>C</em><em>F</em> ⋅ (2 + <em>L</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)</span></td>
-<td><span class="math inline">4<em>B</em> ⋅ ((<em>F</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)+<em>C</em><em>L</em><em>F</em>)</span></td>
-<td><span class="math inline"> (2 + <em>L</em> + Wf1.<em>y</em> + Wa1.<em>y</em>):4<em>L</em></span></td>
+<td>$BCF (2 + L + .y + .y)$</td>
+<td>$4B ((F + .y + .y) (C, 2p) + CLF)$</td>
+<td>$~ (2 + L + .y + .y) : 4L$</td>
 <td>poor</td>
 </tr>
 <tr class="odd">
 <td>Graph SAGE</td>
-<td><span class="math inline"><em>B</em> ⋅ (<em>C</em> + 3<em>C</em><em>F</em> + 3<em>L</em><em>C</em><em>F</em> + (Wf1.<em>y</em> + Wa1.<em>y</em>)⋅(<em>C</em><em>F</em> + <em>C</em> + <em>F</em> + Wf2.<em>y</em> + Wa2.<em>y</em>))</span></td>
-<td><span class="math inline">8<em>B</em><em>C</em> + 4<em>B</em> ⋅ (<em>F</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)+4<em>B</em><em>C</em><em>F</em><em>L</em></span></td>
-<td><span class="math inline"> (2 + <em>L</em> + Wf1.<em>y</em> + Wa1.<em>y</em>):4<em>L</em></span></td>
+<td>$B (C + 3CF + 3LCF + (.y + .y) (CF + C + F + .y + .y))$</td>
+<td>$8BC + 4B (F + .y + .y) (C, 2p) + 4BCFL$</td>
+<td>$~ (2 + L + .y + .y) : 4L$</td>
 <td>poor</td>
 </tr>
 <tr class="even">
@@ -1449,16 +1449,16 @@ Easy</p></td>
 </tr>
 <tr class="even">
 <td>Child-centric comp.</td>
-<td><span class="math inline"><em>B</em><em>C</em><em>F</em> ⋅ (2 + <em>L</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)</span></td>
-<td><span class="math inline">4<em>B</em> ⋅ (<em>F</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)</span> bytes over GPU-GPU + <span class="math inline">4<em>B</em><em>C</em><em>L</em><em>F</em></span> bytes over GPU-CPU</td>
-<td><span class="math inline"> (2 + <em>L</em> + Wf1.<em>y</em> + Wa1.<em>y</em>):4<em>L</em></span> over GPU-CPU</td>
+<td>$BCF (2 + L + .y + .y)$</td>
+<td>$4B (F + .y + .y) (C, 2p)$ bytes over GPU-GPU + $4BCLF$ bytes over GPU-CPU</td>
+<td>$~ (2 + L + .y + .y) : 4L$ over GPU-CPU</td>
 <td>very poor</td>
 </tr>
 <tr class="odd">
 <td>Graph SAGE</td>
-<td><span class="math inline"><em>B</em> ⋅ (<em>C</em> + 3<em>C</em><em>F</em> + 3<em>L</em><em>C</em><em>F</em> + (Wf1.<em>y</em> + Wa1.<em>y</em>)⋅(<em>C</em><em>F</em> + <em>C</em> + <em>F</em> + Wf2.<em>y</em> + Wa2.<em>y</em>))</span></td>
-<td><span class="math inline">8<em>B</em><em>C</em> + 4<em>B</em> ⋅ (<em>F</em> + Wf1.<em>y</em> + Wa1.<em>y</em>)⋅min(<em>C</em>, 2<em>p</em>)</span> bytes over GPU-GPU + <span class="math inline">4<em>B</em><em>C</em><em>F</em><em>L</em></span> bytes over GPU-CPU</td>
-<td><span class="math inline"> (2 + <em>L</em> + Wf1.<em>y</em> + Wa1.<em>y</em>):4<em>L</em></span> over GPU-CPU</td>
+<td>$B (C + 3CF + 3LCF + (.y + .y) (CF + C + F + .y + .y))$</td>
+<td>$8BC + 4B (F + .y + .y) (C, 2p)$ bytes over GPU-GPU + $4BCFL$ bytes over GPU-CPU</td>
+<td>$~ (2 + L + .y + .y) : 4L$ over GPU-CPU</td>
 <td>very poor</td>
 </tr>
 </tbody>
