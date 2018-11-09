@@ -985,15 +985,8 @@ sum up <code>child_feature</code> and <code>child_temp</code> for each source wi
 <td>Graph SAGE</td>
 <td>$B \cdot (C + 3CF + 3LCF + (\textrm{Wf1}.y + \textrm{Wa1}.y) \cdot (CF + C + F + \textrm{Wf2}.y + \textrm{Wa2}.y))$</td>
 <td>$8BC + 4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p) + 4BCFL$</td>
-<td>$~ (2 + L</td>
-<td></td>
-</tr>
-<tr>
-<td>+ \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$</td>
+<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y) : 4L$</td>
 <td>poor</td>
-<td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td></td>
@@ -1013,15 +1006,8 @@ sum up <code>child_feature</code> and <code>child_temp</code> for each source wi
 <td>Child-centric comp.</td>
 <td>$BCF \cdot (2 + L + \textrm{Wf1}.y + \textrm{Wa1}.y)$</td>
 <td>$4B \cdot (F + \textrm{Wf1}.y + \textrm{Wa1}.y) \cdot \min(C, 2p)$ bytes over GPU-GPU + $4BCLF$ bytes over GPU-CPU</td>
-<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{W</td>
-<td></td>
-</tr>
-<tr>
-<td>a1}.y) : 4L$ over GPU-CPU</td>
+<td>$~ (2 + L + \textrm{Wf1}.y + \textrm{ a1}.y) : 4L$ over GPU-CPU</td>
 <td>very poor</td>
-<td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>Graph SAGE</td>
@@ -1054,24 +1040,22 @@ scalability will be perfect, as there is no communication involved at all.</p>
 <p>A more interesting multi-GPU implementation would be when the graph is
 distributed across the GPUs. In this case, each step of a walk not only needs
 to send the <code><walk#, step#, v></code> information to <code>host_GPU(v)</code>, but also to the GPU that
-stores the result for such walk.
-```
-For each walk starting from local vertex v:
+stores the result for such walk.</p>
+<pre class="highlight mid-column-code plaintext"><code>For each walk starting from local vertex v:
     Store v for <walk#, step 0>;
     Select a neighbor u of v;
     Store u for <walk#, step 1>;
-    Send <walk#, 1, u> to host_GPU(u) for visit;</p>
+    Send <walk#, 1, u> to host_GPU(u) for visit;
 
-<p>Repeat until all steps of walks finished:
+Repeat until all steps of walks finished:
     For each received <walk#, step#, v> for visit:
         Select a neighbor u of v;
         Send <walk#, step# + 1, u> to host_GPU(u) for visit;
-        Send <walk#, step# + 1, u> to host_GPU_walk(walk#) for record;</p>
+        Send <walk#, step# + 1, u> to host_GPU_walk(walk#) for record;
 
-<p>For each received <walk#, step#, v> for record:
+    For each received <walk#, step#, v> for record:
         Store v for <walk#, step#>;
-```</p>
-
+</code></pre>
 <p>Using W as the number of walks, for each step, we have</p>
 
 <table style="font-size: 12px;font-size: 12px;"><thead>
@@ -1134,14 +1118,14 @@ sufficient to select a neighbor, with weighted probabilities.</p>
 <tr>
 <td>Greedy</td>
 <td>Straightforward: $dW/p$</td>
-<td>W/p x 24 bytes</td>
+<td>$W/p x 24$ bytes</td>
 <td>$d : 24$</td>
 <td>Poor</td>
 </tr>
 <tr>
 <td>Greedy</td>
 <td>Pre-visit: $W/p$</td>
-<td>W/p x 24 bytes</td>
+<td>$W/p x 24$ bytes</td>
 <td>$1 : 24$</td>
 <td>Very poor</td>
 </tr>
@@ -1332,58 +1316,58 @@ of vertices, the cost analysis is:</p>
 </thead><tbody>
 <tr>
 <td>Wedge generation</td>
-<td>dE/p</td>
+<td>$dE/p$</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Wedge communication</td>
-<td>0</td>
-<td>aE/p x 12</td>
+<td>$0$</td>
+<td>$aE/p x 12$</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Wedge checking</td>
-<td>aE/p x log(d)</td>
+<td>$aE/p x log(d)$</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>AllReduce</td>
-<td>2V</td>
-<td>2V x 4</td>
+<td>$2V$</td>
+<td>$2V x 4$</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Triangle Counting</td>
-<td>(d + a x log(d))E/p + 2V</td>
-<td>aE/p x 12 + 8V</td>
-<td>~(d + a x log(d)) : 12a</td>
+<td>$(d + a x log(d))E/p + 2V$</td>
+<td>$aE/p x 12 + 8V$</td>
+<td>$~(d + a x log(d)) : 12a$</td>
 <td>Okay</td>
 </tr>
 <tr>
 <td>Scan Statistics</td>
-<td>(d + a x log(d))E/p</td>
-<td>12aE/p + 8V</td>
-<td>~(d + a x log(d)) : 12a</td>
+<td>$(d + a x log(d))E/p$</td>
+<td>$12aE/p + 8V$</td>
+<td>$~(d + a x log(d)) : 12a$</td>
 <td>Okay</td>
 </tr>
 <tr>
 <td>(with wedge checks)</td>
-<td>+ 2V + V/p</td>
+<td>$+ 2V + V/p$</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Scan Statistics</td>
-<td>Vdd + V/p</td>
-<td>8V</td>
-<td>dd : 8</td>
+<td>$Vdd + V/p$</td>
+<td>$8V$</td>
+<td>$dd : 8$</td>
 <td>Perfect</td>
 </tr>
 <tr>
@@ -1450,23 +1434,23 @@ are known.</p>
 </thead><tbody>
 <tr>
 <td>Push</td>
-<td>a(V + 1)VE/p</td>
-<td>(V+1)VE/p x 8</td>
-<td>a:8</td>
+<td>$a(V + 1)VE/p$</td>
+<td>$(V+1)VE/p x 8$</td>
+<td>$a:8$</td>
 <td>Less than okay</td>
 </tr>
 <tr>
 <td>Relabel</td>
-<td>VE/p</td>
-<td>V^2 x 8</td>
-<td>d/p : 8</td>
+<td>$VE/p$</td>
+<td>$V^2 x 8$</td>
+<td>$d/p : 8$</td>
 <td>Okay</td>
 </tr>
 <tr>
 <td>MF (Push-Relabel)</td>
-<td>(aV + a + 1)VE/p</td>
-<td>V^2((V+1)d/p + 1) x 8</td>
-<td>~ a:8</td>
+<td>$(aV + a + 1)VE/p$</td>
+<td>$V^2((V+1)d/p + 1) x 8$</td>
+<td>$~ a:8$</td>
 <td>Less than okay</td>
 </tr>
 </tbody></table>
@@ -1496,43 +1480,43 @@ Updates source-vertex and vertex-destination capacities;
 </thead><tbody>
 <tr>
 <td>MF (Push-Relabel)</td>
-<td>(aV + a + 1)VE/p</td>
-<td>V^2((V+1)d/p + 1) x 8</td>
-<td>~ a:8</td>
+<td>$(aV + a + 1)VE/p$</td>
+<td>$V^2((V+1)d/p + 1) x 8$</td>
+<td>$~ a:8$</td>
 <td>Less than okay</td>
 </tr>
 <tr>
 <td>BFS</td>
-<td>E/p</td>
-<td>2V x 4</td>
-<td>d/p : 8</td>
+<td>$E/p$</td>
+<td>$2V x 4$</td>
+<td>$d/p : 8$</td>
 <td>Okay</td>
 </tr>
 <tr>
 <td>V-C updates</td>
-<td>E/p</td>
-<td>V/p x 8</td>
-<td>d : 8</td>
+<td>$E/p$</td>
+<td>$V/p x 8$</td>
+<td>$d : 8$</td>
 <td>Okay</td>
 </tr>
 <tr>
 <td>Capacity updates</td>
-<td>V/p</td>
-<td>V/p x 4</td>
-<td>1 : 4</td>
+<td>$V/p$</td>
+<td>$V/p x 4$</td>
+<td>$1 : 4$</td>
 <td>Less than okay</td>
 </tr>
 <tr>
 <td>GTF</td>
-<td>(aV + a + 1)VE/p</td>
-<td>V^2((V+1)d/p + 1) x 8</td>
-<td>~ a:8</td>
+<td>$(aV + a + 1)VE/p$</td>
+<td>$V^2((V+1)d/p + 1) x 8$</td>
+<td>$~ a:8$</td>
 <td>Less than okay</td>
 </tr>
 <tr>
 <td></td>
-<td>+ 2E/p + V/p</td>
-<td>+ 2V x 4 + V/p x 4</td>
+<td>$+ 2E/p + V/p$</td>
+<td>$+ 2V x 4 + V/p x 4$</td>
 <td></td>
 <td></td>
 </tr>
@@ -1593,37 +1577,37 @@ While (vertex_start < num_vertices)
 </thead><tbody>
 <tr>
 <td>Marking</td>
-<td>dE/p</td>
-<td>0 byte</td>
+<td>$dE/p$</td>
+<td>$0$ byte</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Forming edge lists</td>
-<td>E'</td>
-<td>0 byte</td>
+<td>$E'$</td>
+<td>$0$ byte</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Counting</td>
-<td>dE/p</td>
-<td>0 byte</td>
+<td>$dE/p$</td>
+<td>$0$ byte</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Merging</td>
-<td>E'</td>
-<td>E' x 12 bytes</td>
+<td>$E'$</td>
+<td>$E' x 12$ bytes</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Graph Projection</td>
-<td>2dE/p + 2E'</td>
-<td>12E' bytes</td>
-<td>dE/p + E' : 6E'</td>
+<td>$2dE/p + 2E'$</td>
+<td>$12E'$ bytes</td>
+<td>$dE/p + E' : 6E'$</td>
 <td>Okay</td>
 </tr>
 </tbody></table>
@@ -1702,30 +1686,30 @@ For each local vertex u with gradient updated:
 </thead><tbody>
 <tr>
 <td>Per-vertex updates</td>
-<td>~10 V/p</td>
-<td>0 bytes</td>
+<td>$~10 V/p$</td>
+<td>$0$ bytes</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Ranking propagation</td>
-<td>2E/p</td>
-<td>V * 8 bytes</td>
-<td>d/p : 4</td>
+<td>$2E/p$</td>
+<td>$V * 8$ bytes</td>
+<td>$d/p : 4$</td>
 <td></td>
 </tr>
 <tr>
 <td>Gradient updates</td>
-<td>V/p</td>
-<td>0 bytes</td>
+<td>$V/p$</td>
+<td>$0$ bytes</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Local graph clustering</td>
-<td>(12V + 2E)/p</td>
-<td>8V bytes</td>
-<td>(6 + d)/p : 4</td>
+<td>$(12V + 2E)/p$</td>
+<td>$8V$ bytes</td>
+<td>$(6 + d)/p : 4$</td>
 <td>good</td>
 </tr>
 </tbody></table>

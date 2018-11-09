@@ -6,7 +6,7 @@
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" type="image/ico" href="images/favicon.ico">
-    <title>Scaling analysis for HIVE applications</title>
+    <title>Documentation</title>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <style>
@@ -200,7 +200,7 @@
     </style>
     <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" media="print" />
-      <script src="javascripts/all.js"></script>
+      <script src="javascripts/all_nosearch.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
@@ -236,10 +236,6 @@
     </a>
     <div class="toc-wrapper">
       <img src="images/logo.png" class="logo" alt="Logo" />
-        <div class="search">
-          <input type="text" class="search" id="input-search" placeholder="Search">
-        </div>
-        <ul class="search-results"></ul>
       <div id="toc" class="toc-list-h1">
           <li>
             <a href="#scaling-analysis-for-hive-applications" class="toc-h1 toc-link" data-title="Scaling analysis for HIVE applications">SCALING ANALYSIS FOR HIVE APPLICATIONS</a>
@@ -262,14 +258,10 @@
               </ul>
           </li>
       </div>
-        <ul class="toc-footer">
-            <li><a href='https://github.com/gunrock/gunrock'>Gunrock&colon; GPU Graph Analytics</a></li>
-            <li>Gunrock &copy; 2018 The Regents of the University of California.</li>
-        </ul>
     </div>
     <div class="page-wrapper">
 
-        <!-- <div class="dark-box"></div> -->
+        <div class="dark-box"></div>
 
       <div class="content">
         <h1 id='scaling-analysis-for-hive-applications'>Scaling analysis for HIVE applications</h1>
@@ -744,40 +736,36 @@ min(C, 2p) 4$</td>
 <td>Graph SAGE</td>
 <td>$B (C + 3CF + 3LCF + (.y + .y) (CF + C + F + .y + .y))$</td>
 <td>$8BC + 4B (F + .y + .y) (C, 2p) + 4BCFL$</td>
-<td>$~ (2 + L</td>
+<td>$~ (2 + L + .y + .y) : 4L$</td>
+<td>poor</td>
 </tr>
 <tr class="even">
-<td>+ .y + .y) : 4L$</td>
-<td>poor</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 <tr class="odd">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
 <td><em>Feature in UVM</em></td>
 <td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Child-centric comp.</td>
 <td>$BCF (2 + L + .y + .y)$</td>
 <td>$4B (F + .y + .y) (C, 2p)$ bytes over GPU-GPU + $4BCLF$ bytes over GPU-CPU</td>
 <td>$~ (2 + L + .y + .y) : 4L$ over GPU-CPU</td>
 <td>very poor</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Graph SAGE</td>
 <td>$B (C + 3CF + 3LCF + (.y + .y) (CF + C + F + .y + .y))$</td>
 <td>$8BC + 4B (F + .y + .y) (C, 2p)$ bytes over GPU-GPU +</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>$4BCFL$ bytes over GPU-CPU</td>
 <td>$~ (2 + L + .y + .y) : 4L$ over GPU-CPU</td>
 <td>very poor</td>
@@ -863,14 +851,14 @@ min(C, 2p) 4$</td>
 <tr class="even">
 <td>Greedy</td>
 <td>Straightforward: $dW/p$</td>
-<td>W/p x 24 bytes</td>
+<td>$W/p x 24$ bytes</td>
 <td>$d : 24$</td>
 <td>Poor</td>
 </tr>
 <tr class="odd">
 <td>Greedy</td>
 <td>Pre-visit: $W/p$</td>
-<td>W/p x 24 bytes</td>
+<td>$W/p x 24$ bytes</td>
 <td>$1 : 24$</td>
 <td>Very poor</td>
 </tr>
@@ -1022,58 +1010,58 @@ min(C, 2p) 4$</td>
 <tbody>
 <tr class="odd">
 <td>Wedge generation</td>
-<td>dE/p</td>
+<td>$dE/p$</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
 <td>Wedge communication</td>
-<td>0</td>
-<td>aE/p x 12</td>
+<td>$0$</td>
+<td>$aE/p x 12$</td>
 <td></td>
 <td></td>
 </tr>
 <tr class="odd">
 <td>Wedge checking</td>
-<td>aE/p x log(d)</td>
+<td>$aE/p x log(d)$</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
 <td>AllReduce</td>
-<td>2V</td>
-<td>2V x 4</td>
+<td>$2V$</td>
+<td>$2V x 4$</td>
 <td></td>
 <td></td>
 </tr>
 <tr class="odd">
 <td>Triangle Counting</td>
-<td>(d + a x log(d))E/p + 2V</td>
-<td>aE/p x 12 + 8V</td>
-<td>~(d + a x log(d)) : 12a</td>
+<td>$(d + a x log(d))E/p + 2V$</td>
+<td>$aE/p x 12 + 8V$</td>
+<td>$~(d + a x log(d)) : 12a$</td>
 <td>Okay</td>
 </tr>
 <tr class="even">
 <td>Scan Statistics</td>
-<td>(d + a x log(d))E/p</td>
-<td>12aE/p + 8V</td>
-<td>~(d + a x log(d)) : 12a</td>
+<td>$(d + a x log(d))E/p$</td>
+<td>$12aE/p + 8V$</td>
+<td>$~(d + a x log(d)) : 12a$</td>
 <td>Okay</td>
 </tr>
 <tr class="odd">
 <td>(with wedge checks)</td>
-<td>+ 2V + V/p</td>
+<td>$+ 2V + V/p$</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="even">
 <td>Scan Statistics</td>
-<td>Vdd + V/p</td>
-<td>8V</td>
-<td>dd : 8</td>
+<td>$Vdd + V/p$</td>
+<td>$8V$</td>
+<td>$dd : 8$</td>
 <td>Perfect</td>
 </tr>
 <tr class="odd">
@@ -1141,23 +1129,23 @@ min(C, 2p) 4$</td>
 <tbody>
 <tr class="odd">
 <td>Push</td>
-<td>a(V + 1)VE/p</td>
-<td>(V+1)VE/p x 8</td>
-<td>a:8</td>
+<td>$a(V + 1)VE/p$</td>
+<td>$(V+1)VE/p x 8$</td>
+<td>$a:8$</td>
 <td>Less than okay</td>
 </tr>
 <tr class="even">
 <td>Relabel</td>
-<td>VE/p</td>
-<td>V^2 x 8</td>
-<td>d/p : 8</td>
+<td>$VE/p$</td>
+<td>$V^2 x 8$</td>
+<td>$d/p : 8$</td>
 <td>Okay</td>
 </tr>
 <tr class="odd">
 <td>MF (Push-Relabel)</td>
-<td>(aV + a + 1)VE/p</td>
-<td>V^2((V+1)d/p + 1) x 8</td>
-<td>~ a:8</td>
+<td>$(aV + a + 1)VE/p$</td>
+<td>$V^2((V+1)d/p + 1) x 8$</td>
+<td>$~ a:8$</td>
 <td>Less than okay</td>
 </tr>
 </tbody>
@@ -1192,43 +1180,43 @@ min(C, 2p) 4$</td>
 <tbody>
 <tr class="odd">
 <td>MF (Push-Relabel)</td>
-<td>(aV + a + 1)VE/p</td>
-<td>V^2((V+1)d/p + 1) x 8</td>
-<td>~ a:8</td>
+<td>$(aV + a + 1)VE/p$</td>
+<td>$V^2((V+1)d/p + 1) x 8$</td>
+<td>$~ a:8$</td>
 <td>Less than okay</td>
 </tr>
 <tr class="even">
 <td>BFS</td>
-<td>E/p</td>
-<td>2V x 4</td>
-<td>d/p : 8</td>
+<td>$E/p$</td>
+<td>$2V x 4$</td>
+<td>$d/p : 8$</td>
 <td>Okay</td>
 </tr>
 <tr class="odd">
 <td>V-C updates</td>
-<td>E/p</td>
-<td>V/p x 8</td>
-<td>d : 8</td>
+<td>$E/p$</td>
+<td>$V/p x 8$</td>
+<td>$d : 8$</td>
 <td>Okay</td>
 </tr>
 <tr class="even">
 <td>Capacity updates</td>
-<td>V/p</td>
-<td>V/p x 4</td>
-<td>1 : 4</td>
+<td>$V/p$</td>
+<td>$V/p x 4$</td>
+<td>$1 : 4$</td>
 <td>Less than okay</td>
 </tr>
 <tr class="odd">
 <td>GTF</td>
-<td>(aV + a + 1)VE/p</td>
-<td>V^2((V+1)d/p + 1) x 8</td>
-<td>~ a:8</td>
+<td>$(aV + a + 1)VE/p$</td>
+<td>$V^2((V+1)d/p + 1) x 8$</td>
+<td>$~ a:8$</td>
 <td>Less than okay</td>
 </tr>
 <tr class="even">
 <td></td>
-<td>+ 2E/p + V/p</td>
-<td>+ 2V x 4 + V/p x 4</td>
+<td>$+ 2E/p + V/p$</td>
+<td>$+ 2V x 4 + V/p x 4$</td>
 <td></td>
 <td></td>
 </tr>
@@ -1281,37 +1269,37 @@ min(C, 2p) 4$</td>
 </thead><tbody>
 <tr>
 <td>Marking</td>
-<td>dE/p</td>
-<td>0 byte</td>
+<td>$dE/p$</td>
+<td>$0$ byte</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Forming edge lists</td>
-<td>E'</td>
-<td>0 byte</td>
+<td>$E'$</td>
+<td>$0$ byte</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Counting</td>
-<td>dE/p</td>
-<td>0 byte</td>
+<td>$dE/p$</td>
+<td>$0$ byte</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Merging</td>
-<td>E'</td>
-<td>E' x 12 bytes</td>
+<td>$E'$</td>
+<td>$E' x 12$ bytes</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Graph Projection</td>
-<td>2dE/p + 2E'</td>
-<td>12E' bytes</td>
-<td>dE/p + E' : 6E'</td>
+<td>$2dE/p + 2E'$</td>
+<td>$12E'$ bytes</td>
+<td>$dE/p + E' : 6E'$</td>
 <td>Okay</td>
 </tr>
 </tbody></table>
@@ -1382,30 +1370,30 @@ min(C, 2p) 4$</td>
 </thead><tbody>
 <tr>
 <td>Per-vertex updates</td>
-<td>~10 V/p</td>
-<td>0 bytes</td>
+<td>$~10 V/p$</td>
+<td>$0$ bytes</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Ranking propagation</td>
-<td>2E/p</td>
-<td>V * 8 bytes</td>
-<td>d/p : 4</td>
+<td>$2E/p$</td>
+<td>$V * 8$ bytes</td>
+<td>$d/p : 4$</td>
 <td></td>
 </tr>
 <tr>
 <td>Gradient updates</td>
-<td>V/p</td>
-<td>0 bytes</td>
+<td>$V/p$</td>
+<td>$0$ bytes</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
 <td>Local graph clustering</td>
-<td>(12V + 2E)/p</td>
-<td>8V bytes</td>
-<td>(6 + d)/p : 4</td>
+<td>$(12V + 2E)/p$</td>
+<td>$8V$ bytes</td>
+<td>$(6 + d)/p : 4$</td>
 <td>good</td>
 </tr>
 </tbody></table>
@@ -1545,7 +1533,8 @@ Easy</p></td>
 <h6 id='end-of-report'>End of report</h6>
       </div>
 
-        <!-- <div class="dark-box"></div> -->
+      <div class="dark-box">
+      </div>
     </div>
   </body>
 </html>
