@@ -6,7 +6,7 @@
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" type="image/ico" href="images/favicon.ico">
-    <title>Documentation</title>
+    <title>Sandbox for playing with pandoc/slate</title>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <style>
@@ -200,14 +200,15 @@
     </style>
     <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" media="print" />
-      <script src="javascripts/all_nosearch.js"></script>
+      <script src="javascripts/all.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
-
-    <script type="text/x-mathjax-config;executed=true">
-      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+    });
     </script>
     <script type="text/javascript" async
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
@@ -235,15 +236,23 @@
     </a>
     <div class="toc-wrapper">
       <img src="images/logo.png" class="logo" alt="Logo" />
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
       <div id="toc" class="toc-list-h1">
           <li>
             <a href="#sandbox-for-playing-with-pandoc-slate" class="toc-h1 toc-link" data-title="Sandbox for playing with pandoc/slate">SANDBOX FOR PLAYING WITH PANDOC/SLATE</a>
           </li>
       </div>
+        <ul class="toc-footer">
+            <li><a href='https://github.com/gunrock/gunrock'>Gunrock&colon; GPU Graph Analytics</a></li>
+            <li>Gunrock &copy; 2018 The Regents of the University of California.</li>
+        </ul>
     </div>
     <div class="page-wrapper">
 
-        <div class="dark-box"></div>
+        <!-- <div class="dark-box"></div> -->
 
       <div class="content">
         <h1 id='sandbox-for-playing-with-pandoc-slate'>Sandbox for playing with pandoc/slate</h1>
@@ -1747,8 +1756,7 @@ next line</p></td>
 
       </div>
 
-      <div class="dark-box">
-      </div>
+        <!-- <div class="dark-box"></div> -->
     </div>
   </body>
 </html>
