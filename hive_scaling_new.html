@@ -1717,43 +1717,135 @@ different method of analyzing the computation and the communication
 costs---the computation vs. communication ratio---is needed for these
 applications.</p>
 <h2 id='summary-of-results'>Summary of Results</h2>
-<p>+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Application                     | Computation to communication ratio              | Scalability    | Implementation difficulty |
-+=================================+=================================================+================+===========================+
-| Louvain                         | $E/p : 2V$                                      | Okay           | Hard                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Graph SAGE                      | $\sim CF : \min(C, 2p) \cdot 4$                 | Good           | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Random walk                     | Duplicated graph: infinity\                     | Perfect\       | Trivial\                  |
-|                                 | Distributed graph: 1 : 24                       | Very poor      | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Graph search: Uniform           | 1 : 24                                          | Very poor      | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Graph search: Greedy            | Straightforward: d : 24\                        | Poor\          | Easy\                     |
-|                                 | Pre-visit: 1:24                                 | Very poor      | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Graph search: Stochastic greedy | Straightforward: d : 24\                        | Poor\          | Easy\                     |
-|                                 | Pre-visit: $\log(d) : 24$                       | Very poor      | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Geolocation                     | Explicit movement: $25E/p : 4V$\                | Okay\          | Easy\                     |
-|                                 | UVM or peer access: 25 : 1                      | Good           | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Vertex nomination               | $E : 8V \cdot \min(d, p)$                       | Okay           | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Scan statistics                 | Duplicated graph: infinity\                     | Perfect\       | Trivial\                  |
-|                                 | Distributed graph: $\sim(d+a \cdot \log(d)):12$ | Okay           | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Sparse fused lasso              | $\sim a:8$                                      | Less than okay | Hard                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Graph projection                | Duplicated graph : infinity\                    | Perfect\       | Easy\                     |
-|                                 | Distributed graph : $dE/p + E' : 6E'$           | Okay           | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Local graph clustering          | $(6 + d)/p : 4$                                 | Good           | Easy                      |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Seeded graph matching           |                                                 |                |                           |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+
-| Application classification      |                                                 |                |                           |
-+---------------------------------+-------------------------------------------------+----------------+---------------------------+</p>
+<table style="font-size: 12px;font-size: 12px;"><thead>
+<tr>
+<th>Application</th>
+<th>Computation to communication ratio</th>
+<th>Scalability</th>
+<th>Implementation difficulty</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Louvain</td>
+<td>$E/p : 2V$</td>
+<td>Okay</td>
+<td>Hard</td>
+</tr>
+<tr>
+<td>Graph SAGE</td>
+<td>$\sim CF : \min(C, 2p) \cdot 4$</td>
+<td>Good</td>
+<td>Easy</td>
+</tr>
+<tr>
+<td>Random walk</td>
+<td>Duplicated graph: infinity\</td>
+<td>Perfect\</td>
+<td>Trivial\</td>
+</tr>
+<tr>
+<td></td>
+<td>Distributed graph: 1 : 24</td>
+<td>Very poor</td>
+<td>Easy</td>
+</tr>
+<tr>
+<td>Graph search: Uniform</td>
+<td>1 : 24</td>
+<td>Very poor</td>
+<td>Easy</td>
+</tr>
+<tr>
+<td>Graph search: Greedy</td>
+<td>Straightforward: d : 24\</td>
+<td>Poor\</td>
+<td>Easy\</td>
+</tr>
+<tr>
+<td></td>
+<td>Pre-visit: 1:24</td>
+<td>Very poor</td>
+<td>Easy</td>
+</tr>
+<tr>
+<td>Graph search: Stochastic greedy</td>
+<td>Straightforward: d : 24\</td>
+<td>Poor\</td>
+<td>Easy\</td>
+</tr>
+<tr>
+<td></td>
+<td>Pre-visit: $\log(d) : 24$</td>
+<td>Very poor</td>
+<td>Easy</td>
+</tr>
+<tr>
+<td>Geolocation</td>
+<td>Explicit movement: $25E/p : 4V$\</td>
+<td>Okay\</td>
+<td>Easy\</td>
+</tr>
+<tr>
+<td></td>
+<td>UVM or peer access: 25 : 1</td>
+<td>Good</td>
+<td>Easy</td>
+</tr>
+<tr>
+<td>Vertex nomination</td>
+<td>$E : 8V \cdot \min(d, p)$</td>
+<td>Okay</td>
+<td>Easy</td>
+</tr>
+<tr>
+<td>Scan statistics</td>
+<td>Duplicated graph: infinity\</td>
+<td>Perfect\</td>
+<td>Trivial\</td>
+</tr>
+<tr>
+<td></td>
+<td>Distributed graph: $\sim(d+a \cdot \log(d)):12$</td>
+<td>Okay</td>
+<td>Easy</td>
+</tr>
+<tr>
+<td>Sparse fused lasso</td>
+<td>$\sim a:8$</td>
+<td>Less than okay</td>
+<td>Hard</td>
+</tr>
+<tr>
+<td>Graph projection</td>
+<td>Duplicated graph : infinity\</td>
+<td>Perfect\</td>
+<td>Easy\</td>
+</tr>
+<tr>
+<td></td>
+<td>Distributed graph : $dE/p + E' : 6E'$</td>
+<td>Okay</td>
+<td>Easy</td>
+</tr>
+<tr>
+<td>Local graph clustering</td>
+<td>$(6 + d)/p : 4$</td>
+<td>Good</td>
+<td>Easy</td>
+</tr>
+<tr>
+<td>Seeded graph matching</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Application classification</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
 
 <p>Seeded graph matching and application classification are matrix-operation-based
 and not covered in this table.</p>
