@@ -375,22 +375,101 @@ The SFL problem is mainly divided into two parts, computing residual graphs from
 The term "vertex nomination" covers a variety of different node ranking schemes that fuse "content" and "context" information.  The HIVE reference code implements a "multiple-source shortest path" context scoring function, but uses a very suboptimal algorithm.  By using a more efficient algorithm, our serial CPU implementation achieves 1-2 orders of magnitude speedup over the HIVE implementation and our GPU implementation achieves another 1-2 orders of magnitude on top of that.  Implementation was straightforward, involving only a small modification to the existing Gunrock SSSP app.</p>
 <h2 id='scaling-analysis-for-hive-applications'>Scaling analysis for HIVE applications</h2>
 <p><strong><a href="https://gunrock.github.io/docs/hive_scaling.html">Scaling analysis for HIVE applications</a></strong> 
-| Application                     | Computation to communication ratio              | Scalability    | Implementation difficulty |
-|---------------------------------|-------------------------------------------------|----------------|---------------------------|
-| Louvain                         | $E/p : 2V$                                      | Okay           | Hard                      |
-| Graph SAGE                      | $\sim CF : \min(C, 2p) \cdot 4$                 | Good           | Easy                      |
-| Random walk                     | Duplicated graph: infinity \linebreak Distributed graph: $1 : 24$ | Perfect \linebreak Very poor | Trivial \linebreak Easy |
-| Graph search: Uniform           | $1 : 24$                                        | Very poor      | Easy                      |
-| Graph search: Greedy            | Straightforward: $d : 24$ \linebreak Pre-visit: $1:24$  | Poor \linebreak Very poor | Easy \linebreak Easy           |
-| Graph search: Stochastic greedy | Straightforward: $d : 24$ \linebreak Pre-visit: $\log(d) : 24$ | Poor \linebreak Very Poor | Easy \linebreak Easy    |
-| Geolocation                     | Explicit movement: $25E/p : 4V$ \linebreak UVM or peer access: $25 : 1$ | Okay \linebreak Good | Easy \linebreak Easy |
-| Vertex nomination               | $E : 8V \cdot \min(d, p)$                       | Okay           | Easy                      |
-| Scan statistics                 | Duplicated graph: infinity \linebreak Distributed graph: $\sim (d+a \cdot \log(d)):12$ | Perfect \linebreak Okay | Trivial \linebreak Easy |
-| Sparse fused lasso              | $\sim a:8$                                      | Less than okay | Hard                      |
-| Graph projection                | Duplicated graph : infinity \linebreak Distributed graph : $dE/p + E' : 6E'$ | Perfect \linebreak Okay | Easy \linebreak Easy |
-| Local graph clustering          | $(6 + d)/p : 4$                                 | Good           | Easy                      |
-| Seeded graph matching           |                                                 |                |                           |
-| Application classification      |                                                 |                |                           |</p>
+Summary of all hive applications (computation/communication, scalability and implementation difficulty):</p>
+
+<table style="font-size: 12px;font-size: 12px;"><thead>
+<tr>
+<th>Application</th>
+<th>Computation to communication ratio</th>
+<th>Scalability</th>
+<th>Implementation difficulty</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Louvain</td>
+<td>$E/p : 2V$</td>
+<td>Okay</td>
+<td>Hard</td>
+</tr>
+<tr>
+<td>Graph SAGE</td>
+<td>$\sim CF : \min(C, 2p) \cdot 4$</td>
+<td>Good</td>
+<td>Easy</td>
+</tr>
+<tr>
+<td>Random walk</td>
+<td>Duplicated graph: infinity \linebreak Distributed graph: $1 : 24$</td>
+<td>Perfect \linebreak Very poor</td>
+<td>Trivial \linebreak Easy</td>
+</tr>
+<tr>
+<td>Graph search: Uniform</td>
+<td>$1 : 24$</td>
+<td>Very poor</td>
+<td>Easy</td>
+</tr>
+<tr>
+<td>Graph search: Greedy</td>
+<td>Straightforward: $d : 24$ \linebreak Pre-visit: $1:24$</td>
+<td>Poor \linebreak Very poor</td>
+<td>Easy \linebreak Easy</td>
+</tr>
+<tr>
+<td>Graph search: Stochastic greedy</td>
+<td>Straightforward: $d : 24$ \linebreak Pre-visit: $\log(d) : 24$</td>
+<td>Poor \linebreak Very Poor</td>
+<td>Easy \linebreak Easy</td>
+</tr>
+<tr>
+<td>Geolocation</td>
+<td>Explicit movement: $25E/p : 4V$ \linebreak UVM or peer access: $25 : 1$</td>
+<td>Okay \linebreak Good</td>
+<td>Easy \linebreak Easy</td>
+</tr>
+<tr>
+<td>Vertex nomination</td>
+<td>$E : 8V \cdot \min(d, p)$</td>
+<td>Okay</td>
+<td>Easy</td>
+</tr>
+<tr>
+<td>Scan statistics</td>
+<td>Duplicated graph: infinity \linebreak Distributed graph: $\sim (d+a \cdot \log(d)):12$</td>
+<td>Perfect \linebreak Okay</td>
+<td>Trivial \linebreak Easy</td>
+</tr>
+<tr>
+<td>Sparse fused lasso</td>
+<td>$\sim a:8$</td>
+<td>Less than okay</td>
+<td>Hard</td>
+</tr>
+<tr>
+<td>Graph projection</td>
+<td>Duplicated graph : infinity \linebreak Distributed graph : $dE/p + E' : 6E'$</td>
+<td>Perfect \linebreak Okay</td>
+<td>Easy \linebreak Easy</td>
+</tr>
+<tr>
+<td>Local graph clustering</td>
+<td>$(6 + d)/p : 4$</td>
+<td>Good</td>
+<td>Easy</td>
+</tr>
+<tr>
+<td>Seeded graph matching</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Application classification</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
 
 <p>Seeded graph matching and application classification are matrix-operation-based
 and not covered in this table.</p>
