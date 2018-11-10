@@ -265,6 +265,18 @@
                   <li>
                     <a href="#graph-projections" class="toc-h2 toc-link" data-title="Graph Projections">Graph Projections</a>
                   </li>
+                  <li>
+                    <a href="#seeded-graph-matching-sgm" class="toc-h2 toc-link" data-title="Seeded Graph Matching (SGM)">Seeded Graph Matching (SGM)</a>
+                  </li>
+                  <li>
+                    <a href="#sparse-fused-lasso" class="toc-h2 toc-link" data-title="Sparse Fused Lasso">Sparse Fused Lasso</a>
+                  </li>
+                  <li>
+                    <a href="#vertex-nomination" class="toc-h2 toc-link" data-title="Vertex Nomination">Vertex Nomination</a>
+                  </li>
+                  <li>
+                    <a href="#scaling-analysis-for-hive-applications" class="toc-h2 toc-link" data-title="Scaling analysis for HIVE applications">Scaling analysis for HIVE applications</a>
+                  </li>
               </ul>
           </li>
       </div>
@@ -346,6 +358,70 @@ This variant of local graph clustering (L1 regularized PageRank via FISTA) is a 
 Because it has a natural representation in terms of sparse matrix operations, graph projections gave us an opportunity to compare ease of implementation and performance between Gunrock and another UC-Davis project, GPU <a href="https://github.com/owensgroup/GraphBLAS">GraphBLAS</a>.  </p>
 
 <p>Overall, we found that Gunrock was more flexible and more performant than GraphBLAS, likely due to better load balancing.  However, in this case, the GraphBLAS application was substantially easier to program than Gunrock, and also allowed us to take advantage of some more sophisticated memory allocation methods available in the GraphBLAS cuSPARSE backend.  These findings suggest that addition of certain commonly used API functions to Gunrock could be a fruitful direction for further work.</p>
+<h2 id='seeded-graph-matching-sgm'>Seeded Graph Matching (SGM)</h2>
+<p><strong><a href="https://gunrock.github.io/docs/hive_sgm.html">Seeded Graph Matching (SGM)</a></strong> 
+SGM is a fruitful workflow to optimize, because the existing implementations were not written with performance in mind.  By making minor modifications to the algorithm that allow use of sparse data structures, we enable scaling to larger datasets than previously possible.</p>
+
+<p>The application involves solving a linear assignment problem (LSAP) as a subproblem.  Solving these problems on the GPU is an active area of research -- though papers have been written describing high-performance parallel LSAP solvers, reference implementations are not available.  We implement a GPU LSAP solver via Bertsekas' auction algorithm, and make it available as a <a href="https://github.com/bkj/cbert">standalone library</a>.</p>
+
+<p>SGM is an approximate algorithm that minimizes graph adjacency disagreements via the Frank-Wolfe algorithm. Certain uses of the auction algorithm can introduce additional approximation in the gradients of the Frank-Wolfe iterations.  An interesting direction for future work would be a rigorous study of the effects of this kind of approximation on a variety of different graph tolopogies.  Understanding of those dynamics could allow further scaling beyond what our current implementations can handle.</p>
+<h2 id='sparse-fused-lasso'>Sparse Fused Lasso</h2>
+<p><strong><a href="https://gunrock.github.io/docs/hive_sparse_graph_trend_filtering.html">Sparse Fused Lasso</a></strong> 
+The SFL problem is mainly divided into two parts, computing residual graphs from maxflow and renormalizing the weights of the vertices. Maxflow is parallelizable with the push-relabel algorithm, so we adopt this algorithm in Gunrock's implementation. Moreover, each vertex has its own work to compute which communities it belongs to, and normalize the weights with other vertices in the same community. This renormalization requires global synchronization. SFL iterates by calling maxflow and renormalization several times before it converges. We notice that the overall runtime is mostly spent in maxflow, and thus improving the maxflow implementation will bring substantial speedup in the SFL.</p>
+
+<p>Because of the current state of our maxflow implementation, we notice a 30x slowdown of Gunrock's GPU SFL with respect to the benchmark implementation. This slowdown is mainly caused by the parallel push-relabel implementation taking too many iterations to converge, and making SFL kernel launching overhead-bound. We are looking into algorithmic optimizations to reduce the number of iterations maxflow takes, and also engineering optimizations to reduce the effects of kernel overheads in computation time.</p>
+<h2 id='vertex-nomination'>Vertex Nomination</h2>
+<p><strong><a href="https://gunrock.github.io/docs/hive_vn.html">Vertex Nomination</a></strong> 
+The term "vertex nomination" covers a variety of different node ranking schemes that fuse "content" and "context" information.  The HIVE reference code implements a "multiple-source shortest path" context scoring function, but uses a very suboptimal algorithm.  By using a more efficient algorithm, our serial CPU implementation achieves 1-2 orders of magnitude speedup over the HIVE implementation and our GPU implementation achieves another 1-2 orders of magnitude on top of that.  Implementation was straightforward, involving only a small modification to the existing Gunrock SSSP app.</p>
+<h2 id='scaling-analysis-for-hive-applications'>Scaling analysis for HIVE applications</h2>
+<p><strong><a href="https://gunrock.github.io/docs/hive_scaling.html">Scaling analysis for HIVE applications</a></strong> 
+| Application                     | Computation to communication ratio              | Scalability    | Implementation difficulty |
+|---------------------------------|-------------------------------------------------|----------------|---------------------------|
+| Louvain                         | $E/p : 2V$                                      | Okay           | Hard                      |
+| Graph SAGE                      | $\sim CF : \min(C, 2p) \cdot 4$                 | Good           | Easy                      |
+| Random walk                     | Duplicated graph: infinity <br> Distributed graph: $1 : 24$ | Perfect <br> Very poor | Trivial <br> Easy |
+| Graph search: Uniform           | $1 : 24$                                        | Very poor      | Easy                      |
+| Graph search: Greedy            | Straightforward: $d : 24$ <br> Pre-visit: $1:24$  | Poor <br> Very poor | Easy <br> Easy           |
+| Graph search: Stochastic greedy | Straightforward: $d : 24$ <br> Pre-visit: $\log(d) : 24$ | Poor <br> Very Poor | Easy <br> Easy    |
+| Geolocation                     | Explicit movement: $25E/p : 4V$ <br> UVM or peer access: $25 : 1$ | Okay <br> Good | Easy <br> Easy |
+| Vertex nomination               | $E : 8V \cdot \min(d, p)$                       | Okay           | Easy                      |
+| Scan statistics                 | Duplicated graph: infinity <br> Distributed graph: $\sim (d+a \cdot \log(d)):12$ | Perfect <br> Okay | Trivial <br> Easy |
+| Sparse fused lasso              | $\sim a:8$                                      | Less than okay | Hard                      |
+| Graph projection                | Duplicated graph : infinity <br> Distributed graph : $dE/p + E' : 6E'$ | Perfect <br> Okay | Easy <br> Easy |
+| Local graph clustering          | $(6 + d)/p : 4$                                 | Good           | Easy                      |
+| Seeded graph matching           |                                                 |                |                           |
+| Application classification      |                                                 |                |                           |</p>
+
+<p>Seeded graph matching and application classification are matrix-operation-based
+and not covered in this table.</p>
+
+<p>From the scaling analysis, we can see these workflows can be roughly grouped
+into three categories, by their scalabilities:</p>
+
+<p><em>Good scalability</em>
+GraphSAGE, geolocation using UVM or peer accesses, and local graph clustering
+belong to this group. They share some algorithmic signatures: the whole graph
+needs to be visited at least once in every iteration, and visiting each edge
+involves nontrivial computation. The communication costs are roughly at the
+level of V. As a result, the computation vs. communication ratio is larger than
+E : V. PageRank is a standard graph algorithm that falls in this group.</p>
+
+<p><em>Moderate scalability</em>
+This group includes Louvain, geolocation using explicit movement, vertex
+nomination, scan statistics, and graph projection. They either only visit part
+of the graph in an iteration, have only trivial computation during an edge
+visit, or communicate a little more data than V. The computation vs.
+communication is less than E : V, but still larger than 1 (or 1 operation : 4
+bytes). They are still scalable on the
+DGX-1 system, but not as well as the previous group. Single source shortest
+path (SSSP) is an typical example for this group.</p>
+
+<p><em>Poor scalability</em>
+Random walk, graph search, and sparse fused lasso belong to this group. They
+need to send out some data for each vertex or edge visit. As a result, the
+computation vs communication ratio is less than 1 (or 1 operation : 4 bytes).
+They are very hard to scale across multiple GPUs. Random walk is an typical
+example.</p>
 
       </div>
 
