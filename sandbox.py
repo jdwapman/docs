@@ -8,7 +8,7 @@ import tempfile
 import subprocess
 import re
 
-files = ['hive_scaling.html.md']
+files = ['sandbox.html.md']
 
 pandoc_cmd = ['pandoc',
               '--template=darpa-template.tex',
@@ -21,7 +21,7 @@ pandoc_cmd = ['pandoc',
               # '--variable', 'classoption=article',
               '--variable', 'toc-depth=0',
               '--toc',
-              '-o', 'scaling.pdf',
+              '-o', 'sandbox.pdf',
               # '-o', 'sandbox.tex',
               ]
 pandoc_cmd.extend(files)
