@@ -324,17 +324,17 @@
 </thead><tbody>
 <tr>
 <td>Global Gather</td>
-<td>O(3x &vert; E &vert;)</td>
+<td>$O(3 \cdot</td>
+<td>E</td>
+<td>)$</td>
 <td># of valid locations</td>
-<td>1</td>
-<td>~160M Edges</td>
 </tr>
 <tr>
 <td>Repeated Compute</td>
-<td>O( &vert; E &vert;)</td>
+<td>$O(</td>
+<td>E</td>
+<td>)$</td>
 <td>degree of vertex</td>
-<td>0</td>
-<td>~500M Edges</td>
 </tr>
 </tbody></table>
 
@@ -480,8 +480,8 @@ Node [ 38 ]: Predicted = < 9.427616 , -110.640709 > Reference = < 9.427616 , -11
 <tr>
 <th>GPU</th>
 <th>Dataset</th>
-<th>$&vert; V &vert;$</th>
-<th>$&vert; E &vert;$</th>
+<th>$\cardinality{V}$</th>
+<th>$\cardinality{E}$</th>
 <th>Iters</th>
 <th>Spatial Iters</th>
 <th>GTUSC (16 threads)</th>
