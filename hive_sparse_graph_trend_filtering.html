@@ -321,7 +321,7 @@
         <span class="k">for</span> <span class="n">each</span> <span class="n">e</span><span class="o"><</span><span class="n">v</span><span class="p">,</span> <span class="n">u</span><span class="o">></span> <span class="n">of</span> <span class="n">v</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">residual_capacity</span> <span class="o"><=</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="k">continue</span><span class="p">;</span>
-            <span class="k">if</span> <span class="n">min_height</span> <span class="o">></span> <span class="n">u</span><span class="o">.</span><span class="n">height</span><span class="p">:</span> 
+            <span class="k">if</span> <span class="n">min_height</span> <span class="o">></span> <span class="n">u</span><span class="o">.</span><span class="n">height</span><span class="p">:</span>
                     <span class="n">min_height</span> <span class="p">:</span><span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">height</span>
                     <span class="n">min_u</span> <span class="p">:</span><span class="o">=</span> <span class="n">u</span>
         <span class="k">return</span> <span class="n">min_u</span>
@@ -498,7 +498,7 @@ transfering to host!!!: 8924
 <h3 id='comparison-against-existing-implementations'>Comparison against existing implementations</h3>
 <p>Graphtv is an official implementation of the sparse fused lasso algorithm with a parametric maxflow backend. It is a CPU serial implementation <a href="https://www.cs.ucsb.edu/%7Eyuxiangw/codes/gtf_code.zip">https://www.cs.ucsb.edu/~yuxiangw/codes/gtf_code.zip</a>. The Gunrock GPU runtime is measured between the application enactor and it is an output of the application.</p>
 
-<p>All datasets in the table below are generated from <code>taxi-small.tar.gz</code> with different timestamps, $\sim 20K$ nodes graph is used as a sample test, $\sim 300K$ is a medium sized dataset and the largest availabe is $\sim 600K$ nodes.</p>
+<p>All datasets in the table below are generated from <code>taxi-small.tar.gz</code> with different timestamps. $\sim 20K$-node graph is used as a sample test, $\sim 300K$ is a medium-sized dataset, and the largest available is $\sim 600K$ nodes.</p>
 
 <table style="font-size: 12px;font-size: 12px;"><thead>
 <tr>
@@ -582,56 +582,41 @@ transfering to host!!!: 8924
 <h3 id='performance-limitations'>Performance limitations</h3>
 <p>We observe a slowdown when we compare Graphtv and Gunrock's current SFL implementation on the three datasets provided. On the smaller datasets there just isn't enough work to fill up a GPU and leverage the compute we have available. Even on the larger dataset we do not see a speed-up because of superior serial algorithm within the CPU implementation of maxflow that converges much earlier than our parallel push-relabel max flow algorithm on the GPU.</p>
 
-<p>We take a detailed performance analysis on the <code>NY Taxi</code> dataset with time from <code>2011-06-19 00:00:00</code>
-to <code>2011-06-27 00:00:00</code>:</p>
+<p>We make a detailed performance analysis on the <code>NY Taxi</code> dataset with time from <code>2011-06-19 00:00:00</code> to <code>2011-06-27 00:00:00</code>:</p>
 
 <ul>
-<li><p>Maxflow algorithm uses serial global relabeling and gap heuristics performed
-in Device memory by one CUDA thread. The profiling shows these heuristics
-computation take about 42% of MF's whole computation time while the rest (58%)
-is push relabel (precisely: Gunrock <code>RepeatFor</code> operator running lock-free 
-push-relabel operator). Since maxflow takes up about 96% of SFL's
-computation time, this makes SFL kernel launch overhead-bound. 
-Further optimization of the Maxflow algorithm is discussed below in 
-the Maxflow optimization opportunities paragraph.</p></li>
-<li><p>This dataset with $\sim 213k$ vertices and $\sim 588k$ edges is still small to fill up the GPU. It makes the kernel launching overhead issue much worse than it would with larger graphs.</p></li>
+<li><p>The maxflow algorithm uses serial global relabeling and gap heuristics performed in device memory by one CUDA thread. The profiling shows this heuristics computation takes about 42% of MF's whole computation time, while the rest (58%) is push relabel (precisely: Gunrock <code>RepeatFor</code> operator running the lock-free push-relabel operator). Since maxflow takes up about 96% of SFL's computation time, this makes the SFL kernel launch-overhead-bound. Further optimization of the maxflow algorithm is discussed below in the "maxflow optimization opportunities" paragraph.</p></li>
+<li><p>This dataset, with $\sim 213k$ vertices and $\sim 588k$ edges, is still too small to fill up the GPU. It makes the kernel launching overhead issue much worse than it would with larger graphs.</p></li>
 <li><p>There are some engineering limitations in our current implementation:</p></li>
 </ul>
 
 <p>1. The global relabeling and gap heuristics in maxflow are performed by one
-    thread; although they only run once per a few 1000 iterations, these 
-    procedure takes almost half of computation time.</p>
+    thread; although they only run once per a few 1000 iterations, these
+    procedures take almost half the computation time.</p>
 
-<p>2. The current min-cut finding and renormalization are serial on GPU (i.e.
-    only use a single thread to perform the computation).</p>
+<p>2. The current min-cut finding and renormalization are serial on GPU (i.e.,
+    only using a single thread to perform the computation).</p>
 <h3 id='maxflow-lessons-learned'>Maxflow lessons learned</h3>
 <ul>
-<li><p>Our first approach to max flow problem was the push relabel algorithm in the 
-simplest version. This implementation used 3 operators with 2 synchronization 
-between them, which in combination with a large number of iterations of the 
-algorithm was very costly to the computation of the GPU implementation,
-because of the kernel launch overhead.</p></li>
-<li><p>To reduced the number of kernels and synchronizations we implemented the push-relabel
-in version lock-free proposed by Bo Hong in "A Lock-free Multi-threaded Algorithm for the Maximum Flow Problem"
-<a href="http://people.cs.ksu.edu/%7Ewls77/weston/projects/cis598/hong.pdf">http://people.cs.ksu.edu/~wls77/weston/projects/cis598/hong.pdf</a>. It allowed us
-to reduced the operators down to only one lock-free push-relabel operator and one
+<li><p>Our first approach to the maxflow problem was the push-relabel algorithm in its simplest form. This implementation used 3 operators with 2 synchronizations between them. Because we had a large number of iterations of this algorithm, our computation was dominated by kernel-launch overhead.</p></li>
+<li><p>To reduced the number of kernels and synchronizations, we implemented push-relabel with a lock-free approach proposed by Bo Hong in "A Lock-free Multi-threaded Algorithm for the Maximum Flow Problem"
+<a href="http://people.cs.ksu.edu/%7Ewls77/weston/projects/cis598/hong.pdf">http://people.cs.ksu.edu/~wls77/weston/projects/cis598/hong.pdf</a>. This modification allowed us
+to reduce the operators down to only one lock-free push-relabel operator and one
 synchronization call.</p></li>
-<li><p>Our next optimization was reducing the iteration number of push-relabel algorithm 
-which needs synchronization. For this perpose we used the Gunrock operator <code>RepeatFor</code>. <code>RepeatFor</code> operator allowed us to do several kernel launches as one stacked kernel with global barrier between each call. We have also experimented with the new CUDA 10 feature called <code>cudaGraphs</code> in attempt to reduce the overall kernel launch overhead by creating a task graph of all kernels, but quickly found that a stacked kernel approach worked the best. Now instead of launching hundreds of thousands of iterations until convergence, we only have to perform tens of iterations with hundreds of thousands of repeated kernels within each iteration.</p></li>
+<li><p>Our next optimization was reducing the iteration count of push-relabel, thus reducing the number of synchronizations. For this purpose, we used the Gunrock operator <code>RepeatFor</code>. The <code>RepeatFor</code> operator allowed us to merge several kernel launches into one stacked kernel with a global barrier between each kernel call. We have also experimented with the new CUDA 10 feature called <code>cudaGraphs</code> in attempt to reduce the overall kernel launch overhead by creating a task graph of all kernels, but quickly found that a stacked kernel approach worked the best. Now instead of launching hundreds of thousands of iterations (thus kernels) until convergence, we only have to perform tens of iterations with hundreds of thousands of repeated kernels within each iteration.</p></li>
 </ul>
 <h2 id='next-steps'>Next Steps</h2><h3 id='maxflow-optimization-opportunities'>Maxflow optimization opportunities</h3>
 <ul>
-<li><p>We are looking at optimization to speed up the global reabeling-gap heuristic. 
-It is performed in the Device memory by one thread. This algorithm is 
-based on BFS which could be paralellized as well.</p></li>
-<li><p>We are going to work on parallelizetion of another approach which is used in
+<li><p>We are looking at optimization to speed up the global reabeling-gap heuristic.
+It is currently performed in the Device memory by one thread. This algorithm is based on BFS, which could be parallelized as well.</p></li>
+<li><p>We would like to explore the parallelization of another approach, the
 Boykov Kolmogorov algorithm proposed by Yuri Boykov and Vladimir Kolmogorov in
-"An Experimental Comparison of Min-Cut/Max-Flow Algorithms for Energy 
-Minimization in Vision" <a href="http://www.csd.uwo.ca/faculty/yuri/Papers/pami04.pdf">http://www.csd.uwo.ca/faculty/yuri/Papers/pami04.pdf</a>
-The algorithm instead of finding a new augmenting path or edge (push-relabel) 
-in the graph in each iteration, the Boykov Kolmogorov algorithm keeps the 
-already founded items in two search trees. We are going to use this idea
-in our push relabel algorithm as well.</p></li>
+"An Experimental Comparison of Min-Cut/Max-Flow Algorithms for Energy
+Minimization in Vision" <a href="http://www.csd.uwo.ca/faculty/yuri/Papers/pami04.pdf">http://www.csd.uwo.ca/faculty/yuri/Papers/pami04.pdf</a>.
+Instead of finding a new augmenting path or edge (push-relabel)
+on the graph in each iteration, the Boykov Kolmogorov algorithm keeps the
+already found items in two search trees. We would like to use this idea
+in our push-relabel implementation as well.</p></li>
 </ul>
 <h3 id='gunrock-implications'>Gunrock implications</h3>
 <p>SFL is the first application in Gunrock that calls another application (maxflow). Some common data pre-processing on the CPU requires better designs of the APIs to facilitate this usage. For example, <code>gtf_enactor</code> needs to call <code>mf_problem.reset()</code>, but because the current maxflow code uses CPU to preprocess the graph, SFL has to transfer the data back and forth between CPU and GPU. Using GPU to preprocess the graph for maxflow would be preferable.</p>
@@ -644,9 +629,7 @@ in our push relabel algorithm as well.</p></li>
 
 <p>However, SFL would be a significant challenge with dynamic graphs (the topology of the graph would change). The residual graph includes a swapping edge value (see pseudocode above) and we need to know characteristics of the new graph in order to allocate enough memory space for the new edges and vertices.</p>
 <h3 id='notes-on-larger-datasets'>Notes on larger datasets</h3>
-<p>SFL renormalization can be done without having its temporary arrays on the same GPU, but extra communication cost is needed if these arrays are in different GPU's global memory. Unified memory can also be used to handle larger datasets by oversubscribing and paying the cost of CPU to GPU transfer. Gunrock needs no specific new support to support SFL renormalization on larger datasets.</p>
-<h3 id='notes-on-other-pieces-of-this-workload'>Notes on other pieces of this workload</h3>
-<p>N/A</p>
+<p>SFL renormalization can be done without having its temporary arrays on the same GPU, but extra communication costs are necessary if these arrays are in different GPUs' global memories. Unified memory can also be used to handle larger datasets by oversubscribing and paying the cost of CPU to GPU transfer. Gunrock needs no specific new support to support SFL renormalization on larger datasets.</p>
 <h3 id='research-opportunities'>Research opportunities</h3>
 <p>Prof. Sharpnack indicates that this implementation could be generalized to multi-graph fused lasso. The idea is to set multiple edge values for the edges connecting to source/sink, while keeping the graph topology and edge values $(\lambda_1)$ for the edges in the original graph (excluding source and sink) the same.</p>
 
