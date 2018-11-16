@@ -340,10 +340,7 @@
 
 <p><strong>Note:</strong> <code>spatial_median()</code> is defined as center of points on earth's surface -- given a set of points <code>Q</code>, the function computes the point <code>p</code> such that: <code>sum([haversine_distance(p, q) for q in Q])</code> is minimized. See <code>gunrock/app/geo/geo_spatial.cuh</code> for details on the spatial median implementation.</p>
 <h2 id='how-to-run-this-application-on-darpa-39-s-dgx-1'>How To Run This Application on DARPA's DGX-1</h2><h3 id='prerequisites'>Prerequisites</h3><pre class="highlight mid-column-code shell tab-shell"><code>git clone --recursive https://github.com/gunrock/gunrock -b dev-refactor
-<span class="nb">cd </span>gunrock
-mkdir build
-ctest ..
-<span class="nb">cd</span> ../tests/geo/
+<span class="nb">cd </span>gunrock/tests/geo/
 make clean <span class="o">&amp;&amp;</span> make
 </code></pre><h3 id='hive-data-preparation'>HIVE Data Preparation</h3>
 <p>Prepare the data, skip this step if you are just running the sample dataset. Assuming we are in <code>tests/geo</code> directory:</p>
