@@ -1,114 +1,79 @@
-<h1 id='gunrock-v0-5-release-notes'>Gunrock v0.5 Release Notes</h1>
-<p>Release 0.5, Upcoming</p>
-
-<p>Release 0.5 is mainly a API refactor, with some feature updates:</p>
+<h1 id='gunrock-release-notes'>Gunrock Release Notes</h1>
+<p>Gunrock release 0.5 is a feature (minor) release that adds:</p>
 
 <ul>
-<li>New operator interfaces</li>
-<li>New graph representations</li>
-<li>New frontier structure</li>
-<li>New test driver</li>
-<li>Restructured enactor routines</li>
-<li>New parameter handling</li>
-<li>New 1D operators</li>
-<li>Other code restructuring</li>
-<li>Optional Boost dependency</li>
+<li>New primitives and better support for existing primitives.</li>
+<li>New operator: Intersection.</li>
+<li>Unit-testing support through <a href="https://github.com/google/googletest">Googletest </a> infrastructure.</li>
+<li>CPU reference code for correctness checking for some of the primitives.</li>
+<li>Support for central integration (Jenkins) and code-coverage.</li>
+<li>Overall bug fixes and support for new CUDA architectures.</li>
 </ul>
-<h2 id='changelog'>ChangeLog</h2>
+<h2 id='v0-5-changelog'>v0.5 Changelog</h2>
+<p>All notable changes to gunrock for v0.5 are documented below:</p>
+<h3 id='added'>Added</h3>
 <ul>
-<li><p>Operators (i.e. advance, filter)</p>
+<li>New primitives:
 
 <ul>
-<li>Take in lambda functions for per-element operations, instead of static
-functions in a structure. <code>&lt;algo&gt;_functor.cuh</code> is merged into
-<code>&lt;algo&gt;_enactor.cuh</code></li>
-<li>Use <code>OprtrParameters</code> structure to keep inputs, except for the graph,
-input / output frontiers, and the lambdas</li>
-<li><code>KernelPolicy</code> is defined within each operator, instead of in the enactor</li>
-<li>Templatized options (Idempotence, mark-preds, advance types, reduce ops,
-reduce types, etc.) are provided as a combined 32bit <code>OprtrFlag</code></li>
-<li>Queue index and selector are automatically changed by the operator when
-needed</li>
+<li>A* </li>
+<li>Weighted Label Propagation (LP) </li>
+<li>Minimum Spanning Tree (MST)</li>
+<li>Random Walk (RW)</li>
+<li>Triangle Counting (TC)</li>
 </ul></li>
-<li><p>Graph representation</p>
+<li>Operator:
 
 <ul>
-<li>A single structure encloses all graph related data</li>
-<li>Different representations (CSR, CSC, COO, etc.) can be selected based
-on algorithmic needs</li>
-<li>New graph representations could be added without changing other parts of
-Gunrock, except operator implementation that handles how to traverse such
-new representation</li>
-<li>CPU, GPU and sub-graphs use the same graph data structure, no more
-<code>GraphSlice</code> and <code>GRGraph</code></li>
+<li>Intersection operator (for example, see TC)</li>
 </ul></li>
-<li><p>Frontier</p>
+<li>Unit-testing:
 
 <ul>
-<li>A single structure <code>gunrock/app/frontier.cuh:Frontier</code>
-encloses all frontier related data</li>
+<li>Googletest support (see <code>unittests</code> directory)</li>
 </ul></li>
-<li><p>Test driver</p>
+<li>Docs
 
 <ul>
-<li>Allows multiple graph types (<code>64bit-VertexT</code>, <code>64bit-SizeT</code>,
-<code>64bit-ValueT</code>, directed vs. undirected) and multiple parameters
-combinations to run in a single execution</li>
-<li>Allows result validation for each run, instead of only the last run</li>
-<li>Result validation without reference for BFS and SSSP</li>
-<li>Moved common functions into <code>gunrock/app/test_base.cuh</code></li>
-<li>Moved CPU reference code and result validation into
-<code>gunrock/app/&lt;algo&gt;/&lt;algo&gt;_test.cuh</code></li>
+<li>Support using Slate (see https://github.com/gunrock/docs)</li>
 </ul></li>
-<li><p>Enactor</p>
+<li>CPU reference code</li>
+<li>Run scripts for all primitives</li>
+<li>Clang-format based on Google style
 
 <ul>
-<li>Common functions moved into <code>gunrock/app/enactor_base.cuh</code></li>
-<li>Use OpenMP to maintain controlling threads on CPU</li>
-<li>Use instances of <code>Iteration</code> instead of static access to its functions</li>
+<li>see commit aac9add (revert for diff)</li>
 </ul></li>
-<li><p>Command line parameters</p>
-
-<ul>
-<li>A dedicated <code>Parameters</code> struct to store all running parameters</li>
-<li>Need to define parameters via. <code>Use</code> function before using them</li>
-<li>Command line is parsed by <code>get_opt</code></li>
-<li><code>Set</code> to set parameter values</li>
-<li><code>Get</code> to get parameter values</li>
-<li>Handles vectors as parameter values</li>
-</ul></li>
-<li><p>1D operators for Array1D</p>
-
-<ul>
-<li>Per-element operations, e.g. <code>ForAll</code> and <code>ForEach</code></li>
-<li>Vector-Vector operations, e.g. <code>Add</code>, <code>Minus</code>, <code>Mul</code>, <code>Div</code>, <code>Mad</code>, <code>Set</code></li>
-<li>Vector-Scalar operations</li>
-<li>Sort</li>
-</ul></li>
-<li><p>Code restructuring</p>
-
-<ul>
-<li>Partitioners moved from <code>gunrock/app</code> to <code>gunrock/partitioner</code></li>
-<li><code>LB</code> operator moved from <code>gunrock/oprtr/edge_map_partitioned_forward</code> to
-<code>gunrock/oprtr/LB_advance</code></li>
-<li><code>TWC</code> operator moved from &#39;gunrock/oprtr/edge_map_forward&#39; to
-<code>gunrock/oprtr/TWC_advance</code></li>
-</ul></li>
-<li><p>Optional Boost dependency</p>
-
-<ul>
-<li>Utility functions changed to C++11 or implemented</li>
-<li>CPU references implemented for BFS and SSSP, and will be called when BOOST
-is not available</li>
-<li><code>info</code> will use RapidJson-based implementation, when Boost is not available</li>
-</ul></li>
+<li>Support for Volta and Turing architectures</li>
+<li>Regression tests to <code>ctest</code> for better code-coverage</li>
+<li>Memset kernels</li>
+<li>Multi-gpu testing through Jenkins</li>
 </ul>
-<h2 id='known-issues'>Known Issues</h2>
+<h3 id='removed'>Removed</h3>
 <ul>
-<li>Multi-GPU framework not tested</li>
-<li>Operators have decreased performance, due to more than 32 registers used by
-a single thread in the kernels</li>
-<li>RGG and GRMAT generators not working</li>
-<li>SSSP may have incorrect predecessors, due to data racing in marking the
-predecessors within the operator kernels</li>
+<li>Subgraph matching and join operator removed due to race conditions (SM is not added to the future release)</li>
+<li>Plots generation python scripts removed (see https://github.com/gunrock/io)</li>
+<li>MaxFlow primitive removed, wasn&#39;t fully implemented for a release (implementation exists in the new API for future release)</li>
+<li>Outdated documentation</li>
+</ul>
+<h3 id='fixed'>Fixed</h3>
+<ul>
+<li>HITS now produces correct results</li>
+<li>Illegal memory access fixed for label propagation (LP) primitive</li>
+<li>WTF Illegal memory access fixed for frontier queue (see known issues for problems with this)</li>
+<li>Other minor bug fixes</li>
+</ul>
+<h3 id='changed'>Changed</h3>
+<ul>
+<li>Updated README and other docs</li>
+<li>Moved previously <code>tests</code> directory to <code>examples</code></li>
+<li>Doesn&#39;t require <code>CMakeLists.txt</code> (or <code>cmake</code>) to run <code>make</code></li>
+<li>Moved all docs to Slate</li>
+</ul>
+<h2 id='known-issues'>Known Issues:</h2>
+<ul>
+<li>WTF has illegal memory access (https://github.com/gunrock/gunrock/issues/503).</li>
+<li>A* sometimes outputs the wrong path randomly (https://github.com/gunrock/gunrock/issues/502).</li>
+<li>Random Walk uses custom kernels within gunrock, this is resolved for future releases.</li>
+<li>CPU Reference code not implemented for SALSA, TC and LP (https://github.com/gunrock/gunrock/issues/232).</li>
 </ul>

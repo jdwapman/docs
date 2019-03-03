@@ -364,13 +364,13 @@
               </ul>
           </li>
           <li>
-            <a href="#gunrock-v0-5-release-notes" class="toc-h1 toc-link" data-title="Gunrock v0.5 Release Notes">GUNROCK V0.5 RELEASE NOTES</a>
+            <a href="#gunrock-release-notes" class="toc-h1 toc-link" data-title="Gunrock Release Notes">GUNROCK RELEASE NOTES</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#changelog" class="toc-h2 toc-link" data-title="ChangeLog">ChangeLog</a>
+                    <a href="#v0-5-changelog" class="toc-h2 toc-link" data-title="v0.5 Changelog">v0.5 Changelog</a>
                   </li>
                   <li>
-                    <a href="#known-issues" class="toc-h2 toc-link" data-title="Known Issues">Known Issues</a>
+                    <a href="#known-issues" class="toc-h2 toc-link" data-title="Known Issues:">Known Issues:</a>
                   </li>
               </ul>
           </li>
@@ -441,18 +441,19 @@
         <p align="center">
   <a href="https://github.com/gunrock/gunrock/"><img src="https://github.com/gunrock/docs/raw/master/source/images/GunrockLogo150px.png"></a>
   <br>
-  <a href="https://github.com/gunrock/gunrock/releases/tag/v0.4"><img src="https://img.shields.io/badge/gunrock-0.4-blue.svg"></a>
+  <a href="https://github.com/gunrock/gunrock/releases/tag/v0.5"><img src="https://img.shields.io/badge/gunrock-0.5-blue.svg"></a>
+  <a href="http://mario.ece.ucdavis.edu:8080/job/gunrock/job/master/"><img src="http://mario.ece.ucdavis.edu:8080/buildStatus/icon?job=gunrock/master" alt="Build Status"></a>
   <br>
-  <a href="http://mario.ece.ucdavis.edu:8080/job/gunrock/job/dev/"><img src="http://mario.ece.ucdavis.edu:8080/buildStatus/icon?job=gunrock/dev" alt="Build Status"></a>
   <a href="https://github.com/gunrock/gunrock/blob/master/LICENSE.TXT"><img src="https://img.shields.io/github/license/gunrock/gunrock.svg" alt="Apache 2"></a>
   <a href="https://github.com/gunrock/gunrock/issues"><img src="https://img.shields.io/github/issues/gunrock/gunrock.svg" alt="Issues Open"></a>
+  <a href="https://codecov.io/gh/gunrock/gunrock"><img src="https://codecov.io/gh/gunrock/gunrock/branch/master/graph/badge.svg" /></a>
 </p>
 
 <h1 id="gunrock-gpu-graph-analytics" align="center">Gunrock: GPU Graph Analytics</h1>
 
 <p>Gunrock is a CUDA library for graph-processing designed specifically for the GPU. It uses a high-level, bulk-synchronous, data-centric abstraction focused on operations on a vertex or edge frontier. Gunrock achieves a balance between performance and expressiveness by coupling high performance GPU computing primitives and optimization strategies with a high-level programming model that allows programmers to quickly develop new graph primitives with small code size and minimal GPU programming knowledge.</p>
 
-<p>For more details, please visit our <a href="http://gunrock.github.io/">website</a>, read <a href="#why-gunrock">Why Gunrock</a>, our TOPC 2017 paper <a href="http://escholarship.org/uc/item/9gj6r1dj">Gunrock: GPU Graph Analytics</a>, look at our <a href="#results">results</a>, and find more details in our <a href="#publications">publications</a>. See <a href="http://gunrock.github.io/gunrock/doc/latest/release_notes.html">Release Notes</a> to keep up with the our latest changes.</p>
+<p>For more details, please visit our <a href="http://gunrock.github.io/">website</a>, read <a href="#why-gunrock">Why Gunrock</a>, our TOPC 2017 paper <a href="http://escholarship.org/uc/item/9gj6r1dj">Gunrock: GPU Graph Analytics</a>, look at our <a href="#results-and-analysis">results</a>, and find more details in our <a href="#publications">publications</a>. See <a href="https://gunrock.github.io/docs/#gunrock-v0-5-release-notes">Release Notes</a> to keep up with the our latest changes.</p>
 
 <p>Gunrock is featured on NVIDIA's list of <a href="https://developer.nvidia.com/gpu-accelerated-libraries">GPU Accelerated Libraries</a> as the only external library for GPU graph analytics.</p>
 
@@ -467,8 +468,8 @@
 <tr>
   <td><a href="https://jenkins.io/">Jenkins</a></td>
   <td>Ubuntu 16.04.4 LTS</td>
-  <td>CUDA 10.0, GCC/G++ 5.4, Boost 1.58.0</td>
-  <td><a href="http://mario.ece.ucdavis.edu:8080/blue/organizations/jenkins/gunrock/activity"><img src="http://mario.ece.ucdavis.edu:8080/buildStatus/icon?job=gunrock/dev" alt="Build Status"></a></td>
+  <td>CUDA 10.0, NVIDIA Driver 410.73, GCC/G++ 5.4, Boost 1.58.0</td>
+  <td><a href="http://mario.ece.ucdavis.edu:8080/blue/organizations/jenkins/gunrock/activity"><img src="http://mario.ece.ucdavis.edu:8080/buildStatus/icon?job=gunrock/master" alt="Build Status"></a></td>
 </tr>
 </tbody></table>
 <h2 id='quickstart'>Quickstart</h2>
@@ -496,9 +497,9 @@ make test
 </tbody></table>
 <h2 id='getting-started-with-gunrock'>Getting Started with Gunrock</h2>
 <ul>
-<li><p>For Frequently Asked Questions, see the <a href="#faq">FAQ</a>.</p></li>
+<li><p>For Frequently Asked Questions, see the <a href="https://gunrock.github.io/docs/#frequently-asked-questions">FAQ</a>.</p></li>
 <li><p>For information on building Gunrock, see <a href="#building-gunrock">Building Gunrock</a>.</p></li>
-<li><p>The "tests" subdirectory included with Gunrock has a comprehensive test application for most the functionality of Gunrock.</p></li>
+<li><p>The "examples" subdirectory included with Gunrock has a comprehensive test application for most the functionality of Gunrock.</p></li>
 <li><p>For the programming model we use in Gunrock, see <a href="#programming-model">Programming Model</a>.</p></li>
 <li><p>We have also provided code samples for how to use <a href="https://github.com/gunrock/gunrock/tree/master/shared_lib_tests">Gunrock's C interface</a> and how to <a href="https://github.com/gunrock/gunrock/tree/master/python">call Gunrock primitives from Python</a>, as well as <a href="http://gunrock.github.io/gunrock/doc/annotated_primitives/annotated_primitives.html">annotated code</a> for two typical graph primitives.</p></li>
 <li><p>For details on upcoming changes and features, see the <a href="http://gunrock.github.io/gunrock/doc/latest/road_map.html">Road Map</a>.</p></li>
@@ -561,7 +562,7 @@ COSN '14, pages 63&ndash;68, October 2014.
 <h2 id='presentations'>Presentations</h2>
 <p>GTC 2018, <strong>Latest Development of the Gunrock Graph Processing Library on GPUs</strong>, March 2018. [<a href="http://on-demand.gputechconf.com/gtc/2018/presentation/s8594-latest-development-of-the-gunrock-graph-processing-library-on-gpus.pdf">slides</a> | <a href="http://on-demand.gputechconf.com/gtc/2018/video/S8594/">video</a>]</p>
 
-<p>GTC 2018, <strong>Writing Graph Primitives with Gunrock</strong>, March 2018. [<a href="https://github.com/gunrock/gunrock/blob/master/doc/Writing-Gunrock-Primitives.pdf">slides</a> | <a href="http://on-demand.gputechconf.com/gtc/2018/video/S8586/">video</a>]</p>
+<p>GTC 2018, <strong>Writing Graph Primitives with Gunrock</strong>, March 2018. [<a href="https://github.com/gunrock/docs/blob/master/source/pdf/Writing-Gunrock-Primitives.pdf">slides</a> | <a href="http://on-demand.gputechconf.com/gtc/2018/video/S8586/">video</a>]</p>
 
 <p>GTC 2016, <strong>Gunrock: A Fast and Programmable Multi-GPU Graph Processing Library</strong>, April 2016. [<a href="http://on-demand.gputechconf.com/gtc/2016/presentation/s6374-yangzihao-wang-gunrock.pdf">slides</a>]</p>
 
@@ -957,119 +958,84 @@ reduction and segmented intersection. Generally we want to find the right set of
 <li>If we had a larger number of X in the hardware&mdash;e.g., more registers, more SMs, more threads/SM, more shared memory, bigger cache---how would it help performance? (Where would we want NVIDIA to spend more transistors to best help our performance?)</li>
 <li>How much locality is there in frontiers with respect to the "active" frontier vs. the entire set of vertices? Interesting visualization project, for instance: Get a list of the active vertices in a frontier as a function of iteration, so iteration 0 is vertex set A, iteration 1 is vertex set B, etc. For one iteration, visualize the vertex set as a color per chunk of vertices, say, 1024 vertices per pixel. If all 1024 vertices are part of that frontier, the pixel is white, if 0 black, and gray in between. Then each iteration makes another row of pixels. This shows three things: (a) how many vertices are in the frontier compared to not; (b) how much spatial locality there is; (c) how the frontier evolves over time. One of the goals of this effort would be to determine how useful it would be to do some reordering of vertices either statically or dynamically, and either locally (within a chunk of vertices) or globally.</li>
 </ul>
-<h1 id='gunrock-v0-5-release-notes'>Gunrock v0.5 Release Notes</h1>
-<p>Release 0.5, Upcoming</p>
-
-<p>Release 0.5 is mainly a API refactor, with some feature updates:</p>
+<h1 id='gunrock-release-notes'>Gunrock Release Notes</h1>
+<p>Gunrock release 0.5 is a feature (minor) release that adds:</p>
 
 <ul>
-<li>New operator interfaces</li>
-<li>New graph representations</li>
-<li>New frontier structure</li>
-<li>New test driver</li>
-<li>Restructured enactor routines</li>
-<li>New parameter handling</li>
-<li>New 1D operators</li>
-<li>Other code restructuring</li>
-<li>Optional Boost dependency</li>
+<li>New primitives and better support for existing primitives.</li>
+<li>New operator: Intersection.</li>
+<li>Unit-testing support through <a href="https://github.com/google/googletest">Googletest </a> infrastructure.</li>
+<li>CPU reference code for correctness checking for some of the primitives.</li>
+<li>Support for central integration (Jenkins) and code-coverage.</li>
+<li>Overall bug fixes and support for new CUDA architectures.</li>
 </ul>
-<h2 id='changelog'>ChangeLog</h2>
+<h2 id='v0-5-changelog'>v0.5 Changelog</h2>
+<p>All notable changes to gunrock for v0.5 are documented below:</p>
+<h3 id='added'>Added</h3>
 <ul>
-<li><p>Operators (i.e. advance, filter)</p>
+<li>New primitives:
 
 <ul>
-<li>Take in lambda functions for per-element operations, instead of static
-functions in a structure. <code><algo>_functor.cuh</code> is merged into
-<code><algo>_enactor.cuh</code></li>
-<li>Use <code>OprtrParameters</code> structure to keep inputs, except for the graph,
-input / output frontiers, and the lambdas</li>
-<li><code>KernelPolicy</code> is defined within each operator, instead of in the enactor</li>
-<li>Templatized options (Idempotence, mark-preds, advance types, reduce ops,
-reduce types, etc.) are provided as a combined 32bit <code>OprtrFlag</code></li>
-<li>Queue index and selector are automatically changed by the operator when
-needed</li>
+<li>A* </li>
+<li>Weighted Label Propagation (LP) </li>
+<li>Minimum Spanning Tree (MST)</li>
+<li>Random Walk (RW)</li>
+<li>Triangle Counting (TC)</li>
 </ul></li>
-<li><p>Graph representation</p>
+<li>Operator:
 
 <ul>
-<li>A single structure encloses all graph related data</li>
-<li>Different representations (CSR, CSC, COO, etc.) can be selected based
-on algorithmic needs</li>
-<li>New graph representations could be added without changing other parts of
-Gunrock, except operator implementation that handles how to traverse such
-new representation</li>
-<li>CPU, GPU and sub-graphs use the same graph data structure, no more
-<code>GraphSlice</code> and <code>GRGraph</code></li>
+<li>Intersection operator (for example, see TC)</li>
 </ul></li>
-<li><p>Frontier</p>
+<li>Unit-testing:
 
 <ul>
-<li>A single structure <code>gunrock/app/frontier.cuh:Frontier</code>
-encloses all frontier related data</li>
+<li>Googletest support (see <code>unittests</code> directory)</li>
 </ul></li>
-<li><p>Test driver</p>
+<li>Docs
 
 <ul>
-<li>Allows multiple graph types (<code>64bit-VertexT</code>, <code>64bit-SizeT</code>,
-<code>64bit-ValueT</code>, directed vs. undirected) and multiple parameters
-combinations to run in a single execution</li>
-<li>Allows result validation for each run, instead of only the last run</li>
-<li>Result validation without reference for BFS and SSSP</li>
-<li>Moved common functions into <code>gunrock/app/test_base.cuh</code></li>
-<li>Moved CPU reference code and result validation into
-<code>gunrock/app/<algo>/<algo>_test.cuh</code></li>
+<li>Support using Slate (see https://github.com/gunrock/docs)</li>
 </ul></li>
-<li><p>Enactor</p>
+<li>CPU reference code</li>
+<li>Run scripts for all primitives</li>
+<li>Clang-format based on Google style
 
 <ul>
-<li>Common functions moved into <code>gunrock/app/enactor_base.cuh</code></li>
-<li>Use OpenMP to maintain controlling threads on CPU</li>
-<li>Use instances of <code>Iteration</code> instead of static access to its functions</li>
+<li>see commit aac9add (revert for diff)</li>
 </ul></li>
-<li><p>Command line parameters</p>
-
-<ul>
-<li>A dedicated <code>Parameters</code> struct to store all running parameters</li>
-<li>Need to define parameters via. <code>Use</code> function before using them</li>
-<li>Command line is parsed by <code>get_opt</code></li>
-<li><code>Set</code> to set parameter values</li>
-<li><code>Get</code> to get parameter values</li>
-<li>Handles vectors as parameter values</li>
-</ul></li>
-<li><p>1D operators for Array1D</p>
-
-<ul>
-<li>Per-element operations, e.g. <code>ForAll</code> and <code>ForEach</code></li>
-<li>Vector-Vector operations, e.g. <code>Add</code>, <code>Minus</code>, <code>Mul</code>, <code>Div</code>, <code>Mad</code>, <code>Set</code></li>
-<li>Vector-Scalar operations</li>
-<li>Sort</li>
-</ul></li>
-<li><p>Code restructuring</p>
-
-<ul>
-<li>Partitioners moved from <code>gunrock/app</code> to <code>gunrock/partitioner</code></li>
-<li><code>LB</code> operator moved from <code>gunrock/oprtr/edge_map_partitioned_forward</code> to
-<code>gunrock/oprtr/LB_advance</code></li>
-<li><code>TWC</code> operator moved from 'gunrock/oprtr/edge_map_forward' to
-<code>gunrock/oprtr/TWC_advance</code></li>
-</ul></li>
-<li><p>Optional Boost dependency</p>
-
-<ul>
-<li>Utility functions changed to C++11 or implemented</li>
-<li>CPU references implemented for BFS and SSSP, and will be called when BOOST
-is not available</li>
-<li><code>info</code> will use RapidJson-based implementation, when Boost is not available</li>
-</ul></li>
+<li>Support for Volta and Turing architectures</li>
+<li>Regression tests to <code>ctest</code> for better code-coverage</li>
+<li>Memset kernels</li>
+<li>Multi-gpu testing through Jenkins</li>
 </ul>
-<h2 id='known-issues'>Known Issues</h2>
+<h3 id='removed'>Removed</h3>
 <ul>
-<li>Multi-GPU framework not tested</li>
-<li>Operators have decreased performance, due to more than 32 registers used by
-a single thread in the kernels</li>
-<li>RGG and GRMAT generators not working</li>
-<li>SSSP may have incorrect predecessors, due to data racing in marking the
-predecessors within the operator kernels</li>
+<li>Subgraph matching and join operator removed due to race conditions (SM is not added to the future release)</li>
+<li>Plots generation python scripts removed (see https://github.com/gunrock/io)</li>
+<li>MaxFlow primitive removed, wasn't fully implemented for a release (implementation exists in the new API for future release)</li>
+<li>Outdated documentation</li>
+</ul>
+<h3 id='fixed'>Fixed</h3>
+<ul>
+<li>HITS now produces correct results</li>
+<li>Illegal memory access fixed for label propagation (LP) primitive</li>
+<li>WTF Illegal memory access fixed for frontier queue (see known issues for problems with this)</li>
+<li>Other minor bug fixes</li>
+</ul>
+<h3 id='changed'>Changed</h3>
+<ul>
+<li>Updated README and other docs</li>
+<li>Moved previously <code>tests</code> directory to <code>examples</code></li>
+<li>Doesn't require <code>CMakeLists.txt</code> (or <code>cmake</code>) to run <code>make</code></li>
+<li>Moved all docs to Slate</li>
+</ul>
+<h2 id='known-issues'>Known Issues:</h2>
+<ul>
+<li>WTF has illegal memory access (https://github.com/gunrock/gunrock/issues/503).</li>
+<li>A* sometimes outputs the wrong path randomly (https://github.com/gunrock/gunrock/issues/502).</li>
+<li>Random Walk uses custom kernels within gunrock, this is resolved for future releases.</li>
+<li>CPU Reference code not implemented for SALSA, TC and LP (https://github.com/gunrock/gunrock/issues/232).</li>
 </ul>
 <h1 id='frequently-asked-questions'>Frequently Asked Questions</h1>
 <p>Some of the most common questions we have come across during the life of Gunrock project. If your question isn't already answered below, feel free to create an <a href="https://github.com/gunrock/gunrock/issues">issue</a> on GitHub.</p>

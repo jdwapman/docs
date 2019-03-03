@@ -1,18 +1,19 @@
 <p align="center">
   <a href="https://github.com/gunrock/gunrock/"><img src="https://github.com/gunrock/docs/raw/master/source/images/GunrockLogo150px.png"></a>
   <br>
-  <a href="https://github.com/gunrock/gunrock/releases/tag/v0.4"><img src="https://img.shields.io/badge/gunrock-0.4-blue.svg"></a>
+  <a href="https://github.com/gunrock/gunrock/releases/tag/v0.5"><img src="https://img.shields.io/badge/gunrock-0.5-blue.svg"></a>
+  <a href="http://mario.ece.ucdavis.edu:8080/job/gunrock/job/master/"><img src="http://mario.ece.ucdavis.edu:8080/buildStatus/icon?job=gunrock/master" alt="Build Status"></a>
   <br>
-  <a href="http://mario.ece.ucdavis.edu:8080/job/gunrock/job/dev/"><img src="http://mario.ece.ucdavis.edu:8080/buildStatus/icon?job=gunrock/dev" alt="Build Status"></a>
   <a href="https://github.com/gunrock/gunrock/blob/master/LICENSE.TXT"><img src="https://img.shields.io/github/license/gunrock/gunrock.svg" alt="Apache 2"></a>
   <a href="https://github.com/gunrock/gunrock/issues"><img src="https://img.shields.io/github/issues/gunrock/gunrock.svg" alt="Issues Open"></a>
+  <a href="https://codecov.io/gh/gunrock/gunrock"><img src="https://codecov.io/gh/gunrock/gunrock/branch/master/graph/badge.svg" /></a>
 </p>
 
 <h1 id="gunrock-gpu-graph-analytics" align="center">Gunrock: GPU Graph Analytics</h1>
 
 <p>Gunrock is a CUDA library for graph-processing designed specifically for the GPU. It uses a high-level, bulk-synchronous, data-centric abstraction focused on operations on a vertex or edge frontier. Gunrock achieves a balance between performance and expressiveness by coupling high performance GPU computing primitives and optimization strategies with a high-level programming model that allows programmers to quickly develop new graph primitives with small code size and minimal GPU programming knowledge.</p>
 
-<p>For more details, please visit our <a href="http://gunrock.github.io/">website</a>, read <a href="#why-gunrock">Why Gunrock</a>, our TOPC 2017 paper <a href="http://escholarship.org/uc/item/9gj6r1dj">Gunrock: GPU Graph Analytics</a>, look at our <a href="#results">results</a>, and find more details in our <a href="#publications">publications</a>. See <a href="http://gunrock.github.io/gunrock/doc/latest/release_notes.html">Release Notes</a> to keep up with the our latest changes.</p>
+<p>For more details, please visit our <a href="http://gunrock.github.io/">website</a>, read <a href="#why-gunrock">Why Gunrock</a>, our TOPC 2017 paper <a href="http://escholarship.org/uc/item/9gj6r1dj">Gunrock: GPU Graph Analytics</a>, look at our <a href="#results-and-analysis">results</a>, and find more details in our <a href="#publications">publications</a>. See <a href="https://gunrock.github.io/docs/#gunrock-v0-5-release-notes">Release Notes</a> to keep up with the our latest changes.</p>
 
 <p>Gunrock is featured on NVIDIA&#39;s list of <a href="https://developer.nvidia.com/gpu-accelerated-libraries">GPU Accelerated Libraries</a> as the only external library for GPU graph analytics.</p>
 
@@ -27,8 +28,8 @@
 <tr>
   <td><a href="https://jenkins.io/">Jenkins</a></td>
   <td>Ubuntu 16.04.4 LTS</td>
-  <td>CUDA 10.0, GCC/G++ 5.4, Boost 1.58.0</td>
-  <td><a href="http://mario.ece.ucdavis.edu:8080/blue/organizations/jenkins/gunrock/activity"><img src="http://mario.ece.ucdavis.edu:8080/buildStatus/icon?job=gunrock/dev" alt="Build Status"></a></td>
+  <td>CUDA 10.0, NVIDIA Driver 410.73, GCC/G++ 5.4, Boost 1.58.0</td>
+  <td><a href="http://mario.ece.ucdavis.edu:8080/blue/organizations/jenkins/gunrock/activity"><img src="http://mario.ece.ucdavis.edu:8080/buildStatus/icon?job=gunrock/master" alt="Build Status"></a></td>
 </tr>
 </tbody></table>
 <h2 id='quickstart'>Quickstart</h2>
@@ -56,9 +57,9 @@ make test
 </tbody></table>
 <h2 id='getting-started-with-gunrock'>Getting Started with Gunrock</h2>
 <ul>
-<li><p>For Frequently Asked Questions, see the <a href="#faq">FAQ</a>.</p></li>
+<li><p>For Frequently Asked Questions, see the <a href="https://gunrock.github.io/docs/#frequently-asked-questions">FAQ</a>.</p></li>
 <li><p>For information on building Gunrock, see <a href="#building-gunrock">Building Gunrock</a>.</p></li>
-<li><p>The &quot;tests&quot; subdirectory included with Gunrock has a comprehensive test application for most the functionality of Gunrock.</p></li>
+<li><p>The &quot;examples&quot; subdirectory included with Gunrock has a comprehensive test application for most the functionality of Gunrock.</p></li>
 <li><p>For the programming model we use in Gunrock, see <a href="#programming-model">Programming Model</a>.</p></li>
 <li><p>We have also provided code samples for how to use <a href="https://github.com/gunrock/gunrock/tree/master/shared_lib_tests">Gunrock&#39;s C interface</a> and how to <a href="https://github.com/gunrock/gunrock/tree/master/python">call Gunrock primitives from Python</a>, as well as <a href="http://gunrock.github.io/gunrock/doc/annotated_primitives/annotated_primitives.html">annotated code</a> for two typical graph primitives.</p></li>
 <li><p>For details on upcoming changes and features, see the <a href="http://gunrock.github.io/gunrock/doc/latest/road_map.html">Road Map</a>.</p></li>
@@ -121,7 +122,7 @@ COSN &#39;14, pages 63&ndash;68, October 2014.
 <h2 id='presentations'>Presentations</h2>
 <p>GTC 2018, <strong>Latest Development of the Gunrock Graph Processing Library on GPUs</strong>, March 2018. [<a href="http://on-demand.gputechconf.com/gtc/2018/presentation/s8594-latest-development-of-the-gunrock-graph-processing-library-on-gpus.pdf">slides</a> | <a href="http://on-demand.gputechconf.com/gtc/2018/video/S8594/">video</a>]</p>
 
-<p>GTC 2018, <strong>Writing Graph Primitives with Gunrock</strong>, March 2018. [<a href="https://github.com/gunrock/gunrock/blob/master/doc/Writing-Gunrock-Primitives.pdf">slides</a> | <a href="http://on-demand.gputechconf.com/gtc/2018/video/S8586/">video</a>]</p>
+<p>GTC 2018, <strong>Writing Graph Primitives with Gunrock</strong>, March 2018. [<a href="https://github.com/gunrock/docs/blob/master/source/pdf/Writing-Gunrock-Primitives.pdf">slides</a> | <a href="http://on-demand.gputechconf.com/gtc/2018/video/S8586/">video</a>]</p>
 
 <p>GTC 2016, <strong>Gunrock: A Fast and Programmable Multi-GPU Graph Processing Library</strong>, April 2016. [<a href="http://on-demand.gputechconf.com/gtc/2016/presentation/s6374-yangzihao-wang-gunrock.pdf">slides</a>]</p>
 
