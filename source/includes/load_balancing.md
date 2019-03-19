@@ -130,16 +130,17 @@ they are in use when ENABLE_IDEMPOTENCE is true
 otherwise filter will not remove the duplicates
 The CULL_filter uses 4 different methods to find the duplicates: 1) bitmast: check a global bit mast, 2) Warp: check whether any thread in the warp has encountered the vertex recently; 3) History: check whether any thread in the block has encountered the vertex recently; 4) label: check a global per-element label. 2 & 3 use some kind of hash table to store the most recent vertices-->
 
-## All_Edges
+## All Edges (AE)
 **Big Picture: Perform advance on all edges in the graph**
-The `all_edges` advance method differs from other methods in that it does not start with a user-provided input frontier. Instead, advance is processed on all edges in the graph. This provides a simple way of load-balancing with the constraint that the user cannot select a subset of edges to perform advance. All threads are assigned the same number of edges to process, where each edge has only a single source and destination vertex.
+
+The `all_edges` advance method differs from other methods in that it does not start with a user-provided input frontier. Instead, an advance is performed using all edges in the graph. This provides a simple way of load-balancing with the constraint that the user cannot select a subset of edges to perform advance from as a source. All threads are simply assigned the same number of edges to process, where each edge has only a single source and destination vertex.
 
 This advance method first follows the setup steps listed above, with the exception that `Dispatch::Kernel` is renamed to `Dispatch::Advance_Edges` (in `AE_advance/kernel.cuh`). Each thread:
 
 - Loops for the N edges assigned to each thread:
   - Determines its edge ID based on its block index, thread index, and the number of threads per block
-  - Determines the `src` and `dest` vertices corresponding to the given edge number using a binary search (in `graph.GetEdgeSrdDest`), then applies the user-defined advance operation to the current edge using the `ProcessNeighbor` function
-  - `out_key` is saved to the `thread_outputs` array. This can either be the index of the `dest` vertex or `util::PreDefinedValues<OutKeyT>::InvalidValue`.
+  - Determines the `src` and `dest` vertices corresponding to the given edge number using a binary search using `graph.GetEdgeSrcDest()`, then applies the user-defined advance operation to the current edge using the `ProcessNeighbor` function
+  - `out_key`, the output of the `src` to `dest` advance operation, is saved to the `thread_outputs` array. This can either be the index of the `dest` vertex or `util::PreDefinedValues<OutKeyT>::InvalidValue`.
   - Increment `edge_id` by `stride` and continue looping until N edges have been processed
 - The `Dispatch::Write_Global_Output` function is called from within the thread to add the destination vertices in the `thread_outputs` array to the output frontier. 
 
