@@ -139,11 +139,11 @@ This advance method first follows the setup steps listed above, with the excepti
 
 - Loops for the N edges assigned to each thread:
   - Determines its edge ID based on its block index, thread index, and the number of threads per block
-  - Determines the `src` and `dest` vertices corresponding to the given edge number using a binary search using `graph.GetEdgeSrcDest()`, then applies the user-defined advance operation to the current edge using the `ProcessNeighbor` function
+  - Determines the `src` and `dest` vertices corresponding to the given edge number using a binary search using `graph.GetEdgeSrcDest()`, then applies the user-defined advance operation to the current edge using the `ProcessNeighbor()` function
   - `out_key`, the output of the `src` to `dest` advance operation, is saved to the `thread_outputs` array. This can either be the index of the `dest` vertex or `util::PreDefinedValues<OutKeyT>::InvalidValue`.
   - Increment `edge_id` by `stride` and continue looping until N edges have been processed
-- The `Dispatch::Write_Global_Output` function is called from within the thread to add the destination vertices in the `thread_outputs` array to the output frontier. 
+- The `Dispatch::Write_Global_Output()` function is called from within the thread to add the destination vertices in the `thread_outputs` array to the output frontier. 
 
-This strategy is ideal for graph applications where where all edges must be processed. An ideal example is the HITS app, where one step of the algorithm requires that a given vertex's rank value is set as the sum of all its neighbors' rank values. One method of performing this operation is to initialize a frontier with all vertices in the graph, then to advance from each vertex to all neighbors. This can alternatively be done with this `all_edges` advance method, which by definition advances from all sources to all destinations. (NoteL this assumes that there are no duplicate edges)
+This strategy is ideal for graph applications where where all edges must be processed. An example is the HITS app, where one step of the algorithm requires that the rank value of each vertex in the graph is set as the sum of all its neighbors' rank values. One method of performing this operation is to initialize a frontier with all vertices in the graph, then to advance from each vertex to all of its neighbors. This can alternatively be done with this `all_edges` advance method, which by definition advances from all sources to all destinations. (Note: this assumes that there are no duplicate edges)
 
 <!-- Question: how are repeat output vertices handled? The Write_Global_Output function (and the functions it calls, particularly BlockScanT::Scan) are difficult to understand
