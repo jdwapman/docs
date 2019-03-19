@@ -133,7 +133,7 @@ The CULL_filter uses 4 different methods to find the duplicates: 1) bitmast: che
 ## All Edges (AE)
 **Big Picture: Perform advance on all edges in the graph**
 
-The `all_edges` advance method differs from other methods in that it does not start with a user-provided input frontier. Instead, an advance is performed using all edges in the graph. This provides a simple way of load-balancing with the constraint that the user cannot select a subset of edges to perform advance from as a source. All threads are simply assigned the same number of edges to process, where each edge has only a single source and destination vertex.
+The `all_edges` advance method differs from other methods in that it does not start with a user-provided input frontier. Instead, an advance is performed using all edges in the graph. This provides a simple way of load-balancing with the constraint that the user cannot select a subset of edges to perform advance from. All threads are simply assigned the same number of edges to process, where each edge has only a single source and destination vertex.
 
 This advance method first follows the setup steps listed above, with the exception that `Dispatch::Kernel` is renamed to `Dispatch::Advance_Edges` (in `AE_advance/kernel.cuh`). Each thread:
 
